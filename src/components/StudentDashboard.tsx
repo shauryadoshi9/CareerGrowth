@@ -250,7 +250,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-2xl font-bold text-emerald-500">85% Match</span>
-            <span className="text-xs text-slate-400">SIH26044 Match</span>
+            <span className="text-xs text-slate-400">Verified Match</span>
           </div>
           <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">Eligible for GIFT City Hybrid</p>
         </div>
@@ -355,7 +355,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
 
           <div className="pt-4 border-t border-slate-700/50 space-y-2">
             <h4 className={`text-xs font-semibold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-              SIH26044 Top Job Match
+              Top Industry Job Match
             </h4>
             {topOpportunities[0] && (
               <div className={`p-3 rounded-xl border flex items-center justify-between ${

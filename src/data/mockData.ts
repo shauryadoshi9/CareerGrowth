@@ -216,7 +216,7 @@ export const mockAtRiskStudents: AtRiskStudent[] = [
 export const mockOpportunities: Opportunity[] = [
   {
     id: 'opp-1',
-    title: 'AI & Data Engineering Intern (SIH26044 Partner)',
+    title: 'AI & Data Engineering Intern (Industry Partner)',
     company: 'TechCorp AI Innovations (Gujarat Tech Hub)',
     location: 'GIFT City, Gandhinagar (Hybrid)',
     stipendOrSalary: '₹25,000 / month',

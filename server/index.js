@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const DB_PATH = path.join(__dirname, 'database.json');
 const DIST_PATH = path.join(__dirname, '..', 'dist');
 const PORT = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || 'skillbridge_sih_secret_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'skillbridge_secret_key_prod_2026';
 
 const MIME_TYPES = {
   '.html': 'text/html; charset=UTF-8',
@@ -518,7 +518,7 @@ const server = http.createServer(async (req, res) => {
 
     if (activeKey.trim()) {
       try {
-        const sysInst = `You are SkillBridge AI Tutor, an expert tutor for Indian students (GTU / SIH 2026). Answer questions clearly, accurately, and concisely in ${language} language. Topic: ${topic}.`;
+        const sysInst = `You are SkillBridge AI Tutor, an expert educational and career tutor. Answer questions clearly, accurately, and concisely in ${language} language. Topic: ${topic}.`;
         aiResponseText = await callGeminiAPI(activeKey, sysInst, prompt);
         apiUsed = 'Google Gemini 2.0 API';
       } catch (err) {

@@ -70,7 +70,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   SkillBridge
                 </span>
                 <span className="px-2 py-0.5 text-[10px] font-semibold bg-indigo-500/10 text-indigo-500 border border-indigo-500/30 rounded-full">
-                  SIH26044
+                  Verified
                 </span>
               </div>
               <p className={`text-[11px] font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -79,10 +79,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          {/* Server Connection Badge (Mobile & Desktop) */}
+          {/* Cloud Connection Badge (Mobile & Desktop) */}
           <div className="flex items-center gap-1.5 lg:hidden px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/30">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            <span>Server :5000</span>
+            <span>Cloud Sync</span>
           </div>
         </div>
 
@@ -347,13 +347,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
 
-          {/* SIH 2026 Interactive Demo Tour Button */}
+          {/* Interactive Platform Tour Button */}
           <button
             onClick={onStartDemoTour}
             className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold text-xs shadow-md hover:opacity-95 transition-all"
           >
             <PlayCircle className="w-4 h-4 text-white/90" />
-            <span>SIH Tour</span>
+            <span>Platform Tour</span>
           </button>
 
         </div>

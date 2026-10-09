@@ -56,7 +56,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({ language
       }`}>
         <div>
           <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
-            SIH26044 Academia-Industry Placement Engine
+            Academia-Industry Placement Engine
           </span>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Internship & Placement Matching Engine

@@ -24,7 +24,7 @@ const DEFAULT_ACCOUNTS: GoogleAccount[] = [
   {
     id: 'g-2',
     name: 'GTU Scholar',
-    email: 'scholar.sih2026@gmail.com',
+    email: 'scholar.student@gmail.com',
     avatarColor: 'bg-emerald-600',
   }
 ];

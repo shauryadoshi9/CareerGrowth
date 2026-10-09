@@ -66,7 +66,7 @@ export const InstitutionAnalytics: React.FC<InstitutionAnalyticsProps> = ({ lang
         </div>
 
         <div className="glass-card p-4 rounded-xl border border-slate-800 space-y-1">
-          <span className="text-xs font-medium text-slate-400">SIH26044 Industry Partners</span>
+          <span className="text-xs font-medium text-slate-400">Verified Industry Partners</span>
           <p className="text-2xl font-extrabold text-emerald-400">42 Companies</p>
           <span className="text-[11px] text-emerald-400">Active hiring pipelines</span>
         </div>

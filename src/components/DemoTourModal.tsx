@@ -96,10 +96,10 @@ export const DemoTourModal: React.FC<DemoTourModalProps> = ({
       badge: 'Step 11 of 12'
     },
     {
-      title: '12. SIH26044 Internship & Job Placement Engine',
+      title: '12. Internship & Job Placement Engine',
       role: 'student' as UserRole,
       tab: 'opportunities',
-      description: 'SIH26044 explainable matching engine evaluates hard eligibility + skill compatibility to match students with industry jobs.',
+      description: 'Explainable matching engine evaluates hard eligibility + skill compatibility to match students with industry jobs.',
       badge: 'Step 12 of 12'
     }
   ];
@@ -136,7 +136,7 @@ export const DemoTourModal: React.FC<DemoTourModalProps> = ({
             <span className="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-semibold">
               {step.badge}
             </span>
-            <span className="text-xs text-slate-400 font-medium">SIH 2026 Evaluation Story</span>
+            <span className="text-xs text-slate-400 font-medium">Platform Walkthrough</span>
           </div>
           <button
             onClick={onClose}

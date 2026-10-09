@@ -104,14 +104,14 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Badge & Telemetry */}
           <div className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30">
-              <Sparkles className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
-              SIH 2026 Problem Statement SIH26044
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+              Verified National Career Ecosystem
             </span>
 
             {serverHealth ? (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                 <Server className="w-3.5 h-3.5" />
-                Dynamic Backend Active (Port 5000)
+                Cloud Sync Active
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-amber-500/20 text-amber-300 border border-amber-500/30">
@@ -184,22 +184,22 @@ export const HomePage: React.FC<HomePageProps> = ({
               Dynamic Backend Server Persistence
             </div>
             <h2 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Real-Time Dynamic Server Input & Database Storage
+              Custom Career Goal & Skill Request Storage
             </h2>
             <p className={`text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Enter any custom student goal, skill request, or project note below. It is posted to the Node server on port 5000 and physically saved to <code className="text-indigo-400 font-mono">server/database.json</code>!
+              Record custom learner aspirations, industry preferences, or skill targets directly into your verified profile.
             </p>
           </div>
 
-          {/* Server Telemetry Badge */}
+          {/* Telemetry Badge */}
           <div className={`p-4 rounded-xl border flex items-center gap-4 ${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
             <div className={`w-3 h-3 rounded-full ${serverHealth ? 'bg-emerald-500 animate-ping' : 'bg-amber-500'}`} />
             <div className="text-xs">
               <p className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                {serverHealth ? 'Node.js Server Online' : 'Connecting to Server...'}
+                {serverHealth ? 'Cloud Database Active' : 'Connecting to Database...'}
               </p>
               <p className={isDark ? 'text-slate-400' : 'text-slate-500'}>
-                {serverHealth ? `${serverHealth.stats?.skillsCount || 10} Skills | ${serverHealth.stats?.activityCount || 0} Saved Actions` : 'Port 5000'}
+                {serverHealth ? `${serverHealth.stats?.skillsCount || 10} Skills | ${serverHealth.stats?.activityCount || 0} Saved Actions` : 'Syncing'}
               </p>
             </div>
           </div>
@@ -376,7 +376,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               Core Platform Capabilities
             </h2>
             <p className={`text-sm mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Designed specifically for SIH 2026 problem statement SIH26044 with AI precision.
+              Engineered for students, educational institutions, and enterprise recruiters with AI precision.
             </p>
           </div>
         </div>

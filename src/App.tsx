@@ -142,7 +142,7 @@ export function App() {
         )}
       </main>
 
-      {/* SIH 2026 Interactive Demo Tour Modal */}
+      {/* Interactive Platform Tour Modal */}
       <DemoTourModal
         isOpen={isDemoTourOpen}
         onClose={() => setIsDemoTourOpen(false)}
@@ -157,11 +157,9 @@ export function App() {
           <div className="flex flex-wrap items-center gap-2">
             <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>SkillBridge OS</span>
             <span>•</span>
-            <span>SIH26044 Problem Statement</span>
+            <span>Integrated Career & Employability Engine</span>
             <span>•</span>
-            <span className="text-indigo-500 font-semibold">Team Disruptors VI</span>
-            <span>•</span>
-            <span className="text-emerald-500 font-semibold">Node.js Server Port 5000 Active</span>
+            <span className="text-emerald-500 font-semibold">Cloud Sync Active</span>
           </div>
           <p>© 2026 SkillBridge Platform. From Learning to Livelihood.</p>
         </div>

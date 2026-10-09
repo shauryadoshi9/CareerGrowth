@@ -231,7 +231,7 @@
     {
       "id": "app-1791517418873",
       "opportunityId": "opp-1",
-      "opportunityTitle": "AI & Data Engineering Intern (SIH26044 Partner)",
+      "opportunityTitle": "AI & Data Engineering Intern (Industry Partner)",
       "company": "TechCorp AI Innovations (Gujarat Tech Hub)",
       "appliedAt": "2026-10-09T03:43:38.873Z",
       "status": "Submitted to Server",
@@ -263,7 +263,7 @@
     {
       "timestamp": "2026-10-09T03:43:38.873Z",
       "action": "Job Application Submitted",
-      "details": "AI & Data Engineering Intern (SIH26044 Partner)"
+      "details": "AI & Data Engineering Intern (Industry Partner)"
     },
     {
       "timestamp": "2026-10-09T09:00:00.000Z",
@@ -324,14 +324,30 @@
     },
     {
       "id": "usr_g_1791541149647",
-      "name": "Shaurya Google",
+      "name": "Shaurya Doshi",
       "email": "shauryadoshi9@gmail.com",
       "password": "",
       "avatarUrl": "",
       "isVerified": true,
       "authProvider": "google",
       "createdAt": "2026-10-09T10:19:09.647Z"
+    },
+    {
+      "id": "usr_g_1791541772381",
+      "name": "GTU Scholar",
+      "email": "scholar.student@gmail.com",
+      "password": "",
+      "avatarUrl": "",
+      "isVerified": true,
+      "authProvider": "google",
+      "createdAt": "2026-10-09T10:29:32.381Z"
     }
   ],
-  "otpStore": {}
+  "otpStore": {
+    "12312@ujjj.jnj": {
+      "otp": "447620",
+      "expiresAt": 1791542400456,
+      "createdAt": "2026-10-09T10:30:00.456Z"
+    }
+  }
 }

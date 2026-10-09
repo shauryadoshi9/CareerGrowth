@@ -81,7 +81,9 @@ export function App() {
 
       {/* Main Body View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
-        
+        {/* Auth Views */}
+        {activeTab === 'login' && <LoginForm />}
+        {activeTab === 'register' && <RegisterForm />}
         {/* Home Landing View */}
         {activeTab === 'home' && (
           <HomePage
@@ -93,6 +95,7 @@ export function App() {
             onStartDemoTour={() => setIsDemoTourOpen(true)}
           />
         )}
+
 
         {/* Student Views */}
         {currentRole === 'student' && activeTab !== 'home' && (

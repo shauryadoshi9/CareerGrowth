@@ -173,3 +173,42 @@ export async function fetchCurrentUser(token: string): Promise<{ user: { id: str
   }
 }
 
+export async function sendOtpApi(email: string, type: 'register' | 'login' = 'register'): Promise<{ success: boolean; message: string; otpPreview?: string }> {
+  const res = await fetch(`${API_BASE}/auth/send-otp`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, type })
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Failed to send OTP');
+  }
+  return data;
+}
+
+export async function verifyOtpApi(payload: { name?: string; email: string; password?: string; otp: string }): Promise<{ success: boolean; token: string; user: { id: string; name: string; email: string } }> {
+  const res = await fetch(`${API_BASE}/auth/verify-otp`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Invalid or expired OTP');
+  }
+  return data;
+}
+
+export async function googleLoginApi(account: { email: string; name: string; avatarUrl?: string }): Promise<{ success: boolean; token: string; user: { id: string; name: string; email: string; avatarUrl?: string } }> {
+  const res = await fetch(`${API_BASE}/auth/google-login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(account)
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Google authentication failed');
+  }
+  return data;
+}
+

@@ -1,10 +1,13 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { loginUser, registerUser, fetchCurrentUser } from '../services/api';
+import { loginUser, registerUser, fetchCurrentUser, sendOtpApi, verifyOtpApi, googleLoginApi } from '../services/api';
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
+  avatarUrl?: string;
+  isVerified?: boolean;
+  authProvider?: 'email' | 'google';
 }
 
 interface AuthContextProps {
@@ -12,6 +15,9 @@ interface AuthContextProps {
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
+  sendOtp: (email: string, type?: 'register' | 'login') => Promise<{ success: boolean; message: string; otpPreview?: string }>;
+  verifyOtp: (payload: { name?: string; email: string; password?: string; otp: string }) => Promise<void>;
+  googleLogin: (account: { email: string; name: string; avatarUrl?: string }) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
@@ -21,6 +27,9 @@ export const AuthContext = createContext<AuthContextProps>({
   token: null,
   login: async () => {},
   register: async () => {},
+  sendOtp: async () => ({ success: false, message: '' }),
+  verifyOtp: async () => {},
+  googleLogin: async () => {},
   logout: () => {},
   loading: false,
 });
@@ -60,6 +69,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const sendOtp = async (email: string, type: 'register' | 'login' = 'register') => {
+    return await sendOtpApi(email, type);
+  };
+
+  const verifyOtp = async (payload: { name?: string; email: string; password?: string; otp: string }) => {
+    const res = await verifyOtpApi(payload);
+    if (res?.token) {
+      localStorage.setItem('skillbridge_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+    }
+  };
+
+  const googleLogin = async (account: { email: string; name: string; avatarUrl?: string }) => {
+    const res = await googleLoginApi(account);
+    if (res?.token) {
+      localStorage.setItem('skillbridge_token', res.token);
+      setToken(res.token);
+      setUser(res.user);
+    }
+  };
+
   const logout = () => {
     localStorage.removeItem('skillbridge_token');
     setToken(null);
@@ -67,7 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, register, sendOtp, verifyOtp, googleLogin, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

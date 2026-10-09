@@ -59,15 +59,16 @@ function serveStatic(req, res, pathname) {
 function readDB() {
   try {
     if (!fs.existsSync(DB_PATH)) {
-      return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [] };
+      return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [], otpStore: {} };
     }
     const raw = fs.readFileSync(DB_PATH, 'utf-8');
     const parsed = JSON.parse(raw);
     parsed.users = parsed.users || [];
+    parsed.otpStore = parsed.otpStore || {};
     return parsed;
   } catch (err) {
     console.error('Error reading DB file:', err);
-    return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [] };
+    return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [], otpStore: {} };
   }
 }
 
@@ -202,7 +203,160 @@ const server = http.createServer(async (req, res) => {
   }
 
   // --- AUTH ROUTES ---
-  // POST /api/auth/register
+  // POST /api/auth/send-otp (Generates 6-digit verification code with 10-minute expiry)
+  if (pathname === '/api/auth/send-otp' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const { email } = body;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'A valid email address is required' }));
+      return;
+    }
+    const cleanEmail = email.toLowerCase().trim();
+    const db = readDB();
+    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
+
+    db.otpStore = db.otpStore || {};
+    db.otpStore[cleanEmail] = {
+      otp: generatedOtp,
+      expiresAt: Date.now() + 10 * 60 * 1000, // 10 minutes
+      createdAt: new Date().toISOString()
+    };
+    writeDB(db);
+
+    console.log(`\n========================================`);
+    console.log(`📧 [EMAIL VERIFICATION OTP SENT]`);
+    console.log(`Recipient: ${cleanEmail}`);
+    console.log(`Verification Code: [ ${generatedOtp} ]`);
+    console.log(`Expires: 10 minutes`);
+    console.log(`========================================\n`);
+
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      message: `Verification code sent to ${cleanEmail}`,
+      otpPreview: generatedOtp
+    }));
+    return;
+  }
+
+  // POST /api/auth/verify-otp (Validates OTP and creates verified account)
+  if (pathname === '/api/auth/verify-otp' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const { name, email, password, otp } = body;
+    if (!email || !otp) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Email and verification OTP are required' }));
+      return;
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+    const db = readDB();
+    db.otpStore = db.otpStore || {};
+    const record = db.otpStore[cleanEmail];
+
+    if (!record || record.otp !== otp.trim()) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid verification code. Please try again.' }));
+      return;
+    }
+
+    if (Date.now() > record.expiresAt) {
+      delete db.otpStore[cleanEmail];
+      writeDB(db);
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Verification code has expired. Please request a new code.' }));
+      return;
+    }
+
+    // OTP is valid - consume it
+    delete db.otpStore[cleanEmail];
+
+    db.users = db.users || [];
+    let user = db.users.find(u => u.email.toLowerCase() === cleanEmail);
+
+    if (user && user.password) {
+      // User already fully exists
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'An account with this email is already registered. Please sign in.' }));
+      return;
+    }
+
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : '';
+    if (!user) {
+      user = {
+        id: `usr_${Date.now()}`,
+        name: name || cleanEmail.split('@')[0],
+        email: cleanEmail,
+        password: hashedPassword,
+        isVerified: true,
+        authProvider: 'email',
+        createdAt: new Date().toISOString()
+      };
+      db.users.push(user);
+    } else {
+      user.isVerified = true;
+      if (hashedPassword) user.password = hashedPassword;
+      if (name) user.name = name;
+    }
+
+    writeDB(db);
+    const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      token,
+      user: { id: user.id, name: user.name, email: user.email, isVerified: true, authProvider: 'email' }
+    }));
+    return;
+  }
+
+  // POST /api/auth/google-login (Authenticates chosen Google account identity)
+  if (pathname === '/api/auth/google-login' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const { email, name, avatarUrl } = body;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Valid Google email is required' }));
+      return;
+    }
+
+    const cleanEmail = email.toLowerCase().trim();
+    const db = readDB();
+    db.users = db.users || [];
+    let user = db.users.find(u => u.email.toLowerCase() === cleanEmail);
+
+    if (!user) {
+      user = {
+        id: `usr_g_${Date.now()}`,
+        name: name || cleanEmail.split('@')[0],
+        email: cleanEmail,
+        password: '',
+        avatarUrl: avatarUrl || '',
+        isVerified: true,
+        authProvider: 'google',
+        createdAt: new Date().toISOString()
+      };
+      db.users.push(user);
+    } else {
+      user.authProvider = 'google';
+      user.isVerified = true;
+      if (name) user.name = name;
+      if (avatarUrl) user.avatarUrl = avatarUrl;
+    }
+
+    writeDB(db);
+    const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      token,
+      user: { id: user.id, name: user.name, email: user.email, avatarUrl: user.avatarUrl, isVerified: true, authProvider: 'google' }
+    }));
+    return;
+  }
+
+  // POST /api/auth/register (Direct registration fallback)
   if (pathname === '/api/auth/register' && method === 'POST') {
     const body = await parseJSONBody(req);
     const { name, email, password } = body;
@@ -211,9 +365,10 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ message: 'Email and password are required' }));
       return;
     }
+    const cleanEmail = email.toLowerCase().trim();
     const db = readDB();
     db.users = db.users || [];
-    const existing = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const existing = db.users.find(u => u.email.toLowerCase() === cleanEmail);
     if (existing) {
       res.writeHead(400, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'User already exists with this email' }));
@@ -222,9 +377,11 @@ const server = http.createServer(async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = {
       id: `usr_${Date.now()}`,
-      name: name || email.split('@')[0],
-      email: email.toLowerCase(),
+      name: name || cleanEmail.split('@')[0],
+      email: cleanEmail,
       password: hashedPassword,
+      isVerified: true,
+      authProvider: 'email',
       createdAt: new Date().toISOString()
     };
     db.users.push(newUser);
@@ -234,7 +391,7 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({
       success: true,
       token,
-      user: { id: newUser.id, name: newUser.name, email: newUser.email }
+      user: { id: newUser.id, name: newUser.name, email: newUser.email, isVerified: true }
     }));
     return;
   }
@@ -248,18 +405,24 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({ message: 'Email and password are required' }));
       return;
     }
+    const cleanEmail = email.toLowerCase().trim();
     const db = readDB();
     db.users = db.users || [];
-    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    const user = db.users.find(u => u.email.toLowerCase() === cleanEmail);
     if (!user) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Invalid credentials' }));
+      res.end(JSON.stringify({ message: 'No registered account found with this email' }));
+      return;
+    }
+    if (!user.password && user.authProvider === 'google') {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'This account was created with Google. Please use "Sign in with Google".' }));
       return;
     }
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
       res.writeHead(401, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Invalid credentials' }));
+      res.end(JSON.stringify({ message: 'Invalid password. Please check your credentials.' }));
       return;
     }
     const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
@@ -267,7 +430,7 @@ const server = http.createServer(async (req, res) => {
     res.end(JSON.stringify({
       success: true,
       token,
-      user: { id: user.id, name: user.name, email: user.email }
+      user: { id: user.id, name: user.name, email: user.email, isVerified: user.isVerified || false }
     }));
     return;
   }
@@ -293,7 +456,7 @@ const server = http.createServer(async (req, res) => {
       }
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({
-        user: { id: user.id, name: user.name, email: user.email }
+        user: { id: user.id, name: user.name, email: user.email, isVerified: user.isVerified || false, authProvider: user.authProvider }
       }));
       return;
     } catch (err) {
@@ -305,22 +468,7 @@ const server = http.createServer(async (req, res) => {
 
   // GET /api/auth/google
   if (pathname === '/api/auth/google' && method === 'GET') {
-    const db = readDB();
-    db.users = db.users || [];
-    let googleUser = db.users.find(u => u.email === 'google.demo@skillbridge.edu');
-    if (!googleUser) {
-      googleUser = {
-        id: `usr_google_${Date.now()}`,
-        name: 'Google Student Demo',
-        email: 'google.demo@skillbridge.edu',
-        password: '',
-        createdAt: new Date().toISOString()
-      };
-      db.users.push(googleUser);
-      writeDB(db);
-    }
-    const token = jwt.sign({ id: googleUser.id, email: googleUser.email, name: googleUser.name }, JWT_SECRET, { expiresIn: '7d' });
-    res.writeHead(302, { 'Location': `/?token=${token}&user=${encodeURIComponent(googleUser.name)}` });
+    res.writeHead(302, { 'Location': '/?action=google_login' });
     res.end();
     return;
   }

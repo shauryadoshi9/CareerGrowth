@@ -298,6 +298,40 @@
       "email": "test@skillbridge.edu",
       "password": "$2b$10$i39uhUzhSkc4YckHiBKM5uaCr/vW7gTF1u9ONeAAv2IG5WzvixxHC",
       "createdAt": "2026-10-09T09:54:04.648Z"
+    },
+    {
+      "id": "usr_google_1791539999097",
+      "name": "Google Student Demo",
+      "email": "google.demo@skillbridge.edu",
+      "password": "",
+      "createdAt": "2026-10-09T09:59:59.097Z"
+    },
+    {
+      "id": "usr_1791540031562",
+      "name": "shaurya",
+      "email": "12312@ujjj.jnj",
+      "password": "$2b$10$UKCIz4q8.igA40mSHDUFxuapH/LSIAvd3ddir/61DfyyJybHRs3wS",
+      "createdAt": "2026-10-09T10:00:31.562Z"
+    },
+    {
+      "id": "usr_1791541128866",
+      "name": "Shaurya Doshi",
+      "email": "shaurya.test@gmail.com",
+      "password": "$2b$10$vpRjXjLpYncZQfCowxhgJ.F0sJWY9KssQld9aquvl0hfJw/COLtUS",
+      "isVerified": true,
+      "authProvider": "email",
+      "createdAt": "2026-10-09T10:18:48.866Z"
+    },
+    {
+      "id": "usr_g_1791541149647",
+      "name": "Shaurya Google",
+      "email": "shauryadoshi9@gmail.com",
+      "password": "",
+      "avatarUrl": "",
+      "isVerified": true,
+      "authProvider": "google",
+      "createdAt": "2026-10-09T10:19:09.647Z"
     }
-  ]
+  ],
+  "otpStore": {}
 }

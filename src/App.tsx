@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { LoginForm } from './components/LoginForm';
+import { RegisterForm } from './components/RegisterForm';
 import { UserRole, Language, ThemeMode } from './types';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './components/HomePage';

@@ -1,6 +1,38 @@
 export type UserRole = 'student' | 'teacher' | 'admin';
 
-export type Language = 'en' | 'hi' | 'gu';
+export type Language = 
+  | 'en' // English
+  | 'hi' // Hindi
+  | 'gu' // Gujarati
+  | 'mr' // Marathi
+  | 'ta' // Tamil
+  | 'te' // Telugu
+  | 'kn' // Kannada
+  | 'bn' // Bengali
+  | 'pa' // Punjabi
+  | 'ml'; // Malayalam
+
+export type ThemeMode = 'dark' | 'light';
+
+export interface LanguageOption {
+  code: Language;
+  name: string;
+  nativeName: string;
+  flag: string;
+}
+
+export const SUPPORTED_LANGUAGES: LanguageOption[] = [
+  { code: 'en', name: 'English', nativeName: 'English', flag: '🇬🇧' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिंदी', flag: '🇮🇳' },
+  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી', flag: '🇮🇳' },
+  { code: 'mr', name: 'Marathi', nativeName: 'मराठी', flag: '🇮🇳' },
+  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்', flag: '🇮🇳' },
+  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు', flag: '🇮🇳' },
+  { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ', flag: '🇮🇳' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা', flag: '🇮🇳' },
+  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ', flag: '🇮🇳' },
+  { code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം', flag: '🇮🇳' },
+];
 
 export interface Skill {
   id: string;
@@ -52,6 +84,8 @@ export interface RoadmapStep {
 
 export interface QuizQuestion {
   id: string;
+  topic: string;
+  difficulty: 'easy' | 'medium' | 'hard';
   question: string;
   question_hi?: string;
   question_gu?: string;
@@ -62,8 +96,6 @@ export interface QuizQuestion {
   explanation: string;
   explanation_hi?: string;
   explanation_gu?: string;
-  topic: string;
-  difficulty: 'easy' | 'medium' | 'hard';
 }
 
 export interface OfflinePack {
@@ -105,10 +137,27 @@ export interface Opportunity {
   missingSkills?: string[];
 }
 
-export interface TeacherContentGen {
-  topic: string;
-  gradeLevel: string;
-  language: Language;
-  contentType: 'lesson_plan' | 'quiz_set' | 'remedial_guide';
-  generatedContent: string;
+export interface JobApplication {
+  id: string;
+  opportunityId: string;
+  opportunityTitle: string;
+  company: string;
+  appliedAt: string;
+  status: string;
+  matchScore: number;
+  applicantName: string;
+}
+
+export interface ServerHealth {
+  status: 'online' | 'offline';
+  message: string;
+  timestamp: string;
+  stats: {
+    skillsCount: number;
+    submissionsCount: number;
+    applicationsCount: number;
+    interventionsCount: number;
+    copilotCount: number;
+    activityCount: number;
+  };
 }

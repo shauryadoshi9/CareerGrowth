@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { generateTeacherCopilotContent } from '../services/aiEngine';
-import { Sparkles, FileText, HelpCircle, Edit3, Send, CheckCircle2, Users, Download } from 'lucide-react';
+import { postCustomData } from '../services/api';
+import { SUPPORTED_LANGUAGES } from '../types';
+import { Sparkles, Edit3, CheckCircle2 } from 'lucide-react';
 import { Language } from '../types';
 
 interface TeacherCopilotProps {
@@ -30,8 +32,13 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
     }, 800);
   };
 
-  const handlePublishToClass = () => {
+  const handlePublishToClass = async () => {
     setIsPublished(true);
+    await postCustomData(
+      `Teacher Material: ${topic}`,
+      contentType,
+      { gradeLevel, language: selectedLang, content: generatedText }
+    );
   };
 
   return (
@@ -41,11 +48,11 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
       <div className="glass-panel p-6 rounded-2xl border border-purple-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 text-xs font-semibold">
-            Faculty Empowerment Engine
+            Faculty Empowerment Engine ({selectedLang.toUpperCase()})
           </span>
           <h2 className="text-2xl font-bold text-white font-outfit mt-1">AI Teacher Copilot</h2>
           <p className="text-sm text-slate-300">
-            Generate lesson plans, diagnostic quizzes, answer keys, and remedial guides in Gujarati, Hindi, or English.
+            Generate lesson plans, diagnostic quizzes, answer keys, and remedial guides in any of the 10 Indian languages.
           </p>
         </div>
 
@@ -101,15 +108,15 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-slate-400 block mb-1">Language:</label>
+                <label className="text-xs font-semibold text-slate-400 block mb-1">Language (10 Indian Options):</label>
                 <select
                   value={selectedLang}
                   onChange={(e) => setSelectedLang(e.target.value as Language)}
                   className="w-full bg-slate-900 text-xs text-slate-100 px-3 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-purple-500"
                 >
-                  <option value="en">English</option>
-                  <option value="hi">हिंदी (Hindi)</option>
-                  <option value="gu">ગુજરાતી (Gujarati)</option>
+                  {SUPPORTED_LANGUAGES.map(l => (
+                    <option key={l.code} value={l.code}>{l.flag} {l.nativeName} ({l.name})</option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -146,7 +153,7 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
 
           <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
             <span className="text-xs text-slate-400">
-              {isPublished ? '● Published to GTU Class Dashboard' : 'Draft Ready'}
+              {isPublished ? '● Saved to Dynamic Server DB' : 'Draft Ready'}
             </span>
 
             <div className="flex items-center gap-2">
@@ -159,7 +166,7 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
                 }`}
               >
                 <CheckCircle2 className="w-3.5 h-3.5" />
-                <span>{isPublished ? 'Published to Students' : 'Publish to Class'}</span>
+                <span>{isPublished ? 'Published & Saved to Server' : 'Publish to Server'}</span>
               </button>
             </div>
           </div>

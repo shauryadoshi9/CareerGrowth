@@ -12,6 +12,8 @@
   "dependencies": {
     "canvas-confetti": "^1.9.4",
     "clsx": "^2.1.1",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
     "framer-motion": "^12.4.10",
     "lucide-react": "^0.475.0",
     "react": "^19.0.0",

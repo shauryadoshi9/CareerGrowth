@@ -1,17 +1,34 @@
 import React from 'react';
-import { UserRole, Language } from '../types';
-import { BrainCircuit, Globe, Signal, PlayCircle, Sparkles, UserCheck, ShieldCheck, GraduationCap } from 'lucide-react';
+import { UserRole, Language, ThemeMode, SUPPORTED_LANGUAGES } from '../types';
+import { t } from '../services/i18n';
+import { 
+  BrainCircuit, 
+  Globe, 
+  Signal, 
+  PlayCircle, 
+  Sparkles, 
+  UserCheck, 
+  ShieldCheck, 
+  GraduationCap, 
+  Sun, 
+  Moon, 
+  Home,
+  Server
+} from 'lucide-react';
 
 interface NavbarProps {
   currentRole: UserRole;
   onRoleChange: (role: UserRole) => void;
   language: Language;
   onLanguageChange: (lang: Language) => void;
+  theme: ThemeMode;
+  onToggleTheme: () => void;
   isLowBandwidth: boolean;
   onToggleLowBandwidth: () => void;
   onStartDemoTour: () => void;
   activeTab: string;
   onTabChange: (tab: string) => void;
+  isServerConnected?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -19,80 +36,144 @@ export const Navbar: React.FC<NavbarProps> = ({
   onRoleChange,
   language,
   onLanguageChange,
+  theme,
+  onToggleTheme,
   isLowBandwidth,
   onToggleLowBandwidth,
   onStartDemoTour,
   activeTab,
   onTabChange,
+  isServerConnected = true,
 }) => {
+  const isDark = theme === 'dark';
+
   return (
-    <header className="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3.5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <header className={`sticky top-0 z-50 transition-colors duration-200 ${
+      isDark ? 'bg-slate-950/90 border-b border-slate-800/80' : 'bg-white/90 border-b border-slate-200 shadow-sm'
+    } backdrop-blur-md px-4 lg:px-8 py-3`}>
+      
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-3">
         
         {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => onTabChange('dashboard')}>
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-            <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
-              <BrainCircuit className="w-5 h-5 text-indigo-400 animate-pulse-subtle" />
+        <div className="flex items-center justify-between w-full lg:w-auto">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => onTabChange('home')}>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <div className={`w-full h-full rounded-[10px] flex items-center justify-center ${isDark ? 'bg-slate-950' : 'bg-white'}`}>
+                <BrainCircuit className="w-5 h-5 text-indigo-500 animate-pulse-subtle" />
+              </div>
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className={`font-extrabold text-xl tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  SkillBridge
+                </span>
+                <span className="px-2 py-0.5 text-[10px] font-semibold bg-indigo-500/10 text-indigo-500 border border-indigo-500/30 rounded-full">
+                  SIH26044
+                </span>
+              </div>
+              <p className={`text-[11px] font-medium ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                {t('subtitle', language)}
+              </p>
             </div>
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-extrabold text-xl tracking-tight text-white font-outfit">SkillBridge</span>
-              <span className="px-2 py-0.5 text-[10px] font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 rounded-full">
-                SIH26044
-              </span>
-            </div>
-            <p className="text-[11px] text-slate-400 font-medium">Career Intelligence & Employability OS</p>
+
+          {/* Server Connection Badge (Mobile & Desktop) */}
+          <div className="flex items-center gap-1.5 lg:hidden px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-500 border border-emerald-500/30">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+            <span>Server :5000</span>
           </div>
         </div>
 
-        {/* Center: Main Navigation Tabs based on Role */}
-        <nav className="flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800/80 text-xs font-medium">
+        {/* Center: Navigation Tabs */}
+        <nav className={`flex flex-wrap items-center gap-1 p-1.5 rounded-xl border text-xs font-medium ${
+          isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-100 border-slate-200'
+        }`}>
+          
+          {/* Home Tab Always Available */}
+          <button
+            onClick={() => onTabChange('home')}
+            className={`flex items-center gap-1 px-3 py-1.5 rounded-lg transition-all ${
+              activeTab === 'home' 
+                ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+            }`}
+          >
+            <Home className="w-3.5 h-3.5" />
+            <span>{t('home', language)}</span>
+          </button>
+
           {currentRole === 'student' && (
             <>
               <button
                 onClick={() => onTabChange('dashboard')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'dashboard' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'dashboard' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Dashboard
+                {t('dashboard', language)}
               </button>
               <button
                 onClick={() => onTabChange('skill-gap')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'skill-gap' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'skill-gap' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Skill Gap Engine
+                {t('skill_gap', language)}
               </button>
               <button
                 onClick={() => onTabChange('career-navigator')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'career-navigator' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'career-navigator' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Career Navigator
+                {t('career_nav', language)}
               </button>
               <button
                 onClick={() => onTabChange('learning')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'learning' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'learning' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Adaptive Learning
+                {t('learning_engine', language)}
               </button>
               <button
                 onClick={() => onTabChange('vocational')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'vocational' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'vocational' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Vocational Hub
+                {t('vocational', language)}
               </button>
               <button
                 onClick={() => onTabChange('opportunities')}
-                className={`px-3 py-1.5 rounded-lg transition-all relative ${activeTab === 'opportunities' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all relative ${
+                  activeTab === 'opportunities' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Jobs & Internships
+                {t('opportunity', language)}
                 <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
               </button>
               <button
                 onClick={() => onTabChange('offline-packs')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${activeTab === 'offline-packs' ? 'bg-indigo-600 text-white font-semibold shadow-md shadow-indigo-600/30' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'offline-packs' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                Rural Packs
+                {t('offline_packs', language)}
               </button>
             </>
           )}
@@ -101,15 +182,23 @@ export const Navbar: React.FC<NavbarProps> = ({
             <>
               <button
                 onClick={() => onTabChange('teacher-copilot')}
-                className={`px-3.5 py-1.5 rounded-lg transition-all ${activeTab === 'teacher-copilot' ? 'bg-purple-600 text-white font-semibold shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3.5 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'teacher-copilot' 
+                    ? 'bg-purple-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                AI Teacher Copilot
+                {t('teacher_copilot', language)}
               </button>
               <button
                 onClick={() => onTabChange('learning-risk')}
-                className={`px-3.5 py-1.5 rounded-lg transition-all ${activeTab === 'learning-risk' ? 'bg-purple-600 text-white font-semibold shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+                className={`px-3.5 py-1.5 rounded-lg transition-all ${
+                  activeTab === 'learning-risk' 
+                    ? 'bg-purple-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
               >
-                At-Risk Student Monitor
+                {t('risk_engine', language)}
               </button>
             </>
           )}
@@ -117,79 +206,110 @@ export const Navbar: React.FC<NavbarProps> = ({
           {currentRole === 'admin' && (
             <button
               onClick={() => onTabChange('institution-analytics')}
-              className={`px-4 py-1.5 rounded-lg transition-all ${activeTab === 'institution-analytics' ? 'bg-pink-600 text-white font-semibold shadow-md' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
+              className={`px-4 py-1.5 rounded-lg transition-all ${
+                activeTab === 'institution-analytics' 
+                  ? 'bg-pink-600 text-white font-semibold shadow-md' 
+                  : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+              }`}
             >
-              Institution & Sector Analytics
+              {t('inst_analytics', language)}
             </button>
           )}
+
         </nav>
 
-        {/* Right: Controls & Demo Tour */}
-        <div className="flex items-center gap-2.5">
-          {/* Role Switcher Pill */}
-          <div className="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-1 text-xs">
+        {/* Right Controls: Role, 10 Languages, Dark/Light Mode, Server Badge */}
+        <div className="flex flex-wrap items-center gap-2">
+          
+          {/* Server Badge (Desktop) */}
+          <div className={`hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border ${
+            isServerConnected 
+              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' 
+              : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+          }`}>
+            <Server className="w-3.5 h-3.5" />
+            <span>{isServerConnected ? t('server_status_connected', language) : t('server_status_offline', language)}</span>
+          </div>
+
+          {/* Theme Toggle Button (Dark & Light Mode) */}
+          <button
+            onClick={onToggleTheme}
+            className={`p-2 rounded-xl border transition-all flex items-center justify-center ${
+              isDark 
+                ? 'bg-slate-900 border-slate-800 text-amber-300 hover:bg-slate-800' 
+                : 'bg-slate-100 border-slate-200 text-indigo-600 hover:bg-slate-200'
+            }`}
+            title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
+          {/* Multilingual Selector (10 Indian Languages) */}
+          <div className={`flex items-center gap-1.5 border rounded-xl px-2.5 py-1 text-xs ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-slate-100 border-slate-200 text-slate-800'
+          }`}>
+            <Globe className="w-3.5 h-3.5 text-indigo-500" />
+            <select
+              value={language}
+              onChange={(e) => onLanguageChange(e.target.value as Language)}
+              className="bg-transparent text-xs font-medium focus:outline-none cursor-pointer"
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.code} value={lang.code} className={isDark ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'}>
+                  {lang.flag} {lang.nativeName} ({lang.name})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Role Switcher */}
+          <div className={`flex items-center border rounded-xl p-1 text-xs ${
+            isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+          }`}>
             <button
               onClick={() => { onRoleChange('student'); onTabChange('dashboard'); }}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${currentRole === 'student' ? 'bg-indigo-500/20 text-indigo-300 font-medium border border-indigo-500/30' : 'text-slate-400 hover:text-slate-200'}`}
-              title="Switch to Student Learner Portal"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                currentRole === 'student' 
+                  ? 'bg-indigo-600 text-white font-semibold' 
+                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+              }`}
             >
               <GraduationCap className="w-3.5 h-3.5" />
               <span>Student</span>
             </button>
             <button
               onClick={() => { onRoleChange('teacher'); onTabChange('teacher-copilot'); }}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${currentRole === 'teacher' ? 'bg-purple-500/20 text-purple-300 font-medium border border-purple-500/30' : 'text-slate-400 hover:text-slate-200'}`}
-              title="Switch to Faculty Copilot Portal"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                currentRole === 'teacher' 
+                  ? 'bg-purple-600 text-white font-semibold' 
+                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+              }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
               <span>Teacher</span>
             </button>
             <button
               onClick={() => { onRoleChange('admin'); onTabChange('institution-analytics'); }}
-              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-lg transition-all ${currentRole === 'admin' ? 'bg-pink-500/20 text-pink-300 font-medium border border-pink-500/30' : 'text-slate-400 hover:text-slate-200'}`}
-              title="Switch to University / Govt Analytics Portal"
+              className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all ${
+                currentRole === 'admin' 
+                  ? 'bg-pink-600 text-white font-semibold' 
+                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+              }`}
             >
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Admin</span>
             </button>
           </div>
 
-          {/* Multilingual Selector */}
-          <div className="flex items-center gap-1 bg-slate-900 border border-slate-800 rounded-xl p-1 text-xs text-slate-300">
-            <Globe className="w-3.5 h-3.5 ml-1 text-indigo-400" />
-            <select
-              value={language}
-              onChange={(e) => onLanguageChange(e.target.value as Language)}
-              className="bg-transparent text-xs text-slate-200 focus:outline-none cursor-pointer pr-1"
-            >
-              <option value="en" className="bg-slate-900 text-white">English</option>
-              <option value="hi" className="bg-slate-900 text-white">हिंदी (Hindi)</option>
-              <option value="gu" className="bg-slate-900 text-white">ગુજરાતી (Gujarati)</option>
-            </select>
-          </div>
-
-          {/* Rural Low Bandwidth Toggle */}
-          <button
-            onClick={onToggleLowBandwidth}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-medium transition-all ${
-              isLowBandwidth
-                ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-sm shadow-amber-500/20'
-                : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
-            }`}
-            title="Toggle Rural Low-Bandwidth Mode (Optimizes payload & enables offline caching)"
-          >
-            <Signal className={`w-3.5 h-3.5 ${isLowBandwidth ? 'text-amber-400 animate-pulse' : 'text-slate-400'}`} />
-            <span className="hidden sm:inline">{isLowBandwidth ? 'Rural Mode (Active)' : 'Standard Bandwidth'}</span>
-          </button>
-
-          {/* Live Demo Tour Button */}
+          {/* SIH 2026 Interactive Demo Tour Button */}
           <button
             onClick={onStartDemoTour}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold text-xs shadow-md shadow-indigo-500/20 hover:opacity-95 transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+            className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold text-xs shadow-md hover:opacity-95 transition-all"
           >
-            <PlayCircle className="w-4 h-4 fill-white/20 text-white" />
-            <span>SIH 2026 Story</span>
+            <PlayCircle className="w-4 h-4 text-white/90" />
+            <span>SIH Tour</span>
           </button>
+
         </div>
 
       </div>

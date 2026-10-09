@@ -1,0 +1,294 @@
+{
+  "profile": {
+    "id": "learner-101",
+    "name": "Aarav Patel",
+    "role": "B.Tech Student (Computer Science & Automation)",
+    "institution": "Gujarat Technological University (GTU)",
+    "location": "Ahmedabad / Rural Anand District",
+    "preferredLanguage": "en",
+    "targetCareerId": "career-ai-eng",
+    "academicGpa": 8.4,
+    "completedModules": 14,
+    "streakDays": 12,
+    "offlineSyncStatus": "synced"
+  },
+  "skills": [
+    {
+      "id": "s1",
+      "name": "Python & Data Structures",
+      "category": "core_tech",
+      "currentProficiency": 82,
+      "requiredProficiency": 90,
+      "evidenceCount": 4,
+      "certifications": [
+        "NPTEL Data Structures"
+      ]
+    },
+    {
+      "id": "s2",
+      "name": "Machine Learning & Scikit-Learn",
+      "category": "core_tech",
+      "currentProficiency": 65,
+      "requiredProficiency": 85,
+      "evidenceCount": 2,
+      "certifications": [
+        "AICTE AI Fundamentals"
+      ]
+    },
+    {
+      "id": "s3",
+      "name": "System Architecture & REST APIs",
+      "category": "core_tech",
+      "currentProficiency": 78,
+      "requiredProficiency": 80,
+      "evidenceCount": 3
+    },
+    {
+      "id": "s4",
+      "name": "Deep Learning & Neural Networks",
+      "category": "core_tech",
+      "currentProficiency": 42,
+      "requiredProficiency": 80,
+      "evidenceCount": 1
+    },
+    {
+      "id": "s5",
+      "name": "Prompt Engineering & RAG",
+      "category": "core_tech",
+      "currentProficiency": 55,
+      "requiredProficiency": 85,
+      "evidenceCount": 2
+    },
+    {
+      "id": "s6",
+      "name": "Database & SQL / pgvector",
+      "category": "core_tech",
+      "currentProficiency": 70,
+      "requiredProficiency": 75,
+      "evidenceCount": 3
+    },
+    {
+      "id": "s7",
+      "name": "Solar PV Systems & Grid Maintenance",
+      "category": "practical_vocational",
+      "currentProficiency": 30,
+      "requiredProficiency": 85,
+      "evidenceCount": 0
+    },
+    {
+      "id": "s8",
+      "name": "EV Battery Management Systems",
+      "category": "practical_vocational",
+      "currentProficiency": 25,
+      "requiredProficiency": 80,
+      "evidenceCount": 0
+    },
+    {
+      "id": "s9",
+      "name": "Digital Agriculture IoT Sensors",
+      "category": "domain_knowledge",
+      "currentProficiency": 40,
+      "requiredProficiency": 75,
+      "evidenceCount": 1
+    },
+    {
+      "id": "s10",
+      "name": "Technical Problem Solving & Communication",
+      "category": "soft_skills",
+      "currentProficiency": 85,
+      "requiredProficiency": 85,
+      "evidenceCount": 5
+    }
+  ],
+  "careerPathways": [
+    {
+      "id": "career-ai-eng",
+      "title": "AI Systems & Full-Stack Engineer",
+      "category": "Software & AI",
+      "description": "Design end-to-end AI applications, neural search, FastAPI microservices, and modern dynamic frontends.",
+      "demandIndex": "Critical",
+      "avgSalary": "₹8.5L - ₹18L / annum",
+      "requiredSkills": [
+        {
+          "skillId": "s1",
+          "skillName": "Python & Data Structures",
+          "minScore": 85,
+          "weight": 0.25
+        },
+        {
+          "skillId": "s2",
+          "skillName": "Machine Learning & Scikit-Learn",
+          "minScore": 80,
+          "weight": 0.25
+        },
+        {
+          "skillId": "s4",
+          "skillName": "Deep Learning & Neural Networks",
+          "minScore": 75,
+          "weight": 0.2
+        },
+        {
+          "skillId": "s5",
+          "skillName": "Prompt Engineering & RAG",
+          "minScore": 80,
+          "weight": 0.15
+        },
+        {
+          "skillId": "s6",
+          "skillName": "Database & SQL / pgvector",
+          "minScore": 75,
+          "weight": 0.15
+        }
+      ]
+    },
+    {
+      "id": "career-solar-tech",
+      "title": "Solar PV & Clean Energy Systems Specialist",
+      "category": "Green Tech & Vocational",
+      "description": "Install, troubleshoot, and maintain grid-tied rooftop solar systems and smart inverter networks.",
+      "demandIndex": "High",
+      "avgSalary": "₹4.5L - ₹9L / annum",
+      "requiredSkills": [
+        {
+          "skillId": "s7",
+          "skillName": "Solar PV Systems & Grid Maintenance",
+          "minScore": 85,
+          "weight": 0.5
+        },
+        {
+          "skillId": "s3",
+          "skillName": "System Architecture & REST APIs",
+          "minScore": 60,
+          "weight": 0.2
+        },
+        {
+          "skillId": "s10",
+          "skillName": "Technical Problem Solving & Communication",
+          "minScore": 75,
+          "weight": 0.3
+        }
+      ]
+    },
+    {
+      "id": "career-ev-eng",
+      "title": "EV Mobility & Powertrain Diagnostics Engineer",
+      "category": "Automotive & Electronics",
+      "description": "Analyze electric vehicle battery health (BMS), motor controllers, and automated diagnostic systems.",
+      "demandIndex": "Very High",
+      "avgSalary": "₹6L - ₹14L / annum",
+      "requiredSkills": [
+        {
+          "skillId": "s8",
+          "skillName": "EV Battery Management Systems",
+          "minScore": 80,
+          "weight": 0.45
+        },
+        {
+          "skillId": "s1",
+          "skillName": "Python & Data Structures",
+          "minScore": 70,
+          "weight": 0.25
+        },
+        {
+          "skillId": "s6",
+          "skillName": "Database & SQL / pgvector",
+          "minScore": 65,
+          "weight": 0.3
+        }
+      ]
+    },
+    {
+      "id": "career-agri-tech",
+      "title": "Smart Agriculture & IoT Automation Lead",
+      "category": "Agritech & Rural Tech",
+      "description": "Deploy IoT moisture sensors, drone crop health analyzers, and automated irrigation telemetry.",
+      "demandIndex": "High",
+      "avgSalary": "₹5L - ₹11L / annum",
+      "requiredSkills": [
+        {
+          "skillId": "s9",
+          "skillName": "Digital Agriculture IoT Sensors",
+          "minScore": 80,
+          "weight": 0.4
+        },
+        {
+          "skillId": "s1",
+          "skillName": "Python & Data Structures",
+          "minScore": 70,
+          "weight": 0.3
+        },
+        {
+          "skillId": "s2",
+          "skillName": "Machine Learning & Scikit-Learn",
+          "minScore": 65,
+          "weight": 0.3
+        }
+      ]
+    }
+  ],
+  "quizSubmissions": [],
+  "applications": [
+    {
+      "id": "app-1791517418873",
+      "opportunityId": "opp-1",
+      "opportunityTitle": "AI & Data Engineering Intern (SIH26044 Partner)",
+      "company": "TechCorp AI Innovations (Gujarat Tech Hub)",
+      "appliedAt": "2026-10-09T03:43:38.873Z",
+      "status": "Submitted to Server",
+      "matchScore": 96,
+      "applicantName": "Aarav Patel"
+    }
+  ],
+  "interventions": [],
+  "copilotHistory": [],
+  "activityLog": [
+    {
+      "timestamp": "2026-10-09T03:58:38.657Z",
+      "action": "AI Tutor Query",
+      "details": {
+        "prompt": "",
+        "topic": "General Tech",
+        "apiUsed": "Built-in Expert Engine"
+      }
+    },
+    {
+      "timestamp": "2026-10-09T03:55:11.700Z",
+      "action": "AI Tutor Query",
+      "details": {
+        "prompt": "",
+        "topic": "General Tech",
+        "apiUsed": "Built-in Expert Engine"
+      }
+    },
+    {
+      "timestamp": "2026-10-09T03:43:38.873Z",
+      "action": "Job Application Submitted",
+      "details": "AI & Data Engineering Intern (SIH26044 Partner)"
+    },
+    {
+      "timestamp": "2026-10-09T09:00:00.000Z",
+      "action": "Server database initialized",
+      "details": "SkillBridge dynamic backend active"
+    }
+  ],
+  "aiTutorHistory": [
+    {
+      "id": "ai-tutor-1791518318657",
+      "prompt": "",
+      "topic": "General Tech",
+      "language": "en",
+      "response": "🤖 [AI TUTOR - EXPERT ANSWER (EN)]\nTopic: General Tech\n\nQuestion: \"General Inquiry\"\n\n💡 EXPLANATION & CONCEPTS:\n• For topic \"General Tech\": Key conceptual principles require breaking down complex domain workflows into 3 core stages: 1) State Initialization, 2) Transformation Logic, and 3) Verification & Validation against target benchmarks.\n\n🎯 PRACTICAL TAKEAWAY & STEP-BY-STEP ADVICE:\n1. Understand the core mathematical formulation or diagnostic schematic first.\n2. Build verified project evidence (e.g. NPTEL / AICTE certified labs).\n3. Test your understanding using SkillBridge Diagnostic Quizzes and low-bandwidth rural offline packs.",
+      "apiUsed": "Built-in Expert Engine",
+      "timestamp": "2026-10-09T03:58:38.657Z"
+    },
+    {
+      "id": "ai-tutor-1791518111700",
+      "prompt": "",
+      "topic": "General Tech",
+      "language": "en",
+      "response": "🤖 [AI TUTOR - EXPERT ANSWER (EN)]\nTopic: General Tech\n\nQuestion: \"General Inquiry\"\n\n💡 EXPLANATION & CONCEPTS:\n• For topic \"General Tech\": Key conceptual principles require breaking down complex domain workflows into 3 core stages: 1) State Initialization, 2) Transformation Logic, and 3) Verification & Validation against target benchmarks.\n\n🎯 PRACTICAL TAKEAWAY & STEP-BY-STEP ADVICE:\n1. Understand the core mathematical formulation or diagnostic schematic first.\n2. Build verified project evidence (e.g. NPTEL / AICTE certified labs).\n3. Test your understanding using SkillBridge Diagnostic Quizzes and low-bandwidth rural offline packs.",
+      "apiUsed": "Built-in Expert Engine",
+      "timestamp": "2026-10-09T03:55:11.700Z"
+    }
+  ]
+}

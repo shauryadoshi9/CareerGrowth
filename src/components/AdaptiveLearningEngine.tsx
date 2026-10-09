@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { sampleQuizQuestions } from '../data/mockData';
-import { translateText } from '../services/aiEngine';
-import { BookOpen, Code, HelpCircle, Sparkles, Volume2, CheckCircle2, XCircle, ArrowRight, MessageSquare, Play, Send } from 'lucide-react';
+import { t } from '../services/i18n';
+import { submitQuizAnswers, askAiTutor } from '../services/api';
+import { BookOpen, Code, HelpCircle, Sparkles, Volume2, CheckCircle2, XCircle, ArrowRight, Send, Key, Settings } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Language } from '../types';
 
@@ -16,8 +17,13 @@ export const AdaptiveLearningEngine: React.FC<AdaptiveLearningEngineProps> = ({ 
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isAnswerSubmitted, setIsAnswerSubmitted] = useState<boolean>(false);
   const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+  
+  // AI Tutor State & Key Configuration
   const [aiTutorPrompt, setAiTutorPrompt] = useState<string>('');
   const [aiTutorResponse, setAiTutorResponse] = useState<string>('');
+  const [aiEngineUsed, setAiEngineUsed] = useState<string>('');
+  const [customApiKey, setCustomApiKey] = useState<string>('');
+  const [showKeyConfig, setShowKeyConfig] = useState<boolean>(false);
   const [isAiGenerating, setIsAiGenerating] = useState<boolean>(false);
 
   const question = sampleQuizQuestions[currentQuestionIdx];
@@ -40,16 +46,25 @@ export const AdaptiveLearningEngine: React.FC<AdaptiveLearningEngineProps> = ({ 
     return question.explanation;
   };
 
-  const handleSubmitQuiz = () => {
+  const handleSubmitQuiz = async () => {
     if (selectedOption === null) return;
     setIsAnswerSubmitted(true);
-    if (selectedOption === question.correctAnswer) {
+    const isCorrect = selectedOption === question.correctAnswer;
+
+    if (isCorrect) {
       confetti({
         particleCount: 80,
         spread: 60,
         origin: { y: 0.6 }
       });
     }
+
+    await submitQuizAnswers(
+      question.topic,
+      isCorrect ? 100 : 0,
+      1,
+      [{ questionId: question.id, selectedOption, isCorrect }]
+    );
   };
 
   const handleNextQuestion = () => {
@@ -58,18 +73,31 @@ export const AdaptiveLearningEngine: React.FC<AdaptiveLearningEngineProps> = ({ 
     setCurrentQuestionIdx((prev) => (prev + 1) % sampleQuizQuestions.length);
   };
 
-  const handleAskAiTutor = (e: React.FormEvent) => {
+  const handleAskAiTutor = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!aiTutorPrompt.trim()) return;
     setIsAiGenerating(true);
+    setAiTutorResponse('');
+    setAiEngineUsed('');
 
-    setTimeout(() => {
-      const resp = `[AI TUTOR - ${language.toUpperCase()} RESPONSE]
-Regarding "${aiTutorPrompt}":
-In ${question.topic}, the key rule is to ground neural activation or vector queries using structured embeddings. For low-bandwidth or regional settings, we simplify the mathematical tensor operations into 3 visual layers.`;
-      setAiTutorResponse(resp);
-      setIsAiGenerating(false);
-    }, 1000);
+    const res = await askAiTutor(
+      aiTutorPrompt,
+      question.topic,
+      language,
+      customApiKey
+    );
+
+    setIsAiGenerating(false);
+
+    if (res.success && res.answer) {
+      setAiTutorResponse(res.answer);
+      setAiEngineUsed(res.apiUsed || 'Smart AI Engine');
+    } else {
+      setAiTutorResponse(`⚠️ ${res.error || 'Could not connect to AI Tutor'}. Showing local response:
+Topic: ${question.topic}
+Answer: In ${question.topic}, neural representations rely on non-linear activations or high-dimensional embeddings to preserve semantic gradients.`);
+      setAiEngineUsed('Local Fallback');
+    }
   };
 
   const toggleAudioTTS = () => {
@@ -83,9 +111,9 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
       <div className="glass-panel p-6 rounded-2xl border border-indigo-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
-            Adaptive Difficulty: Intermediate → Advanced
+            ● Adaptive Learning Engine ({language.toUpperCase()})
           </span>
-          <h2 className="text-2xl font-bold text-white font-outfit mt-1">Adaptive Learning Engine</h2>
+          <h2 className="text-2xl font-bold text-white font-outfit mt-1">{t('learning_engine', language)}</h2>
           <p className="text-sm text-slate-300">
             Topic: <span className="text-indigo-400 font-semibold">{question.topic}</span>
           </p>
@@ -131,7 +159,7 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left Column: Topic Viewer */}
-        <div className="lg:col-span-8 glass-card p-6 rounded-2xl border border-slate-800 space-y-6">
+        <div className="lg:col-span-7 glass-card p-6 rounded-2xl border border-slate-800 space-y-6">
           
           {activeSubTab === 'concept' && (
             <div className="space-y-4">
@@ -186,7 +214,7 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
                 <p><span className="text-purple-400">from</span> sentence_transformers <span className="text-purple-400">import</span> SentenceTransformer</p>
                 <br />
                 <p><span className="text-indigo-400">model</span> = SentenceTransformer(<span className="text-emerald-300">'all-MiniLM-L6-v2'</span>)</p>
-                <p><span className="text-indigo-400">query_vector</span> = model.encode(<span className="text-emerald-300">"Explain activation functions in Gujarati"</span>)</p>
+                <p><span className="text-indigo-400">query_vector</span> = model.encode(<span className="text-emerald-300">"Explain activation functions in {language.toUpperCase()}"</span>)</p>
                 <br />
                 <p><span className="text-slate-500"># Execute vector similarity lookup</span></p>
                 <p>cursor.execute(<span className="text-emerald-300">"SELECT content, 1 - (embedding &lt;=&gt; %s) AS similarity FROM learning_resources ORDER BY embedding &lt;=&gt; %s LIMIT 3"</span>, (query_vector, query_vector))</p>
@@ -249,7 +277,7 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
               {/* Explanation card after submit */}
               {isAnswerSubmitted && (
                 <div className="bg-slate-900/90 p-4 rounded-xl border border-indigo-500/30 space-y-2 text-xs">
-                  <p className="font-bold text-indigo-400">Explainable Answer Reason:</p>
+                  <p className="font-bold text-indigo-400">Explainable Answer Reason & Server Logged:</p>
                   <p className="text-slate-300">{getExplanation()}</p>
                 </div>
               )}
@@ -264,7 +292,7 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
                       selectedOption === null ? 'opacity-40 cursor-not-allowed bg-slate-800' : 'bg-indigo-600 hover:bg-indigo-500 shadow-md'
                     }`}
                   >
-                    Submit Answer
+                    Submit Answer & Save to Server
                   </button>
                 ) : (
                   <button
@@ -281,27 +309,58 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
 
         </div>
 
-        {/* Right Column: Multilingual AI Tutor Drawer */}
-        <div className="lg:col-span-4 glass-card p-5 rounded-2xl border border-slate-800 space-y-4 flex flex-col justify-between">
+        {/* Right Column: Multilingual AI Tutor Drawer with Custom API Key Option */}
+        <div className="lg:col-span-5 glass-card p-5 rounded-2xl border border-slate-800 space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-sm font-bold text-white font-outfit flex items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-indigo-400" />
-                <span>AI Multilingual Tutor</span>
-              </h3>
-              <span className="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded font-mono">
-                {language.toUpperCase()} Engine
-              </span>
+                <h3 className="text-sm font-bold text-white font-outfit">AI Multilingual Tutor</h3>
+              </div>
+              <button
+                onClick={() => setShowKeyConfig(!showKeyConfig)}
+                className="flex items-center gap-1 px-2 py-1 rounded bg-slate-800 text-[10px] text-indigo-300 hover:bg-slate-700"
+                title="Configure Gemini API Key"
+              >
+                <Settings className="w-3 h-3" />
+                <span>{customApiKey ? 'Key Set' : 'Configure Key'}</span>
+              </button>
             </div>
 
-            <p className="text-xs text-slate-300">
-              Ask AI for simplified explanations in English, Hindi, or Gujarati.
+            {/* Config drawer for custom API key */}
+            {showKeyConfig && (
+              <div className="bg-slate-900/90 p-3 rounded-xl border border-indigo-500/30 space-y-2 text-xs">
+                <div className="flex items-center gap-1.5 font-bold text-indigo-300">
+                  <Key className="w-3.5 h-3.5" />
+                  <span>Google Gemini API Key (Optional)</span>
+                </div>
+                <input
+                  type="password"
+                  value={customApiKey}
+                  onChange={(e) => setCustomApiKey(e.target.value)}
+                  placeholder="Paste your Gemini API key here..."
+                  className="w-full bg-slate-950 px-3 py-1.5 text-xs text-white rounded-lg border border-slate-700 focus:outline-none focus:border-indigo-500 font-mono"
+                />
+                <p className="text-[10px] text-slate-400">
+                  If left empty, the server automatically uses its built-in AI expert engine.
+                </p>
+              </div>
+            )}
+
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Ask any question about <span className="text-indigo-400 font-semibold">{question.topic}</span> in {language.toUpperCase()}!
             </p>
 
+            {/* Tutor Response Box */}
             {aiTutorResponse && (
-              <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-800 text-xs text-slate-200 space-y-1">
-                <p className="text-[10px] text-indigo-400 font-semibold">Tutor Output:</p>
-                <p className="leading-relaxed">{aiTutorResponse}</p>
+              <div className="bg-slate-900/95 p-4 rounded-xl border border-indigo-500/30 text-xs text-slate-100 space-y-2 shadow-inner">
+                <div className="flex items-center justify-between text-[10px] text-indigo-400 font-bold border-b border-slate-800 pb-1.5">
+                  <span>AI TUTOR ANSWER</span>
+                  <span className="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300">{aiEngineUsed}</span>
+                </div>
+                <div className="whitespace-pre-wrap font-sans text-xs text-slate-200 leading-relaxed">
+                  {aiTutorResponse}
+                </div>
               </div>
             )}
           </div>
@@ -309,18 +368,19 @@ In ${question.topic}, the key rule is to ground neural activation or vector quer
           <form onSubmit={handleAskAiTutor} className="space-y-2 pt-3 border-t border-slate-800">
             <input
               type="text"
-              placeholder={`Ask AI tutor in ${language.toUpperCase()}...`}
+              required
+              placeholder={`Ask AI tutor about ${question.topic} in ${language.toUpperCase()}...`}
               value={aiTutorPrompt}
               onChange={(e) => setAiTutorPrompt(e.target.value)}
-              className="w-full bg-slate-900 text-xs text-slate-100 px-3 py-2 rounded-xl border border-slate-800 focus:outline-none focus:border-indigo-500"
+              className="w-full bg-slate-900 text-xs text-slate-100 px-3.5 py-2.5 rounded-xl border border-slate-800 focus:outline-none focus:border-indigo-500"
             />
             <button
               type="submit"
               disabled={isAiGenerating}
-              className="w-full flex items-center justify-center gap-1.5 px-3 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md"
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95 text-white text-xs font-bold rounded-xl transition-all shadow-md disabled:opacity-50"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>{isAiGenerating ? 'AI Responding...' : 'Ask AI Tutor'}</span>
+              <Send className="w-4 h-4" />
+              <span>{isAiGenerating ? 'AI Tutor Processing...' : 'Ask AI Tutor'}</span>
             </button>
           </form>
         </div>

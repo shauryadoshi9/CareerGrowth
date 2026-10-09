@@ -187,17 +187,20 @@ Target: At-Risk Students Struggling with ${topic}
 export function translateText(text: string, targetLang: Language): string {
   if (targetLang === 'en') return text;
   
-  // High-quality deterministic translation dictionary for core app terms
-  const dict: Record<string, { hi: string; gu: string }> = {
-    'Skill Gap Analyzer': { hi: 'कौशल अंतर विश्लेषक', gu: 'કૌશલ્ય તફાવત વિશ્લેષક' },
-    'Adaptive Learning Engine': { hi: 'अनुकूली शिक्षण इंजन', gu: 'એડેપ્ટિવ લર્નિંગ એન્જિન' },
-    'AI Career Navigator': { hi: 'एआई करियर नेविगेटर', gu: 'AI કારકિર્દી નેવિગેટર' },
-    'Rural Low-Bandwidth Mode': { hi: 'ग्रामीण कम-बैंडविड्थ मोड', gu: 'ગ્રામીણ ઓછું-બેન્ડવિડ્થ મોડ' },
-    'Teacher Copilot': { hi: 'शिक्षक कोपायलट', gu: 'શિક્ષક કો-પાયલોટ' },
-    'Learning Risk Engine': { hi: 'शिक्षण जोखिम और हस्तक्षेप इंजन', gu: 'લર્નિંગ રિસ્ક અને ઈન્ટરવેન્શન એન્જિન' },
-    'Opportunity Placement Matching': { hi: 'इंटरनशिप और जॉब मैचिंग', gu: 'ઈન્ટર્નશીપ અને જોબ મેચિંગ' },
-    'From Learning to Livelihood': { hi: 'शिक्षा से आजीविका तक', gu: 'શિક્ષણથી આજીવિકા સુધી' }
+  const dict: Record<string, Partial<Record<Language, string>>> = {
+    'Skill Gap Analyzer': { hi: 'कौशल अंतर विश्लेषक', gu: 'કૌશલ્ય તફાવત વિશ્લેષક', mr: 'कौशल्य फरक विश्लेषक' },
+    'Adaptive Learning Engine': { hi: 'अनुकूली शिक्षण इंजन', gu: 'એડેપ્ટિવ લર્નિંગ એન્જિન', mr: 'अनुकूलनीय शिक्षण' },
+    'AI Career Navigator': { hi: 'एआई करियर नेविगेटर', gu: 'AI કારકિર્દી નેવિગેટર', mr: 'एआय करिअर नेव्हिगेटर' },
+    'Rural Low-Bandwidth Mode': { hi: 'ग्रामीण कम-बैंडविड्थ मोड', gu: 'ગ્રામીણ ઓછું-બેન્ડવિડ્થ મોડ', mr: 'ग्रामीण कमी-बैंडविड्थ मोड' },
+    'Teacher Copilot': { hi: 'शिक्षक कोपायलट', gu: 'શિક્ષક કો-પાયલોટ', mr: 'शिक्षक कोपायलट' },
+    'Learning Risk Engine': { hi: 'शिक्षण जोखिम और हस्तक्षेप इंजन', gu: 'લર્નિંગ રિસ્ક અને ઈન્ટરવેન્શન એન્જિન', mr: 'शिक्षण जोखीम आणि हस्तक्षेप' },
+    'Opportunity Placement Matching': { hi: 'इंटरनशिप और जॉब मैचिंग', gu: 'ઈન્ટર્નશીપ અને જોબ મેચિંગ', mr: 'नोकरी आणि इंटर्नशिप मॅच' },
+    'From Learning to Livelihood': { hi: 'शिक्षा से आजीविका तक', gu: 'શિક્ષણથી આજીવિકા સુધી', mr: 'शिक्षणापासून उपजीविकेपर्यन्त' }
   };
 
-  return dict[text] ? dict[text][targetLang] : `${text} (${targetLang.toUpperCase()})`;
+  const match = dict[text];
+  if (match && match[targetLang]) {
+    return match[targetLang]!;
+  }
+  return text;
 }

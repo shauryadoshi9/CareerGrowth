@@ -1,0 +1,136 @@
+import { Skill, JobApplication, ServerHealth } from '../types';
+
+const API_BASE = 'http://localhost:5000/api';
+
+export async function checkServerHealth(): Promise<ServerHealth | null> {
+  try {
+    const res = await fetch(`${API_BASE}/health`, { method: 'GET' });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function fetchSkillsFromServer(): Promise<Skill[] | null> {
+  try {
+    const res = await fetch(`${API_BASE}/skills`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function addSkillToServer(skill: Partial<Skill>): Promise<{ success: boolean; skill?: Skill; skills?: Skill[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/skills`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(skill)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function updateSkillOnServer(skillId: string, updates: Partial<Skill>): Promise<{ success: boolean; skills?: Skill[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/skills/${skillId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function deleteSkillFromServer(skillId: string): Promise<{ success: boolean; skills?: Skill[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/skills/${skillId}`, {
+      method: 'DELETE'
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function submitQuizAnswers(topic: string, score: number, totalQuestions: number, answers: any[]): Promise<any> {
+  try {
+    const res = await fetch(`${API_BASE}/quiz-submissions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ topic, score, totalQuestions, answers })
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function submitJobApplication(opportunityId: string, opportunityTitle: string, company: string, matchScore: number): Promise<{ success: boolean; application?: JobApplication; applications?: JobApplication[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/applications`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ opportunityId, opportunityTitle, company, matchScore })
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function fetchApplications(): Promise<JobApplication[]> {
+  try {
+    const res = await fetch(`${API_BASE}/applications`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
+export async function postTeacherIntervention(studentId: string, studentName: string, note: string, actionType: string): Promise<any> {
+  try {
+    const res = await fetch(`${API_BASE}/interventions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ studentId, studentName, note, actionType })
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function postCustomData(title: string, category: string, payload: any): Promise<any> {
+  try {
+    const res = await fetch(`${API_BASE}/custom-input`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title, category, payload })
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function askAiTutor(prompt: string, topic: string, language: string, apiKey?: string): Promise<{ success: boolean; answer?: string; apiUsed?: string; error?: string }> {
+  try {
+    const res = await fetch(`${API_BASE}/ai-tutor`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt, topic, language, apiKey })
+    });
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    return await res.json();
+  } catch (err: any) {
+    return { success: false, error: err.message || 'Failed to connect to AI server' };
+  }
+}

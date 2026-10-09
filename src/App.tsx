@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { UserRole, Language } from './types';
+import React, { useState, useEffect } from 'react';
+import { UserRole, Language, ThemeMode } from './types';
 import { Navbar } from './components/Navbar';
+import { HomePage } from './components/HomePage';
 import { DemoTourModal } from './components/DemoTourModal';
 import { StudentDashboard } from './components/StudentDashboard';
 import { SkillGapAnalyzer } from './components/SkillGapAnalyzer';
@@ -12,19 +13,36 @@ import { TeacherCopilot } from './components/TeacherCopilot';
 import { RiskInterventionEngine } from './components/RiskInterventionEngine';
 import { OpportunityMatcher } from './components/OpportunityMatcher';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
+import { checkServerHealth } from './services/api';
 
 export function App() {
   const [currentRole, setCurrentRole] = useState<UserRole>('student');
-  const [activeTab, setActiveTab] = useState<string>('dashboard');
+  const [activeTab, setActiveTab] = useState<string>('home');
   const [language, setLanguage] = useState<Language>('en');
+  const [theme, setTheme] = useState<ThemeMode>('dark');
   const [isLowBandwidth, setIsLowBandwidth] = useState<boolean>(false);
   const [isDemoTourOpen, setIsDemoTourOpen] = useState<boolean>(false);
+  const [isServerConnected, setIsServerConnected] = useState<boolean>(true);
+
+  useEffect(() => {
+    let mounted = true;
+    const pollHealth = async () => {
+      const health = await checkServerHealth();
+      if (mounted) setIsServerConnected(!!health);
+    };
+    pollHealth();
+    const interval = setInterval(pollHealth, 6000);
+    return () => {
+      mounted = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   const handleRoleChange = (newRole: UserRole) => {
     setCurrentRole(newRole);
-    if (newRole === 'student') setActiveTab('dashboard');
-    else if (newRole === 'teacher') setActiveTab('teacher-copilot');
-    else if (newRole === 'admin') setActiveTab('institution-analytics');
+    if (newRole === 'student' && activeTab !== 'home') setActiveTab('dashboard');
+    else if (newRole === 'teacher' && activeTab !== 'home') setActiveTab('teacher-copilot');
+    else if (newRole === 'admin' && activeTab !== 'home') setActiveTab('institution-analytics');
   };
 
   const handleNavigateTab = (tab: string, role?: UserRole) => {
@@ -34,8 +52,14 @@ export function App() {
     setActiveTab(tab);
   };
 
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+  };
+
+  const isDark = theme === 'dark';
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300`}>
       
       {/* Top Header Navbar */}
       <Navbar
@@ -43,23 +67,40 @@ export function App() {
         onRoleChange={handleRoleChange}
         language={language}
         onLanguageChange={setLanguage}
+        theme={theme}
+        onToggleTheme={toggleTheme}
         isLowBandwidth={isLowBandwidth}
         onToggleLowBandwidth={() => setIsLowBandwidth(!isLowBandwidth)}
         onStartDemoTour={() => setIsDemoTourOpen(true)}
         activeTab={activeTab}
         onTabChange={setActiveTab}
+        isServerConnected={isServerConnected}
       />
 
       {/* Main Body View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
-        {currentRole === 'student' && (
+        
+        {/* Home Landing View */}
+        {activeTab === 'home' && (
+          <HomePage
+            currentRole={currentRole}
+            onRoleChange={handleRoleChange}
+            language={language}
+            theme={theme}
+            onNavigateTab={handleNavigateTab}
+            onStartDemoTour={() => setIsDemoTourOpen(true)}
+          />
+        )}
+
+        {/* Student Views */}
+        {currentRole === 'student' && activeTab !== 'home' && (
           <>
-            {activeTab === 'dashboard' && <StudentDashboard onNavigateTab={handleNavigateTab} language={language} />}
+            {activeTab === 'dashboard' && <StudentDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'skill-gap' && <SkillGapAnalyzer onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'career-navigator' && <CareerNavigator onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'learning' && <AdaptiveLearningEngine onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} />}
-            {activeTab === 'opportunities' && <OpportunityMatcher onNavigateTab={handleNavigateTab} language={language} />}
+            {activeTab === 'opportunities' && <OpportunityMatcher onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'offline-packs' && (
               <OfflinePackManager
                 isLowBandwidth={isLowBandwidth}
@@ -70,14 +111,16 @@ export function App() {
           </>
         )}
 
-        {currentRole === 'teacher' && (
+        {/* Educator / Teacher Views */}
+        {currentRole === 'teacher' && activeTab !== 'home' && (
           <>
             {activeTab === 'teacher-copilot' && <TeacherCopilot language={language} />}
             {activeTab === 'learning-risk' && <RiskInterventionEngine language={language} />}
           </>
         )}
 
-        {currentRole === 'admin' && (
+        {/* Institution Admin Views */}
+        {currentRole === 'admin' && activeTab !== 'home' && (
           <>
             {activeTab === 'institution-analytics' && <InstitutionAnalytics language={language} />}
           </>
@@ -92,14 +135,18 @@ export function App() {
       />
 
       {/* Footer Bar */}
-      <footer className="glass-panel border-t border-slate-900 px-4 py-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-2">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-slate-300">SkillBridge OS</span>
+      <footer className={`border-t px-4 py-5 mt-auto transition-colors ${
+        isDark ? 'bg-slate-950/80 border-slate-900 text-slate-400' : 'bg-white border-slate-200 text-slate-600 shadow-sm'
+      }`}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs gap-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>SkillBridge OS</span>
             <span>•</span>
             <span>SIH26044 Problem Statement</span>
             <span>•</span>
-            <span className="text-indigo-400">Team Disruptors VI</span>
+            <span className="text-indigo-500 font-semibold">Team Disruptors VI</span>
+            <span>•</span>
+            <span className="text-emerald-500 font-semibold">Node.js Server Port 5000 Active</span>
           </div>
           <p>© 2026 SkillBridge Platform. From Learning to Livelihood.</p>
         </div>

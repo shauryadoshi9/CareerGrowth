@@ -116,6 +116,10 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         return 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30';
       case 'Hack2Skill':
         return 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30';
+      case 'AICTE Portal':
+        return 'bg-teal-500/15 text-teal-400 border-teal-500/30';
+      case 'Google Open Source':
+        return 'bg-amber-500/15 text-amber-400 border-amber-500/30';
       default:
         return 'bg-purple-500/15 text-purple-400 border-purple-500/30';
     }
@@ -222,13 +226,13 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
             <span className="text-xs font-medium text-slate-500 mr-1 flex items-center gap-1">
               <Filter className="w-3.5 h-3.5" /> Source:
             </span>
-            {['all', 'PM Internship Scheme', 'Devfolio', 'Unstop', 'Hack2Skill'].map(p => (
+            {['all', 'PM Internship Scheme', 'Devfolio', 'Unstop', 'Hack2Skill', 'AICTE Portal', 'Google Open Source'].map(p => (
               <button
                 key={p}
                 onClick={() => setSelectedPlatform(p)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
                   selectedPlatform === p
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-indigo-600 text-white shadow-md'
                     : isDark
                       ? 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -260,11 +264,18 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
               <div className={`h-2.5 w-full bg-gradient-to-r ${opp.bannerGradient || 'from-indigo-500 to-purple-600'}`} />
 
               <div className="p-6 space-y-4 flex-1">
-                {/* Platform Tag & Deadline */}
+                {/* Platform Tag & Urgency / Deadline */}
                 <div className="flex items-center justify-between gap-2">
-                  <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${getPlatformBadge(opp.sourcePlatform)}`}>
-                    {opp.sourcePlatform}
-                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${getPlatformBadge(opp.sourcePlatform)}`}>
+                      {opp.sourcePlatform}
+                    </span>
+                    {opp.urgencyBadge && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                        {opp.urgencyBadge}
+                      </span>
+                    )}
+                  </div>
                   {opp.deadline && (
                     <div className="flex items-center gap-1 text-[11px] text-slate-400">
                       <Clock className="w-3 h-3 text-amber-400" />
@@ -278,9 +289,16 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                   <h3 className={`text-base font-bold line-clamp-2 group-hover:text-indigo-400 transition ${isDark ? 'text-white' : 'text-slate-900'}`}>
                     {opp.title}
                   </h3>
-                  <div className="flex items-center gap-1.5 mt-1.5 text-xs font-medium text-slate-400">
-                    <Building className="w-3.5 h-3.5 shrink-0" />
-                    <span className="truncate">{opp.company}</span>
+                  <div className="flex items-center justify-between mt-1.5 text-xs font-medium text-slate-400">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <Building className="w-3.5 h-3.5 shrink-0" />
+                      <span className="truncate">{opp.company}</span>
+                    </div>
+                    {opp.registeredCount && (
+                      <span className="text-[11px] text-indigo-400 font-semibold shrink-0">
+                        {opp.registeredCount}
+                      </span>
+                    )}
                   </div>
                 </div>
 

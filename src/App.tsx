@@ -17,6 +17,7 @@ import { OpportunityMatcher } from './components/OpportunityMatcher';
 import { AIStudyBuddy } from './components/AIStudyBuddy';
 import { DailyRevisionPlanner } from './components/DailyRevisionPlanner';
 import { MockInterviewEngine } from './components/MockInterviewEngine';
+import { MentorHub } from './components/MentorHub';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
 import { checkServerHealth } from './services/api';
 
@@ -121,6 +122,7 @@ export function App() {
             {activeTab === 'revision-planner' && <DailyRevisionPlanner onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'mock-interview' && <MockInterviewEngine onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'opportunities' && <OpportunityMatcher onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'mentors' && <MentorHub language={language} theme={theme} onNavigateTab={handleNavigateTab} />}
             {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'offline-packs' && (
               <OfflinePackManager

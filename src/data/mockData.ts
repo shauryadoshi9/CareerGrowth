@@ -1,4 +1,4 @@
-import { Skill, CareerPath, OfflinePack, AtRiskStudent, Opportunity, QuizQuestion } from '../types';
+import { Skill, CareerPath, OfflinePack, AtRiskStudent, Opportunity, QuizQuestion, Mentor } from '../types';
 
 export const initialLearnerProfile = {
   id: 'learner-101',
@@ -214,19 +214,23 @@ export const mockAtRiskStudents: AtRiskStudent[] = [
 ];
 
 export const mockOpportunities: Opportunity[] = [
+  // 1. PM Internship Scheme (Govt. of India - MCA)
   {
     id: 'opp-pm-1',
-    title: 'Prime Minister Internship Scheme (Top 500 Industry Partners)',
+    title: 'Prime Minister Internship Scheme in Top 500 Companies (MCA)',
     company: 'Ministry of Corporate Affairs (Govt. of India)',
-    location: 'Pan-India (Major Districts & Industrial Hubs)',
-    stipendOrSalary: '₹5,000 / month + ₹6,000 Grant',
-    prizeOrStipend: '₹5,000 / mo + ₹6,000 Grant',
+    location: 'Pan-India (Top 500 Corporates - Tata, Reliance, L&T, HDFC)',
+    stipendOrSalary: '₹5,000 / month + ₹6,000 One-time Grant',
+    prizeOrStipend: '₹5,000 / mo + ₹6,000 Allowance',
     type: 'internship',
     category: 'internship',
     sourcePlatform: 'PM Internship Scheme',
     sourceUrl: 'https://pminternship.mca.gov.in/',
-    deadline: 'Rolling Admissions 2026',
-    tags: ['Govt of India', 'Top 500 Corporates', 'Direct Benefit Transfer', 'Verified Certification'],
+    deadline: 'Phase 2 Live - 1.25 Lakh Slots',
+    registeredCount: '1,20,000+ Enrolled',
+    urgencyBadge: '⚡ Govt Flagship',
+    verifiedHost: true,
+    tags: ['Govt of India Verified', '12-Month Internship', 'Direct Benefit Transfer', 'Top 500 Companies', 'No Application Fee'],
     bannerGradient: 'from-amber-500 via-orange-600 to-red-600',
     minGpa: 6.0,
     requiredSkills: [
@@ -234,20 +238,50 @@ export const mockOpportunities: Opportunity[] = [
       { skillName: 'Technical Problem Solving & Communication', level: 70 }
     ]
   },
+
+  // 2. Unstop - Flipkart GRiD 6.0
   {
-    id: 'opp-devfolio-1',
-    title: 'ETHIndia & Web3/AI Developer Hackathon',
-    company: 'Devfolio Ecosystem & Global Protocol Partners',
-    location: 'Bengaluru & Virtual Hybrid',
-    stipendOrSalary: '₹25,00,000+ Prize Pool',
-    prizeOrStipend: '₹25,00,000+ Pool',
+    id: 'opp-unstop-grid',
+    title: 'Flipkart GRiD 6.0 - Software Development & AI Track',
+    company: 'Flipkart Careers (Unstop Exclusive)',
+    location: 'Bengaluru (National Virtual Prelims)',
+    stipendOrSalary: '₹5,25,000 Cash Pool + SDE Internship PPIs (₹1.5L/mo)',
+    prizeOrStipend: '₹5,25,000 + SDE PPIs',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/hackathons/flipkart-grid-60-flipkart-1000000',
+    deadline: 'Live on Unstop Portal',
+    registeredCount: '48,500+ Engineers',
+    urgencyBadge: '🔥 High PPI Conversion',
+    verifiedHost: true,
+    tags: ['Unstop Verified', 'Hiring Challenge', 'SDE Pre-Placement Interviews', 'Engineering & MCA'],
+    bannerGradient: 'from-indigo-600 via-blue-600 to-cyan-600',
+    minGpa: 7.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 80 },
+      { skillName: 'Prompt Engineering & RAG', level: 75 }
+    ]
+  },
+
+  // 3. Devfolio - ETHIndia 2026
+  {
+    id: 'opp-devfolio-ethindia',
+    title: 'ETHIndia 2026 - Global Web3 & Decentralized AI Hackathon',
+    company: 'Devfolio Ecosystem & Global Protocol Foundations',
+    location: 'Bengaluru (In-person) & Virtual Track',
+    stipendOrSalary: '$100,000+ (₹83,00,000+) Global Prize Pool',
+    prizeOrStipend: '₹83,00,000+ ($100k) Pool',
     type: 'hackathon',
     category: 'hackathon',
     sourcePlatform: 'Devfolio',
-    sourceUrl: 'https://devfolio.co/hackathons',
-    deadline: 'Applications Closing in 6 Days',
-    tags: ['Devfolio Verified', 'AI Track', 'Global Mentors', 'Fast-track Interviews'],
-    bannerGradient: 'from-blue-600 via-indigo-600 to-purple-700',
+    sourceUrl: 'https://ethindia.devfolio.co/',
+    deadline: 'Applications Closing in 5 Days',
+    registeredCount: '15,400+ Hackers',
+    urgencyBadge: '⚡ Closing Soon',
+    verifiedHost: true,
+    tags: ['Devfolio Flagship', 'Web3 & AI', 'Global VCs & Grants', 'Travel Grants Available'],
+    bannerGradient: 'from-blue-600 via-indigo-700 to-purple-800',
     minGpa: 6.5,
     requiredSkills: [
       { skillName: 'Python & Data Structures', level: 75 },
@@ -255,39 +289,48 @@ export const mockOpportunities: Opportunity[] = [
       { skillName: 'Database & SQL / pgvector', level: 65 }
     ]
   },
+
+  // 4. Unstop - Tata Crucible Campus Quiz 2026
   {
-    id: 'opp-unstop-1',
-    title: 'Flipkart GRiD 6.0 National Tech & E-Commerce Challenge',
-    company: 'Flipkart Careers (Unstop Exclusive)',
-    location: 'Bengaluru (Remote Finalists)',
-    stipendOrSalary: '₹5,25,000 + SDE Pre-Placement Interviews',
-    prizeOrStipend: '₹5,25,000 + PPIs',
-    type: 'hackathon',
-    category: 'hackathon',
+    id: 'opp-unstop-tata-quiz',
+    title: 'Tata Crucible Campus Business & Technology Quiz 2026',
+    company: 'Tata Sons & Tata Group (Unstop Partnered)',
+    location: 'Online Zonal Prelims & National Finals',
+    stipendOrSalary: '₹2,50,000 Grand Cash Prize + National Trophy',
+    prizeOrStipend: '₹2,50,000 Cash Prize',
+    type: 'quiz',
+    category: 'quiz',
     sourcePlatform: 'Unstop',
-    sourceUrl: 'https://unstop.com/hackathons',
-    deadline: 'Live on Unstop Portal',
-    tags: ['Unstop Verified', 'Hiring Challenge', 'High PPI Conversion', 'Engineering Students'],
-    bannerGradient: 'from-indigo-600 via-cyan-600 to-blue-700',
-    minGpa: 7.0,
+    sourceUrl: 'https://unstop.com/competitions/tata-crucible-campus-quiz-2026',
+    deadline: 'Registrations Open',
+    registeredCount: '22,000+ Students',
+    urgencyBadge: '💡 National Prestige',
+    verifiedHost: true,
+    tags: ['Unstop Quiz', 'Tata Sons', 'General Tech & Business', 'No Eligibility Barriers'],
+    bannerGradient: 'from-purple-600 via-pink-600 to-rose-600',
+    minGpa: 6.0,
     requiredSkills: [
-      { skillName: 'Python & Data Structures', level: 80 },
-      { skillName: 'Prompt Engineering & RAG', level: 75 }
+      { skillName: 'Technical Problem Solving & Communication', level: 80 }
     ]
   },
+
+  // 5. Hack2Skill - India AI Innovation Hackathon
   {
-    id: 'opp-h2s-1',
-    title: 'Hack2Skill Generative AI & Automation Sprint',
-    company: 'Hack2Skill & Tech Industry Alliance',
-    location: 'Virtual / Online India',
-    stipendOrSalary: '₹3,00,000 Cash Prizes + Cloud Credits',
-    prizeOrStipend: '₹3,00,000 + Credits',
+    id: 'opp-h2s-india-ai',
+    title: 'India AI & Generative Intelligence Innovation Sprint',
+    company: 'Hack2Skill & MeitY Partner Ecosystem',
+    location: 'Virtual / Online Pan-India',
+    stipendOrSalary: '₹8,00,000 Cash Prizes + NVIDIA Cloud GPU Credits',
+    prizeOrStipend: '₹8,00,000 + GPU Vouchers',
     type: 'hackathon',
     category: 'hackathon',
     sourcePlatform: 'Hack2Skill',
     sourceUrl: 'https://hack2skill.com/',
-    deadline: 'Submissions Open',
-    tags: ['Hack2Skill', 'Hands-on Labs', 'Cloud Vouchers', 'Open to All Branches'],
+    deadline: 'Submissions Open Now',
+    registeredCount: '8,200+ Developers',
+    urgencyBadge: '🟢 Submissions Live',
+    verifiedHost: true,
+    tags: ['Hack2Skill Verified', 'Generative AI', 'Cloud Credits', 'Open to All Indian Colleges'],
     bannerGradient: 'from-emerald-600 via-teal-600 to-cyan-600',
     minGpa: 6.0,
     requiredSkills: [
@@ -295,64 +338,372 @@ export const mockOpportunities: Opportunity[] = [
       { skillName: 'Deep Learning & Neural Networks', level: 65 }
     ]
   },
+
+  // 6. Devfolio - HackNITR 6.0
   {
-    id: 'opp-unstop-quiz',
-    title: 'Tata Crucible Campus Business & Technology Quiz',
-    company: 'Tata Sons (Unstop Partnered)',
-    location: 'National Multi-City & Online',
-    stipendOrSalary: '₹2,50,000 Prize Money + Leadership Recognition',
-    prizeOrStipend: '₹2,50,000 Cash',
+    id: 'opp-devfolio-hacknitr',
+    title: 'HackNITR 6.0 - Flagship National Student Hackathon',
+    company: 'NIT Rourkela on Devfolio',
+    location: 'Hybrid / Virtual & Campus Finals',
+    stipendOrSalary: '₹5,50,000 Prize Pool + Swag & Sponsor Bounties',
+    prizeOrStipend: '₹5,50,000 Cash Pool',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Devfolio',
+    sourceUrl: 'https://devfolio.co/hackathons',
+    deadline: 'Registrations Live',
+    registeredCount: '6,400+ Hackers',
+    urgencyBadge: '🎁 Free Swags',
+    verifiedHost: true,
+    tags: ['Devfolio Community', 'Beginner Friendly', 'Hardware & AI Tracks', 'Top Mentor Support'],
+    bannerGradient: 'from-violet-600 via-fuchsia-600 to-pink-600',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 70 },
+      { skillName: 'System Architecture & REST APIs', level: 65 }
+    ]
+  },
+
+  // 7. Unstop - Amazon ML Challenge 2026
+  {
+    id: 'opp-unstop-amazon-ml',
+    title: 'Amazon Machine Learning Challenge 2026',
+    company: 'Amazon India (Unstop Exclusive)',
+    location: 'Virtual / Online India',
+    stipendOrSalary: '₹10,00,000 Cash Prizes + Applied Scientist / SDE Roles',
+    prizeOrStipend: '₹10,00,000 + Amazon Roles',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/hackathons/amazon-ml-challenge-2026',
+    deadline: 'Closing in 7 Days',
+    registeredCount: '34,000+ Participants',
+    urgencyBadge: '⚡ Top Tier Hiring',
+    verifiedHost: true,
+    tags: ['Unstop Flagship', 'Amazon SDE & ML Roles', 'Computer Vision & NLP', 'High Impact'],
+    bannerGradient: 'from-amber-600 via-orange-600 to-yellow-600',
+    minGpa: 7.0,
+    requiredSkills: [
+      { skillName: 'Machine Learning & Scikit-Learn', level: 80 },
+      { skillName: 'Deep Learning & Neural Networks', level: 75 }
+    ]
+  },
+
+  // 8. Devfolio - HackByte 3.0
+  {
+    id: 'opp-devfolio-hackbyte',
+    title: 'HackByte 3.0 - IIIT Jabalpur Annual Hackathon',
+    company: 'IIITDM Jabalpur on Devfolio',
+    location: 'Online Pan-India',
+    stipendOrSalary: '₹4,00,000 Cash Pool + Cloud Vouchers',
+    prizeOrStipend: '₹4,00,000 Pool',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Devfolio',
+    sourceUrl: 'https://devfolio.co/hackathons',
+    deadline: 'Registrations Open',
+    registeredCount: '4,100+ Participants',
+    urgencyBadge: '🟢 Open Now',
+    verifiedHost: true,
+    tags: ['Devfolio Verified', 'Web & App', 'Open Innovation', 'Senior Mentorship'],
+    bannerGradient: 'from-cyan-600 via-blue-600 to-indigo-700',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'System Architecture & REST APIs', level: 70 },
+      { skillName: 'Database & SQL / pgvector', level: 65 }
+    ]
+  },
+
+  // 9. Hack2Skill - Smart Mobility & CleanTech Challenge
+  {
+    id: 'opp-h2s-cleantech',
+    title: 'Smart Mobility, EV & Clean Energy Sprint',
+    company: 'Hack2Skill & Automotive Technology Alliance',
+    location: 'Virtual & Pune / Ahmedabad Sandboxes',
+    stipendOrSalary: '₹4,50,000 Cash + EV Incubation Grants',
+    prizeOrStipend: '₹4,50,000 + Incubation',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Hack2Skill',
+    sourceUrl: 'https://hack2skill.com/',
+    deadline: 'Live Innovation Sprint',
+    registeredCount: '3,800+ Engineers',
+    urgencyBadge: '⚡ CleanTech Track',
+    verifiedHost: true,
+    tags: ['Hack2Skill', 'EV Batteries', 'Solar Smart Grids', 'Hardware Prototypes'],
+    bannerGradient: 'from-teal-600 via-emerald-600 to-green-700',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'EV Battery Management Systems', level: 70 },
+      { skillName: 'Solar PV Systems & Grid Maintenance', level: 65 }
+    ]
+  },
+
+  // 10. Unstop - L'Oréal Brandstorm 2026
+  {
+    id: 'opp-unstop-loreal',
+    title: "L'Oréal Brandstorm 2026 - Global Tech & Sustainability Challenge",
+    company: "L'Oréal Global (Unstop Exclusive)",
+    location: 'Virtual National Prelims & Paris Finals',
+    stipendOrSalary: 'Paris Intrapreneurship Mission + Pre-Placement Interviews',
+    prizeOrStipend: 'Paris Mission + PPIs',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/competitions/loreal-brandstorm-2026',
+    deadline: 'Applications Live',
+    registeredCount: '19,500+ Innovators',
+    urgencyBadge: '✈️ Global Final in Paris',
+    verifiedHost: true,
+    tags: ['Unstop Global', 'Sustainability & AI', 'Direct PPIs', 'Undergrads & Postgrads'],
+    bannerGradient: 'from-rose-600 via-pink-700 to-purple-800',
+    minGpa: 6.5,
+    requiredSkills: [
+      { skillName: 'Technical Problem Solving & Communication', level: 75 }
+    ]
+  },
+
+  // 11. Devfolio - InOut 11.0
+  {
+    id: 'opp-devfolio-inout',
+    title: "InOut 11.0 - India's Oldest Community Hackathon",
+    company: 'Devfolio & Hacker Community Foundation',
+    location: 'Bengaluru & Virtual Track',
+    stipendOrSalary: '₹12,00,000+ Prize Bounty & Partner Tracks',
+    prizeOrStipend: '₹12,00,000+ Bounty',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Devfolio',
+    sourceUrl: 'https://devfolio.co/hackathons',
+    deadline: 'Phase 1 Applications',
+    registeredCount: '7,800+ Hackers',
+    urgencyBadge: '🔥 Community Classic',
+    verifiedHost: true,
+    tags: ['Devfolio Exclusive', 'Top Mentors', 'Fast-Track VC Bounties'],
+    bannerGradient: 'from-purple-700 via-indigo-700 to-blue-800',
+    minGpa: 6.5,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 75 },
+      { skillName: 'System Architecture & REST APIs', level: 75 }
+    ]
+  },
+
+  // 12. Unstop - Reliance TUP 9.0
+  {
+    id: 'opp-unstop-reliance-tup',
+    title: 'Reliance The Ultimate Pitch (TUP) 9.0',
+    company: 'Reliance Industries (Unstop Exclusive)',
+    location: 'Online Prelims & Mumbai Corporate Finals',
+    stipendOrSalary: '₹6,00,000 Cash Prizes + Seed Incubation Support',
+    prizeOrStipend: '₹6,00,000 Cash + Seed',
     type: 'quiz',
     category: 'quiz',
     sourcePlatform: 'Unstop',
-    sourceUrl: 'https://unstop.com/competitions',
-    deadline: 'Registrations Open',
-    tags: ['Unstop Quiz', 'General Tech & Business', 'Prestigious Credential'],
-    bannerGradient: 'from-purple-600 via-pink-600 to-rose-600',
+    sourceUrl: 'https://unstop.com/competitions/reliance-tup-9',
+    deadline: 'Submissions Open',
+    registeredCount: '16,200+ Pitches',
+    urgencyBadge: '💼 Reliance Leadership',
+    verifiedHost: true,
+    tags: ['Unstop Verified', 'Startup Pitch', 'Direct CXO Mentorship', 'All College Students'],
+    bannerGradient: 'from-red-600 via-orange-600 to-amber-600',
     minGpa: 6.0,
     requiredSkills: [
-      { skillName: 'Technical Problem Solving & Communication', level: 80 }
+      { skillName: 'Technical Problem Solving & Communication', level: 75 }
     ]
   },
+
+  // 13. Hack2Skill - AgriTech & Rural IoT Sprint
   {
-    id: 'opp-aicte-1',
-    title: 'AICTE Smart Mobility & Clean Tech Apprenticeship',
-    company: 'AICTE & National Clean Energy Mission',
-    location: 'Ahmedabad / GIFT City Hub',
-    stipendOrSalary: '₹22,000 / month',
+    id: 'opp-h2s-agritech',
+    title: 'AgriTech, Smart Drone & Rural IoT Innovation Sprint',
+    company: 'Hack2Skill & National Rural Digital Mission',
+    location: 'Virtual / Online India',
+    stipendOrSalary: '₹3,00,000 Cash + Rural Pilot Deployment Funding',
+    prizeOrStipend: '₹3,00,000 + Pilot Grants',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Hack2Skill',
+    sourceUrl: 'https://hack2skill.com/',
+    deadline: 'Live Challenge',
+    registeredCount: '2,900+ Teams',
+    urgencyBadge: '🌾 Rural Impact',
+    verifiedHost: true,
+    tags: ['Hack2Skill', 'IoT Sensors', 'Drone Tech', 'Rural Development'],
+    bannerGradient: 'from-green-600 via-emerald-600 to-teal-700',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Technical Problem Solving & Communication', level: 70 }
+    ]
+  },
+
+  // 14. AICTE - Smart Grid Apprenticeship
+  {
+    id: 'opp-aicte-grid',
+    title: 'AICTE National Renewable & Smart Grid Apprenticeship',
+    company: 'AICTE & Ministry of Education Portal',
+    location: 'Ahmedabad / GIFT City Hub & Pan-India',
+    stipendOrSalary: '₹22,000 / month Stipend + NATS Certification',
     prizeOrStipend: '₹22,000 / month',
     type: 'vocational_apprenticeship',
     category: 'internship',
-    sourcePlatform: 'SkillBridge Partner',
+    sourcePlatform: 'AICTE Portal',
     sourceUrl: 'https://internship.aicte-india.org/',
-    deadline: 'Rolling Next Batch',
-    tags: ['NATS Accredited', 'NCrF Credits', 'Govt Verified', 'Stipendiary'],
-    bannerGradient: 'from-teal-600 via-emerald-700 to-green-700',
+    deadline: 'Rolling Next Batch 2026',
+    registeredCount: '5,000+ Apprentices',
+    urgencyBadge: '📜 NCrF Credit Backed',
+    verifiedHost: true,
+    tags: ['AICTE Verified', 'NATS Accredited', 'NCrF Credits', 'Stipendiary', 'Government Portal'],
+    bannerGradient: 'from-teal-600 via-emerald-700 to-green-800',
     minGpa: 6.5,
     requiredSkills: [
       { skillName: 'Solar PV Systems & Grid Maintenance', level: 75 },
       { skillName: 'Technical Problem Solving & Communication', level: 70 }
     ]
   },
+
+  // 15. Google - Google Summer of Code (GSoC) 2026
   {
-    id: 'opp-gsoc-1',
-    title: 'Google Summer of Code Open Source Fellowship',
-    company: 'Google Open Source Organizations',
-    location: 'Remote Work from Anywhere',
+    id: 'opp-google-gsoc',
+    title: 'Google Summer of Code (GSoC) Open Source Fellowship',
+    company: 'Google Open Source Programs & 150+ Global Foundations',
+    location: '100% Remote / Work from Anywhere',
     stipendOrSalary: '₹1,80,000 - ₹3,20,000 Stipend (USD Equivalent)',
     prizeOrStipend: 'Up to ₹3,20,000',
     type: 'internship',
     category: 'scholarship',
-    sourcePlatform: 'SkillBridge Partner',
+    sourcePlatform: 'Google Open Source',
     sourceUrl: 'https://summerofcode.withgoogle.com/',
-    deadline: 'Announced Annually',
-    tags: ['Global Open Source', '1-on-1 Mentorship', 'High Prestigious Value'],
+    deadline: 'Annual Window Live',
+    registeredCount: '12,000+ Contributors',
+    urgencyBadge: '⭐ Global Prestige',
+    verifiedHost: true,
+    tags: ['Google Verified', 'Global Open Source', '1-on-1 Mentorship', 'High Resume Value'],
     bannerGradient: 'from-amber-600 via-red-600 to-purple-700',
     minGpa: 7.5,
     requiredSkills: [
       { skillName: 'Python & Data Structures', level: 85 },
       { skillName: 'Database & SQL / pgvector', level: 75 }
     ]
+  },
+
+  // 16. Unstop - Optum Stratethon Season 5
+  {
+    id: 'opp-unstop-optum',
+    title: 'Optum Stratethon Season 5 - HealthTech & AI Challenge',
+    company: 'Optum & UnitedHealth Group (Unstop Exclusive)',
+    location: 'Virtual National Prelims',
+    stipendOrSalary: '₹15,00,000 Cash Pool + Fast-Track Software Interviews',
+    prizeOrStipend: '₹15,00,000 + Optum Roles',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/hackathons/optum-stratethon-season-5',
+    deadline: 'Registrations Open',
+    registeredCount: '28,000+ Students',
+    urgencyBadge: '🏥 HealthTech SDE',
+    verifiedHost: true,
+    tags: ['Unstop Flagship', 'HealthTech', '₹15 Lakh Cash', 'Fast-Track Placement'],
+    bannerGradient: 'from-cyan-700 via-blue-700 to-indigo-800',
+    minGpa: 7.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 75 },
+      { skillName: 'System Architecture & REST APIs', level: 75 }
+    ]
   }
 ];
+
+// Verified 1-on-1 Industry Mentors Dataset
+export const mockMentors: Mentor[] = [
+  {
+    id: 'mentor-1',
+    name: 'Priya Sharma',
+    role: 'Senior AI Research Engineer',
+    company: 'Google DeepMind (Ex-IIT Bombay)',
+    avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    rating: 4.98,
+    sessionsCount: 185,
+    bio: 'Specializes in LLM architectures, RAG pipelines, PyTorch optimization, and technical AI mock interview drills.',
+    expertise: ['Generative AI', 'PyTorch & RAG', 'AI Mock Interviews', 'Research Papers'],
+    languages: ['English', 'Hindi'],
+    availableSlots: ['Tomorrow at 6:00 PM', 'Thursday at 7:30 PM', 'Saturday at 11:00 AM'],
+    sessionPrice: 'Free 1:1 Intro Session',
+    topTopic: 'AI Systems & RAG Architecture Review'
+  },
+  {
+    id: 'mentor-2',
+    name: 'Kunal Verma',
+    role: 'Staff Distributed Systems Architect',
+    company: 'Microsoft Azure (Ex-Amazon)',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    rating: 4.95,
+    sessionsCount: 220,
+    bio: 'Guided 200+ students into Tier-1 product companies. Focuses on high-scale microservices, concurrency, and system design rounds.',
+    expertise: ['System Design', 'Distributed Systems', 'SDE Interview Prep', 'Resume Critique'],
+    languages: ['English', 'Hindi'],
+    availableSlots: ['Wednesday at 8:00 PM', 'Friday at 6:30 PM', 'Sunday at 10:00 AM'],
+    sessionPrice: 'Free 1:1 Intro Session',
+    topTopic: 'SDE System Design & High-Concurrency Architecture'
+  },
+  {
+    id: 'mentor-3',
+    name: 'Dr. Harsh Patel',
+    role: 'CleanTech & Battery Systems Scientist',
+    company: 'GIFT City EV & Clean Energy Alliance',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    rating: 4.92,
+    sessionsCount: 115,
+    bio: 'Passionate about guiding polytechnic and engineering graduates into renewable careers: EV Battery Management (BMS) and Solar Rooftop MPPT.',
+    expertise: ['EV Powertrains', 'Solar Rooftop MPPT', 'Smart Grid Tech', 'Diploma to BTech Transition'],
+    languages: ['English', 'Gujarati', 'Hindi'],
+    availableSlots: ['Tomorrow at 5:00 PM', 'Saturday at 3:00 PM', 'Sunday at 4:30 PM'],
+    sessionPrice: 'Scholarship Sponsored',
+    topTopic: 'Solar PV Grid Synchronization & EV Battery BMS Diagnostics'
+  },
+  {
+    id: 'mentor-4',
+    name: 'Ananya Iyer',
+    role: 'Lead Full-Stack Engineer',
+    company: 'Zerodha Technology (FinTech)',
+    avatarUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    rating: 4.99,
+    sessionsCount: 310,
+    bio: 'Frequent hackathon judge and winner. Advises student teams on pitching, rapid prototyping, and full-stack performance tuning.',
+    expertise: ['React & Node.js', 'FinTech Architecture', 'Hackathon Winning Strategy', 'Portfolio Reviews'],
+    languages: ['English', 'Hindi', 'Tamil'],
+    availableSlots: ['Thursday at 6:00 PM', 'Saturday at 1:00 PM', 'Sunday at 6:00 PM'],
+    sessionPrice: 'Free 1:1 Intro Session',
+    topTopic: 'Hackathon Strategy & Fast Production MVP Development'
+  },
+  {
+    id: 'mentor-5',
+    name: 'Rohan Mehta',
+    role: 'Senior SDE & Open Source Maintainer',
+    company: 'Google Summer of Code (GSoC) Mentor',
+    avatarUrl: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    rating: 4.96,
+    sessionsCount: 195,
+    bio: 'Helped 40+ students qualify for GSoC, LFX, and open source fellowships. Focuses on Git mastery, issue selection, and proposal writing.',
+    expertise: ['GSoC Proposal Writing', 'Open Source Contributions', 'Git Workflow', 'C++ & Python'],
+    languages: ['English', 'Gujarati', 'Hindi'],
+    availableSlots: ['Wednesday at 7:00 PM', 'Friday at 8:00 PM', 'Sunday at 11:30 AM'],
+    sessionPrice: 'Free 1:1 Intro Session',
+    topTopic: 'GSoC Proposal Drafting & First Open Source Pull Request'
+  },
+  {
+    id: 'mentor-6',
+    name: 'Sneha Mukherjee',
+    role: 'Analytics & Campus Recruitment Manager',
+    company: 'Tata Consultancy Services (TCS)',
+    avatarUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    rating: 4.90,
+    sessionsCount: 140,
+    bio: '10+ years evaluating candidate profiles. Expert in campus placement aptitude, HR interview questions, and behavioral rubrics.',
+    expertise: ['Campus Hiring Prep', 'HR & Behavioral Questions', 'Resume ATS Optimization', 'Communication Skills'],
+    languages: ['English', 'Hindi', 'Bengali'],
+    availableSlots: ['Tomorrow at 7:00 PM', 'Thursday at 5:30 PM', 'Saturday at 4:00 PM'],
+    sessionPrice: 'Free 1:1 Intro Session',
+    topTopic: 'Campus Placement Mock HR & Behavioral Interview'
+  }
+];
+
 

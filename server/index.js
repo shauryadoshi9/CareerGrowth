@@ -722,6 +722,49 @@ const server = http.createServer(async (req, res) => {
     }
   }
 
+  // GET /api/mentors
+  if (pathname === '/api/mentors' && method === 'GET') {
+    const db = readDB();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(db.mentors || []));
+    return;
+  }
+
+  // POST /api/mentors/book (Book a 1:1 mentorship session)
+  if (pathname === '/api/mentors/book' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const db = readDB();
+    const booking = {
+      id: `booking-${Date.now()}`,
+      mentorId: body.mentorId,
+      mentorName: body.mentorName || 'Industry Mentor',
+      mentorCompany: body.mentorCompany || 'Tech Ecosystem',
+      dateSlot: body.dateSlot || 'Upcoming Slot',
+      topic: body.topic || 'General 1:1 Mentorship',
+      studentName: body.studentName || db.profile?.name || 'Aarav Patel',
+      studentEmail: body.studentEmail || 'student@skillbridge.edu',
+      meetLink: `https://meet.google.com/sb-${Math.random().toString(36).substring(2, 6)}-${Math.random().toString(36).substring(2, 5)}`,
+      status: 'confirmed',
+      createdAt: new Date().toISOString()
+    };
+    db.mentorshipBookings = db.mentorshipBookings || [];
+    db.mentorshipBookings.unshift(booking);
+    db.activityLog = db.activityLog || [];
+    db.activityLog.unshift({ timestamp: new Date().toISOString(), action: '1:1 Mentorship Booked', details: `${booking.mentorName} (${booking.dateSlot})` });
+    writeDB(db);
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: true, booking, bookings: db.mentorshipBookings }));
+    return;
+  }
+
+  // GET /api/mentors/bookings
+  if (pathname === '/api/mentors/bookings' && method === 'GET') {
+    const db = readDB();
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(db.mentorshipBookings || []));
+    return;
+  }
+
   // POST /api/custom-input (Generic user data submission)
   if (pathname === '/api/custom-input' && method === 'POST') {
     const body = await parseJSONBody(req);

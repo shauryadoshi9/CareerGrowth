@@ -129,11 +129,14 @@ export interface Opportunity {
   location: string;
   stipendOrSalary: string;
   type: 'internship' | 'fulltime' | 'vocational_apprenticeship' | 'hackathon' | 'quiz' | 'scholarship';
-  category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job';
-  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner';
+  category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job' | 'mentorship';
+  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner' | 'AICTE Portal' | 'Google Open Source';
   sourceUrl: string;
   deadline?: string;
   prizeOrStipend?: string;
+  registeredCount?: string;
+  urgencyBadge?: string;
+  verifiedHost?: boolean;
   tags?: string[];
   bannerGradient?: string;
   minGpa: number;
@@ -142,6 +145,36 @@ export interface Opportunity {
   eligibilityMet?: boolean;
   alignedSkills?: string[];
   missingSkills?: string[];
+}
+
+export interface Mentor {
+  id: string;
+  name: string;
+  role: string;
+  company: string;
+  avatarUrl: string;
+  rating: number;
+  sessionsCount: number;
+  bio: string;
+  expertise: string[];
+  languages: string[];
+  availableSlots: string[];
+  sessionPrice: string;
+  topTopic: string;
+}
+
+export interface MentorshipBooking {
+  id: string;
+  mentorId: string;
+  mentorName: string;
+  mentorCompany: string;
+  dateSlot: string;
+  topic: string;
+  studentName: string;
+  studentEmail: string;
+  meetLink: string;
+  status: 'confirmed' | 'completed';
+  createdAt: string;
 }
 
 export interface JobApplication {

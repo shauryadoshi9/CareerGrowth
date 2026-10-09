@@ -1,4 +1,4 @@
-import { Skill, JobApplication, ServerHealth } from '../types';
+import { Skill, JobApplication, ServerHealth, Mentor, MentorshipBooking } from '../types';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -211,4 +211,38 @@ export async function googleLoginApi(account: { email: string; name: string; ava
   }
   return data;
 }
+
+export async function fetchMentors(): Promise<Mentor[]> {
+  try {
+    const res = await fetch(`${API_BASE}/mentors`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
+export async function bookMentorshipSession(booking: Partial<MentorshipBooking>): Promise<{ success: boolean; booking?: MentorshipBooking; bookings?: MentorshipBooking[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/mentors/book`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(booking)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function fetchMyMentorshipBookings(): Promise<MentorshipBooking[]> {
+  try {
+    const res = await fetch(`${API_BASE}/mentors/bookings`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
 

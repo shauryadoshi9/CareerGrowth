@@ -243,6 +243,11 @@
   "copilotHistory": [],
   "activityLog": [
     {
+      "timestamp": "2026-10-09T15:13:49.096Z",
+      "action": "1:1 Mentorship Booked",
+      "details": "Industry Mentor (Upcoming Slot)"
+    },
+    {
       "timestamp": "2026-10-09T03:58:38.657Z",
       "action": "AI Tutor Query",
       "details": {
@@ -349,5 +354,19 @@
       "expiresAt": 1791542400456,
       "createdAt": "2026-10-09T10:30:00.456Z"
     }
-  }
+  },
+  "mentorshipBookings": [
+    {
+      "id": "booking-1791558829096",
+      "mentorName": "Industry Mentor",
+      "mentorCompany": "Tech Ecosystem",
+      "dateSlot": "Upcoming Slot",
+      "topic": "General 1:1 Mentorship",
+      "studentName": "Aarav Patel",
+      "studentEmail": "student@skillbridge.edu",
+      "meetLink": "https://meet.google.com/sb-yk9a-gdc",
+      "status": "confirmed",
+      "createdAt": "2026-10-09T15:13:49.096Z"
+    }
+  ]
 }

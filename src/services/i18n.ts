@@ -146,6 +146,18 @@ export const i18nDictionary: Record<string, Record<Language, string>> = {
     pa: 'ਮੌਕ ਇੰਟਰਵਿਊ',
     ml: 'മോക്ക് ഇന്റർവ്യൂ'
   },
+  'mentors': {
+    en: '1:1 Mentors',
+    hi: '1:1 मेंटर्स',
+    gu: '1:1 માર્ગદર્શકો',
+    mr: '1:1 मार्गदर्शक',
+    ta: '1:1 வழிகாட்டிகள்',
+    te: '1:1 మెంటార్లు',
+    kn: '1:1 ಮಾರ್ಗದರ್ಶಕರು',
+    bn: '১:১ মেন্টর',
+    pa: '1:1 ਮੈਂਟਰ',
+    ml: '1:1 മെന്റർമാർ'
+  },
   'offline_packs': {
     en: 'Offline Packs',
     hi: 'ऑफलाइन पैकेज',

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initialLearnerProfile, defaultSkills, careerPathways, mockOpportunities } from '../data/mockData';
 import { calculateSkillGap, calculateJobMatch } from '../services/aiEngine';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip } from 'recharts';
-import { Target, Award, ArrowUpRight, Zap, BookOpen, Briefcase, Plus, Save, Trash2, CheckCircle, Bot, Calendar, MessageSquareCode, Sparkles, Flame } from 'lucide-react';
+import { Target, Award, ArrowUpRight, Zap, BookOpen, Briefcase, Plus, Save, Trash2, CheckCircle, Bot, Calendar, MessageSquareCode, Sparkles, Flame, Users } from 'lucide-react';
 import { Language, ThemeMode, Skill } from '../types';
 import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer } from '../services/api';
 
@@ -258,7 +258,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
       </div>
 
       {/* Quick Acceleration Suites Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         
         {/* Card 1: AI Study Buddy */}
         <div 
@@ -307,7 +307,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
             </span>
           </div>
           <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Revision & Growth Journey
+            Revision & Journey
           </h4>
           <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Generates 30m/45m schedules based on weak topics + 5-stage career progression milestones.
@@ -336,7 +336,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
             </span>
           </div>
           <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Mock Interview Engine
+            Mock Interview
           </h4>
           <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Technical practice for AI, Full-Stack & Clean Tech roles with AI grading and targeted drill tasks.
@@ -361,7 +361,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               <Zap className="w-5 h-5" />
             </div>
             <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Live National
+              Devfolio & Unstop
             </span>
           </div>
           <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -372,6 +372,35 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           </p>
           <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-emerald-400 group-hover:text-emerald-300">
             <span>Browse Contests</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+        {/* Card 5: 1:1 Industry Mentors */}
+        <div 
+          onClick={() => onNavigateTab('mentors')}
+          className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+            isDark 
+              ? 'bg-gradient-to-br from-purple-950/40 via-slate-900 to-slate-900 border-purple-500/30 hover:border-purple-400' 
+              : 'bg-gradient-to-br from-purple-50/70 via-white to-indigo-50/50 border-purple-200 hover:border-purple-400 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Users className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+              Google & MS
+            </span>
+          </div>
+          <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            1:1 Top Mentors
+          </h4>
+          <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Book 1:1 sessions with verified engineers and researchers from Google, Microsoft, and Zerodha.
+          </p>
+          <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-purple-400 group-hover:text-purple-300">
+            <span>Book 1:1</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </div>
         </div>

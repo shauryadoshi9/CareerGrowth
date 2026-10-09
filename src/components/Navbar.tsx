@@ -18,7 +18,8 @@ import {
   Bot,
   Calendar,
   MessageSquareCode,
-  Zap
+  Zap,
+  Users
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -194,6 +195,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <Zap className="w-3.5 h-3.5 text-amber-400" />
                 <span>{t('opportunity', language)}</span>
                 <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+              </button>
+              <button
+                onClick={() => onTabChange('mentors')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'mentors' 
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                <Users className="w-3.5 h-3.5 text-purple-400" />
+                <span>{t('mentors', language)}</span>
               </button>
               <button
                 onClick={() => onTabChange('vocational')}

@@ -1,4 +1,4 @@
-import { Skill, CareerPath, OfflinePack, AtRiskStudent, Opportunity, QuizQuestion, Mentor } from '../types';
+import { Skill, CareerPath, OfflinePack, AtRiskStudent, Opportunity, QuizQuestion, Mentor, ProjectPortfolioItem } from '../types';
 
 export const initialLearnerProfile = {
   id: 'learner-101',
@@ -15,16 +15,108 @@ export const initialLearnerProfile = {
 };
 
 export const defaultSkills: Skill[] = [
-  { id: 's1', name: 'Python & Data Structures', category: 'core_tech', currentProficiency: 82, requiredProficiency: 90, evidenceCount: 4, certifications: ['NPTEL Data Structures'] },
-  { id: 's2', name: 'Machine Learning & Scikit-Learn', category: 'core_tech', currentProficiency: 65, requiredProficiency: 85, evidenceCount: 2, certifications: ['AICTE AI Fundamentals'] },
-  { id: 's3', name: 'System Architecture & REST APIs', category: 'core_tech', currentProficiency: 78, requiredProficiency: 80, evidenceCount: 3 },
-  { id: 's4', name: 'Deep Learning & Neural Networks', category: 'core_tech', currentProficiency: 42, requiredProficiency: 80, evidenceCount: 1 },
-  { id: 's5', name: 'Prompt Engineering & RAG', category: 'core_tech', currentProficiency: 55, requiredProficiency: 85, evidenceCount: 2 },
-  { id: 's6', name: 'Database & SQL / pgvector', category: 'core_tech', currentProficiency: 70, requiredProficiency: 75, evidenceCount: 3 },
-  { id: 's7', name: 'Solar PV Systems & Grid Maintenance', category: 'practical_vocational', currentProficiency: 30, requiredProficiency: 85, evidenceCount: 0 },
-  { id: 's8', name: 'EV Battery Management Systems', category: 'practical_vocational', currentProficiency: 25, requiredProficiency: 80, evidenceCount: 0 },
-  { id: 's9', name: 'Digital Agriculture IoT Sensors', category: 'domain_knowledge', currentProficiency: 40, requiredProficiency: 75, evidenceCount: 1 },
-  { id: 's10', name: 'Technical Problem Solving & Communication', category: 'soft_skills', currentProficiency: 85, requiredProficiency: 85, evidenceCount: 5 }
+  { 
+    id: 's1', 
+    name: 'Python & Data Structures', 
+    category: 'core_tech', 
+    currentProficiency: 82, 
+    requiredProficiency: 90, 
+    evidenceCount: 4, 
+    certifications: ['NPTEL Data Structures'], 
+    completedProjects: ['Algorithm Visualizer', 'CLI Data Processing Pipeline'],
+    quizScore: 88,
+    portfolioLinks: ['https://github.com/aarav-patel/python-ds-algo']
+  },
+  { 
+    id: 's2', 
+    name: 'Machine Learning & Scikit-Learn', 
+    category: 'core_tech', 
+    currentProficiency: 65, 
+    requiredProficiency: 85, 
+    evidenceCount: 2, 
+    certifications: ['AICTE AI Fundamentals'],
+    completedProjects: ['Crop Yield Prediction Random Forest'],
+    quizScore: 72,
+    portfolioLinks: ['https://github.com/aarav-patel/crop-yield-predictor']
+  },
+  { 
+    id: 's3', 
+    name: 'System Architecture & REST APIs', 
+    category: 'core_tech', 
+    currentProficiency: 78, 
+    requiredProficiency: 80, 
+    evidenceCount: 3,
+    completedProjects: ['FastAPI Microservices Authentication Gateway'],
+    quizScore: 80,
+    portfolioLinks: ['https://github.com/aarav-patel/fastapi-gateway']
+  },
+  { 
+    id: 's4', 
+    name: 'Deep Learning & Neural Networks', 
+    category: 'core_tech', 
+    currentProficiency: 42, 
+    requiredProficiency: 80, 
+    evidenceCount: 1,
+    quizScore: 48
+  },
+  { 
+    id: 's5', 
+    name: 'Prompt Engineering & RAG', 
+    category: 'core_tech', 
+    currentProficiency: 55, 
+    requiredProficiency: 85, 
+    evidenceCount: 2,
+    completedProjects: ['Personal Document Q&A Bot with FastAPI & pgvector'],
+    quizScore: 60,
+    portfolioLinks: ['https://github.com/aarav-patel/rag-doc-chat']
+  },
+  { 
+    id: 's6', 
+    name: 'Database & SQL / pgvector', 
+    category: 'core_tech', 
+    currentProficiency: 70, 
+    requiredProficiency: 75, 
+    evidenceCount: 3,
+    quizScore: 75
+  },
+  { 
+    id: 's7', 
+    name: 'Solar PV Systems & Grid Maintenance', 
+    category: 'practical_vocational', 
+    currentProficiency: 30, 
+    requiredProficiency: 85, 
+    evidenceCount: 0,
+    quizScore: 35
+  },
+  { 
+    id: 's8', 
+    name: 'EV Battery Management Systems', 
+    category: 'practical_vocational', 
+    currentProficiency: 25, 
+    requiredProficiency: 80, 
+    evidenceCount: 0,
+    quizScore: 30
+  },
+  { 
+    id: 's9', 
+    name: 'Digital Agriculture IoT Sensors', 
+    category: 'domain_knowledge', 
+    currentProficiency: 40, 
+    requiredProficiency: 75, 
+    evidenceCount: 1,
+    completedProjects: ['ESP32 Soil Telemetry Testbench'],
+    quizScore: 45
+  },
+  { 
+    id: 's10', 
+    name: 'Technical Problem Solving & Communication', 
+    category: 'soft_skills', 
+    currentProficiency: 85, 
+    requiredProficiency: 85, 
+    evidenceCount: 5,
+    certifications: ['British Council Communication Skills'],
+    quizScore: 90
+  }
 ];
 
 export const careerPathways: CareerPath[] = [
@@ -609,6 +701,128 @@ export const mockOpportunities: Opportunity[] = [
       { skillName: 'Python & Data Structures', level: 75 },
       { skillName: 'System Architecture & REST APIs', level: 75 }
     ]
+  },
+
+  // 17. National Scholarship Portal (NSP) - Central Sector Scheme
+  {
+    id: 'opp-nsp-scholarship',
+    title: 'Central Sector Scholarship Scheme for College & University Students',
+    company: 'Ministry of Education, Govt. of India (NSP Portal)',
+    location: 'Pan-India (Direct Benefit Transfer DBT)',
+    stipendOrSalary: '₹12,000 to ₹20,000 / year Financial Grant',
+    prizeOrStipend: '₹20,000/yr Grant',
+    type: 'scholarship',
+    category: 'scholarship',
+    sourcePlatform: 'NSP & Govt Portal',
+    sourceUrl: 'https://scholarships.gov.in/',
+    deadline: 'Applications Open for 2026 Academic Year',
+    registeredCount: '82,000+ Applied',
+    urgencyBadge: '🏛️ Direct Benefit Transfer',
+    verifiedHost: true,
+    tags: ['Govt Scholarship', 'DBT Transfer', 'NSP Portal', 'College Students', 'Merit Financial Aid'],
+    bannerGradient: 'from-amber-600 via-orange-600 to-red-700',
+    minGpa: 7.5,
+    requiredSkills: [
+      { skillName: 'Technical Problem Solving & Communication', level: 75 }
+    ]
+  },
+
+  // 18. Reliance Foundation Undergraduate Scholarships 2026
+  {
+    id: 'opp-reliance-scholarship',
+    title: 'Reliance Foundation Undergraduate Merit-cum-Means Scholarship 2026',
+    company: 'Reliance Foundation (Partnered with Premier Institutions)',
+    location: 'Pan-India (All Recognized Degree Colleges)',
+    stipendOrSalary: 'Up to ₹2,00,000 Financial Grant for Degree Duration',
+    prizeOrStipend: '₹2,00,000 Grant',
+    type: 'scholarship',
+    category: 'scholarship',
+    sourcePlatform: 'Industry Partner',
+    sourceUrl: 'https://www.scholarships.reliancefoundation.org/',
+    deadline: 'Applications Closing Soon',
+    registeredCount: '45,000+ Applicants',
+    urgencyBadge: '💰 Up to ₹2 Lakh',
+    verifiedHost: true,
+    tags: ['Reliance Foundation', 'Undergraduate Grant', 'Merit & Need', 'Mentorship & Network'],
+    bannerGradient: 'from-blue-700 via-indigo-700 to-purple-800',
+    minGpa: 7.0,
+    requiredSkills: [
+      { skillName: 'Technical Problem Solving & Communication', level: 70 }
+    ]
+  },
+
+  // 19. Swayam NPTEL Free Certified AI & Data Science Mastery Course
+  {
+    id: 'opp-nptel-freecourse',
+    title: 'NPTEL Swayam: Foundations of Data Science & Machine Learning',
+    company: 'IIT Madras & Ministry of Education (Swayam Portal)',
+    location: '100% Online / Self-Paced & Proctored Exam',
+    stipendOrSalary: 'Free Courseware + Credit Transfer (NCrF/AICTE)',
+    prizeOrStipend: 'Free Certified (AICTE Credits)',
+    type: 'free_course',
+    category: 'free_course',
+    sourcePlatform: 'AICTE Portal',
+    sourceUrl: 'https://swayam.gov.in/nc_details/NPTEL',
+    deadline: 'Enrollment Open for Next Semester',
+    registeredCount: '95,000+ Learners',
+    urgencyBadge: '🎓 Academic Credits',
+    verifiedHost: true,
+    tags: ['NPTEL Free Course', 'IIT Faculty', 'NCrF Credits', 'AICTE Recognized'],
+    bannerGradient: 'from-teal-600 via-cyan-600 to-blue-700',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 70 },
+      { skillName: 'Machine Learning & Scikit-Learn', level: 65 }
+    ]
+  },
+
+  // 20. Google Cloud Skills Boost Free Generative AI Training Path
+  {
+    id: 'opp-google-cloud-course',
+    title: 'Google Cloud Generative AI & Foundation Models Learning Path',
+    company: 'Google Cloud Training & Developer Relations',
+    location: '100% Online Self-Paced',
+    stipendOrSalary: 'Free Skill Badges + Google Cloud Qwiklabs Vouchers',
+    prizeOrStipend: 'Free Vouchers & Badges',
+    type: 'free_course',
+    category: 'free_course',
+    sourcePlatform: 'Google Open Source',
+    sourceUrl: 'https://www.cloudskillsboost.google/paths/118',
+    deadline: 'Instant Free Access',
+    registeredCount: '60,000+ Badges Earned',
+    urgencyBadge: '☁️ Free Cloud Credits',
+    verifiedHost: true,
+    tags: ['Google Cloud', 'Generative AI', 'Free Badges', 'Prompt Engineering'],
+    bannerGradient: 'from-sky-600 via-blue-600 to-indigo-700',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Prompt Engineering & RAG', level: 60 }
+    ]
+  },
+
+  // 21. TCS Digital / NQT Entry-Level Software Engineer 2026
+  {
+    id: 'opp-tcs-entry-job',
+    title: 'TCS National Qualifier Test (NQT) - Digital Software Engineer',
+    company: 'Tata Consultancy Services (TCS)',
+    location: 'Pan-India (Hybrid Across Major Delivery Hubs)',
+    stipendOrSalary: '₹7,00,000 - ₹9,50,000 / annum (Digital Band)',
+    prizeOrStipend: '₹7L - ₹9.5L CTC',
+    type: 'entry_level_job',
+    category: 'job',
+    sourcePlatform: 'Industry Partner',
+    sourceUrl: 'https://www.tcs.com/careers/entry-level',
+    deadline: 'Registrations Live on TCS Hub',
+    registeredCount: '1,20,000+ Enrolled',
+    urgencyBadge: '💼 Direct Full-Time Role',
+    verifiedHost: true,
+    tags: ['TCS Digital', 'Entry-Level Full-Time', 'B.Tech/MCA/B.Sc', 'Tier 2/3 College Priority'],
+    bannerGradient: 'from-violet-700 via-purple-700 to-pink-700',
+    minGpa: 6.5,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 80 },
+      { skillName: 'System Architecture & REST APIs', level: 75 }
+    ]
   }
 ];
 
@@ -703,6 +917,81 @@ export const mockMentors: Mentor[] = [
     availableSlots: ['Tomorrow at 7:00 PM', 'Thursday at 5:30 PM', 'Saturday at 4:00 PM'],
     sessionPrice: 'Free 1:1 Intro Session',
     topTopic: 'Campus Placement Mock HR & Behavioral Interview'
+  }
+];
+
+// Recommended Real-World Projects with Discrete Steps (Report Highlight #6 & #13)
+export const mockRecommendedProjects: ProjectPortfolioItem[] = [
+  {
+    id: 'proj-rag-bot',
+    title: 'Personal Document Q&A Bot with FastAPI & pgvector',
+    category: 'AI & Data Engineering',
+    level: 'Intermediate',
+    description: 'Build a production Retrieval-Augmented Generation (RAG) assistant that chunks technical PDFs, generates dense vector embeddings, and performs cosine similarity search before prompting the LLM.',
+    targetSkills: ['Python & Data Structures', 'Prompt Engineering & RAG', 'Database & SQL / pgvector'],
+    isVerifiedEvidence: true,
+    repoUrl: 'https://github.com/aarav-patel/rag-doc-chat',
+    demoUrl: 'https://rag-doc-chat.skillbridge.dev',
+    notes: 'Benchmarked with 500-page AI research paper dataset. Cosine similarity threshold tuned to 0.82 for zero hallucinations.',
+    completedAt: '2026-09-28',
+    matchedOpportunityIds: ['opp-unstop-amazon-ml', 'opp-devfolio-ethindia', 'opp-pminternship-ai', 'opp-h2s-india-ai'],
+    steps: [
+      { id: 'step-1', title: 'Architecture & PDF Parser', detail: 'Implement PyPDF text extraction and recursive sliding-window chunking (500 tokens, 50 overlap).', completed: true },
+      { id: 'step-2', title: 'Vector Embeddings & PostgreSQL', detail: 'Generate 1536-dimensional embeddings and store in PostgreSQL using the pgvector extension with IVFFlat index.', completed: true },
+      { id: 'step-3', title: 'FastAPI Semantic Query Endpoint', detail: 'Construct REST route /api/query that calculates top-k cosine similarity and augments the system prompt.', completed: true },
+      { id: 'step-4', title: 'Diagnostic Verification & Benchmarking', detail: 'Run hallucination evaluation testbench with Ragas metrics and publish open-source GitHub repository.', completed: true }
+    ]
+  },
+  {
+    id: 'proj-solar-mppt',
+    title: 'Solar Rooftop MPPT Inverter & Grid Sync Simulation',
+    category: 'Clean Energy & Smart Grid',
+    level: 'Intermediate',
+    description: 'Design and simulate an automated Perturb & Observe Maximum Power Point Tracking (MPPT) controller with grid synchronization safety locks.',
+    targetSkills: ['Solar PV Systems & Grid Maintenance', 'Technical Problem Solving & Communication', 'System Architecture & REST APIs'],
+    isVerifiedEvidence: true,
+    repoUrl: 'https://github.com/aarav-patel/solar-mppt-sim',
+    notes: 'Maintained 98.4% tracking efficiency across simulated dynamic cloud cover irradiance changes.',
+    completedAt: '2026-09-15',
+    matchedOpportunityIds: ['opp-aicte-smartgrid', 'opp-unstop-cleantech'],
+    steps: [
+      { id: 'step-1', title: 'I-V & P-V Mathematical Modeling', detail: 'Model standard silicon solar cell characteristic curve under varying irradiance (200 - 1000 W/m²).', completed: true },
+      { id: 'step-2', title: 'Perturb & Observe Algorithm', detail: 'Implement discrete duty-cycle adjustment loop to track maximum electrical power point.', completed: true },
+      { id: 'step-3', title: 'Anti-Islanding Grid Protection', detail: 'Program automatic disconnection triggers when utility grid voltage drops below standard tolerance.', completed: true },
+      { id: 'step-4', title: 'Telemetry Dashboard & Report', detail: 'Record experimental logs and assemble verification report aligned with NCrF vocational guidelines.', completed: true }
+    ]
+  },
+  {
+    id: 'proj-ev-bms',
+    title: 'EV Lithium-ion Battery State-of-Charge (SoC) & BMS Monitor',
+    category: 'Electric Mobility & Automotive',
+    level: 'Advanced',
+    description: 'Develop an extended Kalman Filter (EKF) algorithm running on microcontrollers to estimate individual cell voltage, internal resistance, and state-of-charge for 48V EV battery packs.',
+    targetSkills: ['EV Battery Management Systems', 'Python & Data Structures', 'System Architecture & REST APIs'],
+    isVerifiedEvidence: false,
+    matchedOpportunityIds: ['opp-reliance-tup', 'opp-h2s-agritech-iot'],
+    steps: [
+      { id: 'step-1', title: 'Battery Equivalent Circuit Model', detail: 'Formulate 2-RC Thevenin circuit model capturing charge-transfer and diffusion polarization dynamics.', completed: true },
+      { id: 'step-2', title: 'Extended Kalman Filter Implementation', detail: 'Code recursive EKF state estimator in Python to track real-time SoC within ±2.5% accuracy.', completed: false },
+      { id: 'step-3', title: 'Thermal Runaway Safety Alerting', detail: 'Integrate multi-point thermistor threshold warnings with CAN bus broadcast simulation.', completed: false },
+      { id: 'step-4', title: 'Hardware-in-the-Loop Validation', detail: 'Benchmark controller against standardized automotive driving cycles (WLTP).', completed: false }
+    ]
+  },
+  {
+    id: 'proj-smart-agri',
+    title: 'Precision Agri IoT Soil Telemetry & Automated Drip Relay',
+    category: 'Agritech & Embedded IoT',
+    level: 'Beginner',
+    description: 'Build a low-power wireless telemetry probe that samples volumetric soil moisture and ambient temperature, triggering solar-powered solenoid irrigation valves.',
+    targetSkills: ['Digital Agriculture IoT Sensors', 'Python & Data Structures'],
+    isVerifiedEvidence: false,
+    matchedOpportunityIds: ['opp-h2s-agritech-iot', 'opp-pminternship-ai'],
+    steps: [
+      { id: 'step-1', title: 'Sensor Calibration in Sand/Clay', detail: 'Calibrate capacitive soil moisture sensors against gravimetric soil drying standards.', completed: true },
+      { id: 'step-2', title: 'ESP32 MQTT Publish Loop', detail: 'Program microcontroller to sleep in deep sleep mode and wake up hourly to publish telemetry packets.', completed: false },
+      { id: 'step-3', title: 'Automated Relay Valve Actuation', detail: 'Implement threshold-based valve switching to prevent over-irrigation and conserve groundwater.', completed: false },
+      { id: 'step-4', title: 'Mobile Cloud Dashboard', detail: 'Connect MQTT feed to web visualization showing live farm moisture heatmap.', completed: false }
+    ]
   }
 ];
 

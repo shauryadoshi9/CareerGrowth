@@ -42,6 +42,9 @@ export interface Skill {
   requiredProficiency: number; // 0 - 100
   evidenceCount: number;
   certifications?: string[];
+  completedProjects?: string[];
+  portfolioLinks?: string[];
+  quizScore?: number;
 }
 
 export interface CareerPath {
@@ -128,9 +131,9 @@ export interface Opportunity {
   company: string;
   location: string;
   stipendOrSalary: string;
-  type: 'internship' | 'fulltime' | 'vocational_apprenticeship' | 'hackathon' | 'quiz' | 'scholarship';
-  category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job' | 'mentorship';
-  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner' | 'AICTE Portal' | 'Google Open Source';
+  type: 'internship' | 'fulltime' | 'vocational_apprenticeship' | 'hackathon' | 'quiz' | 'scholarship' | 'free_course' | 'entry_level_job';
+  category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job' | 'free_course' | 'mentorship';
+  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner' | 'AICTE Portal' | 'Google Open Source' | 'NSP & Govt Portal' | 'Industry Partner';
   sourceUrl: string;
   deadline?: string;
   prizeOrStipend?: string;
@@ -145,6 +148,40 @@ export interface Opportunity {
   eligibilityMet?: boolean;
   alignedSkills?: string[];
   missingSkills?: string[];
+}
+
+export interface ProjectStep {
+  id: string;
+  title: string;
+  detail: string;
+  completed: boolean;
+}
+
+export interface ProjectPortfolioItem {
+  id: string;
+  title: string;
+  category: string;
+  level: 'Beginner' | 'Intermediate' | 'Advanced';
+  description: string;
+  targetSkills: string[];
+  steps: ProjectStep[];
+  repoUrl?: string;
+  demoUrl?: string;
+  notes?: string;
+  completedAt?: string;
+  isVerifiedEvidence: boolean;
+  matchedOpportunityIds: string[];
+}
+
+export interface ProgressShareConsent {
+  consentGiven: boolean;
+  shareWith: 'parent' | 'teacher' | 'both';
+  shareCode: string;
+  parentEmail?: string;
+  teacherEmail?: string;
+  achievements: string[];
+  nextSteps: string[];
+  lastUpdated: string;
 }
 
 export interface Mentor {

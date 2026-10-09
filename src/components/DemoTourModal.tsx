@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, ChevronRight, ChevronLeft, CheckCircle2, Sparkles, Award, ArrowRight } from 'lucide-react';
+import { X, ChevronRight, ChevronLeft, CheckCircle2, Sparkles, Award, ArrowRight, Play } from 'lucide-react';
 import { UserRole } from '../types';
 
 interface DemoTourModalProps {
@@ -17,90 +17,91 @@ export const DemoTourModal: React.FC<DemoTourModalProps> = ({
 
   if (!isOpen) return null;
 
+  // Aligned with Report Highlights #12, #13, #14 & Integrated Platform Capabilities
   const demoSteps = [
     {
-      title: '1. Student Onboarding & Profile Setup',
+      title: '1. Student Onboarding & Multi-Factor Evidence',
       role: 'student' as UserRole,
       tab: 'dashboard',
-      description: 'Learner logs in and initializes their profile with academic background, current verified skills, and interest area.',
+      description: 'Learner logs in and initializes profile. Skills are tracked via a multi-factor combination of quizzes, certificates, and completed portfolio projects.',
       badge: 'Step 1 of 12'
     },
     {
-      title: '2. Preferred Language & Career Aspirations',
+      title: '2. Deterministic Skill Gap Analysis',
       role: 'student' as UserRole,
-      tab: 'dashboard',
-      description: 'Learner selects target career (e.g. AI Systems Engineer or Solar Tech Specialist) and prefers Gujarati / Hindi / English language.',
+      tab: 'skill-gap',
+      description: 'Benchmarks current skills against industry standard taxonomies (AI, Solar PV, EV Mobility) and calculates exact readiness percentage.',
       badge: 'Step 2 of 12'
     },
     {
-      title: '3. Baseline Knowledge & Skill Assessment',
+      title: '3. Career Pathway Navigation',
       role: 'student' as UserRole,
-      tab: 'skill-gap',
-      description: 'System evaluates baseline proficiency across technical, practical vocational, and core concepts.',
+      tab: 'career-navigator',
+      description: 'Compares demand index and salary projections for high-growth sectors with regional localization in Hindi and Gujarati.',
       badge: 'Step 3 of 12'
     },
     {
-      title: '4. Skill Gap Analysis & Missing Skills Identified',
+      title: '4. Adaptive Learning Roadmap',
       role: 'student' as UserRole,
-      tab: 'skill-gap',
-      description: 'Displays exact readiness score, matched skills %, and prioritizes missing skill gaps (Gap = Required - Current).',
+      tab: 'learning',
+      description: 'Generates a month-by-month milestone timeline with bite-sized concept units, diagnostic assessments, and remedial loops.',
       badge: 'Step 4 of 12'
     },
     {
-      title: '5. AI Career Navigator Pathways',
+      title: '5. AI Study Buddy & Weak Topic Breakdown',
       role: 'student' as UserRole,
-      tab: 'career-navigator',
-      description: 'Allows side-by-side career pathway comparison and projects required industry benchmarks.',
-      badge: 'Step 5 of 12'
+      tab: 'study-buddy',
+      description: 'NEW DEMO IDEA: AI Study Buddy translates heavy technical topics into plain real-life analogies, breaks down common student mistakes, and supports bilingual voice learning.',
+      badge: 'Step 5 of 12 (Highlight #2, #7, #12)'
     },
     {
-      title: '6. Personalized 3-Month Adaptive Roadmap',
+      title: '6. Recommended Project in Discrete Steps',
       role: 'student' as UserRole,
-      tab: 'career-navigator',
-      description: 'Generates a month-by-month milestone timeline: Concept -> Practical Sandbox -> Quiz -> Remediation.',
-      badge: 'Step 6 of 12'
+      tab: 'vocational',
+      description: 'NEW IDEA: Breaks practical projects into manageable steps (Step 1-4). Learners check off progress and record completed GitHub repo evidence into their recruiter portfolio.',
+      badge: 'Step 6 of 12 (Highlight #6)'
     },
     {
-      title: '7. Adaptive Learning & Multilingual AI Explanation',
+      title: '7. Portfolio Project Connected to Opportunities',
       role: 'student' as UserRole,
-      tab: 'learning',
-      description: 'Learner views concept topics and opens AI Tutor for Gujarati, Hindi, or English prompt-engineered explanations.',
-      badge: 'Step 7 of 12'
+      tab: 'opportunities',
+      description: 'NEW DEMO IDEA: Shows how a completed portfolio project (e.g. RAG Q&A Bot) directly connects to matched listings on PM Internship Scheme, Devfolio, Unstop, and Hack2Skill.',
+      badge: 'Step 7 of 12 (Highlight #13)'
     },
     {
-      title: '8. Diagnostic Quiz & Real-Time Mastery Update',
+      title: '8. Daily Revision & My Growth Journey',
       role: 'student' as UserRole,
-      tab: 'learning',
-      description: 'Completes a topic assessment quiz; system automatically recalculates skill mastery score and awards badges.',
-      badge: 'Step 8 of 12'
+      tab: 'revision-planner',
+      description: 'Micro-schedule planner balancing weak diagnostic topics, learning goals, upcoming exams, and available study hours.',
+      badge: 'Step 8 of 12 (Highlight #3 & #10)'
     },
     {
-      title: '9. Rural Low-Bandwidth Mode & Offline Content Packs',
+      title: '9. Text-Based AI Mock Interview Practice',
       role: 'student' as UserRole,
-      tab: 'offline-packs',
-      description: 'Demonstrates offline downloadable packs for remote learners with local state caching and background sync.',
-      badge: 'Step 9 of 12'
+      tab: 'mock-interview',
+      description: 'Interactive technical interview practice across 4 career tracks with instant rubric scoring, concept analysis, and targeted practice activities.',
+      badge: 'Step 9 of 12 (Highlight #4)'
     },
     {
-      title: '10. Faculty AI Copilot & Lesson Plan Generator',
-      role: 'teacher' as UserRole,
-      tab: 'teacher-copilot',
-      description: 'Switches to Teacher view to generate custom lesson plans, quizzes, and remedial guides in 3 languages.',
+      title: '10. 1-on-1 Industry Mentorship Hub',
+      role: 'student' as UserRole,
+      tab: 'mentors',
+      description: 'Book 1:1 sessions with verified industry researchers from Google DeepMind, Microsoft Azure, and Zerodha with instant Google Meet link generation.',
       badge: 'Step 10 of 12'
     },
     {
-      title: '11. At-Risk Student Monitor & Remedial Intervention',
+      title: '11. Supportive Learning Interventions (Faculty)',
       role: 'teacher' as UserRole,
       tab: 'learning-risk',
-      description: 'System automatically flags students at risk of falling behind and assigns peer mentoring or remedial worksheets.',
-      badge: 'Step 11 of 12'
+      description: 'Supportive non-labeling framework that flags emerging learning hurdles and makes it easy to involve a teacher or industry mentor.',
+      badge: 'Step 11 of 12 (Highlight #9)'
     },
     {
-      title: '12. Internship & Job Placement Engine',
-      role: 'student' as UserRole,
-      tab: 'opportunities',
-      description: 'Explainable matching engine evaluates hard eligibility + skill compatibility to match students with industry jobs.',
-      badge: 'Step 12 of 12'
+      title: '12. Pilot Program Empirical Evaluation Framework',
+      role: 'admin' as UserRole,
+      tab: 'institution-analytics',
+      description: 'NEW EVALUATION IDEA: Rigorously tests the pilot with college and rural learners across 5 empirical measures (learning-plan completion, quiz delta, projects, teacher feedback, and opportunity discovery).',
+      badge: 'Step 12 of 12 (Highlight #14)'
     }
   ];
 
@@ -125,65 +126,68 @@ export const DemoTourModal: React.FC<DemoTourModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-      <div className="glass-panel max-w-2xl w-full rounded-2xl border border-indigo-500/30 p-6 shadow-2xl relative overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-fade-in">
+      <div className="glass-panel max-w-2xl w-full rounded-3xl border border-indigo-500/40 p-6 md:p-8 shadow-2xl relative overflow-hidden bg-slate-900 text-white">
         
         {/* Glow Header Accent */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
+        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500" />
         
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-semibold">
+            <span className="px-3 py-1 rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 text-xs font-semibold">
               {step.badge}
             </span>
-            <span className="text-xs text-slate-400 font-medium">Platform Walkthrough</span>
+            <span className="text-xs text-slate-400 font-medium">Interactive Platform Walkthrough</span>
           </div>
+
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-all"
+            className="p-1.5 rounded-xl hover:bg-slate-800 text-slate-400 hover:text-white transition"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <h3 className="text-xl font-bold text-white font-outfit mb-2 flex items-center gap-2">
-          <span>{step.title}</span>
-        </h3>
-        <p className="text-sm text-slate-300 mb-6 leading-relaxed bg-slate-900/60 p-3.5 rounded-xl border border-slate-800">
-          {step.description}
-        </p>
+        {/* Step Content */}
+        <div className="space-y-4 my-6">
+          <h2 className="text-xl md:text-2xl font-bold font-outfit text-white flex items-center gap-2">
+            <span>{step.title}</span>
+          </h2>
 
-        {/* Progress Dots */}
-        <div className="flex items-center justify-between gap-1 mb-6">
-          {demoSteps.map((s, idx) => (
+          <p className="text-sm text-slate-300 leading-relaxed bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
+            {step.description}
+          </p>
+
+          <div className="flex items-center justify-between text-xs text-slate-400 pt-2">
+            <span>Viewing Target Tab: <strong className="text-indigo-400 uppercase">{step.tab}</strong></span>
+            <span>Audience Context: <strong className="text-emerald-400 uppercase">{step.role}</strong></span>
+          </div>
+        </div>
+
+        {/* Step Progress Dots */}
+        <div className="flex items-center justify-center gap-1.5 py-2">
+          {demoSteps.map((_, idx) => (
             <button
               key={idx}
               onClick={() => handleGoToStep(idx)}
-              className={`h-2 flex-1 rounded-full transition-all ${
-                idx === currentStep
-                  ? 'bg-gradient-to-r from-indigo-500 to-pink-500 shadow-md shadow-indigo-500/30 scale-y-125'
-                  : idx < currentStep
-                  ? 'bg-indigo-600/60'
-                  : 'bg-slate-800'
+              className={`h-2 rounded-full transition-all ${
+                idx === currentStep 
+                  ? 'w-7 bg-indigo-500' 
+                  : 'w-2 bg-slate-700 hover:bg-slate-600'
               }`}
-              title={s.title}
             />
           ))}
         </div>
 
-        {/* Action Controls */}
-        <div className="flex items-center justify-between">
+        {/* Controls Footer */}
+        <div className="flex items-center justify-between pt-4 border-t border-slate-800 mt-4">
           <button
-            onClick={handlePrev}
             disabled={currentStep === 0}
-            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
-              currentStep === 0
-                ? 'opacity-40 cursor-not-allowed text-slate-500 bg-slate-900'
-                : 'bg-slate-800 text-slate-200 hover:bg-slate-700'
-            }`}
+            onClick={handlePrev}
+            className="px-4 py-2 rounded-xl border border-slate-700 text-xs font-semibold text-slate-300 hover:text-white disabled:opacity-30 transition flex items-center gap-1"
           >
             <ChevronLeft className="w-4 h-4" />
-            <span>Previous Step</span>
+            <span>Previous</span>
           </button>
 
           <button
@@ -191,23 +195,28 @@ export const DemoTourModal: React.FC<DemoTourModalProps> = ({
               onNavigateTab(step.tab, step.role);
               onClose();
             }}
-            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-indigo-900/50 text-indigo-300 border border-indigo-500/30 text-xs font-semibold transition-all"
+            className="text-xs text-indigo-400 hover:underline font-semibold"
           >
-            Jump to View
+            Explore This Screen
           </button>
 
-          <button
-            onClick={handleNext}
-            disabled={currentStep === demoSteps.length - 1}
-            className={`flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-semibold text-white transition-all shadow-md ${
-              currentStep === demoSteps.length - 1
-                ? 'bg-emerald-600 hover:bg-emerald-500'
-                : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:opacity-95'
-            }`}
-          >
-            <span>{currentStep === demoSteps.length - 1 ? 'Finish Tour' : 'Next Step'}</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
+          {currentStep < demoSteps.length - 1 ? (
+            <button
+              onClick={handleNext}
+              className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md shadow-indigo-600/30 transition flex items-center gap-1"
+            >
+              <span>Next Step</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          ) : (
+            <button
+              onClick={onClose}
+              className="px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold shadow-md transition flex items-center gap-1"
+            >
+              <span>Finish Tour</span>
+              <CheckCircle2 className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
       </div>

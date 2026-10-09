@@ -1,156 +1,382 @@
-import React, { useState } from 'react';
-import { Sun, Zap, Cpu, Wrench, CheckSquare, ShieldAlert, Award, ChevronRight } from 'lucide-react';
-import { Language } from '../types';
+import React, { useState, useEffect } from 'react';
+import { 
+  Sun, 
+  Zap, 
+  Cpu, 
+  Wrench, 
+  CheckSquare, 
+  ShieldAlert, 
+  Award, 
+  ChevronRight, 
+  FolderGit2, 
+  CheckCircle2, 
+  ExternalLink, 
+  Plus, 
+  Save, 
+  Sparkles, 
+  Layers, 
+  ArrowUpRight 
+} from 'lucide-react';
+import { Language, ProjectPortfolioItem } from '../types';
+import { mockRecommendedProjects } from '../data/mockData';
+import { fetchPortfolioProjectsApi, savePortfolioProjectApi } from '../services/api';
 
 interface VocationalHubProps {
   language: Language;
-  onNavigateTab: (tab: string) => void;
+  onNavigateTab: (tab: string, role?: any) => void;
 }
 
 export const VocationalHub: React.FC<VocationalHubProps> = ({ language, onNavigateTab }) => {
-  const [selectedPathway, setSelectedPathway] = useState<string>('solar');
+  const [projects, setProjects] = useState<ProjectPortfolioItem[]>(mockRecommendedProjects);
+  const [selectedLevel, setSelectedLevel] = useState<string>('all');
+  const [recordingProjectId, setRecordingProjectId] = useState<string | null>(null);
+  const [repoUrlInput, setRepoUrlInput] = useState<string>('');
+  const [demoUrlInput, setDemoUrlInput] = useState<string>('');
+  const [notesInput, setNotesInput] = useState<string>('');
+  const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
-  const pathways = [
-    {
-      id: 'solar',
-      title: 'Solar PV & Rooftop Installation',
-      icon: Sun,
-      color: 'text-amber-400',
-      bg: 'bg-amber-500/10 border-amber-500/30',
-      description: 'Master practical solar panel mounting, string inverter wiring, phase balancing, and grid sync safety protocols.',
-      checklists: [
-        'Perform solar irradiance testing using multimeter & pyranometer',
-        'Wire MC4 connectors with IP67 waterproofing seal',
-        'Configure grid-tie micro-inverter telemetry settings',
-        'Verify earthing resistance (< 5 Ohms standard)'
-      ]
-    },
-    {
-      id: 'ev',
-      title: 'EV Mobility & Battery Diagnostics',
-      icon: Zap,
-      color: 'text-indigo-400',
-      bg: 'bg-indigo-500/10 border-indigo-500/30',
-      description: 'Troubleshoot Lithium-ion battery packs, BMS cell balancing, high-voltage contactors, and CAN bus telemetry.',
-      checklists: [
-        'Measure cell voltage variances across 48V/72V EV battery modules',
-        'Read diagnostic fault codes (DTC) using OBD-II CAN bus tool',
-        'Perform thermal imaging inspection of high-current power cables',
-        'Test regenerative braking controller response curves'
-      ]
-    },
-    {
-      id: 'agri',
-      title: 'Smart Agri IoT & Automated Irrigation',
-      icon: Cpu,
-      color: 'text-emerald-400',
-      bg: 'bg-emerald-500/10 border-emerald-500/30',
-      description: 'Deploy low-power LoRaWAN soil moisture probes, automated solenoid valves, and drone crop health telemetry.',
-      checklists: [
-        'Calibrate capacitive soil moisture sensors in sand/clay substrates',
-        'Program ESP32 / Arduino microcontroller for solar-powered telemetry',
-        'Set up automated drip irrigation relay based on soil moisture thresholds',
-        'Upload multispectral drone imagery to crop yield model'
-      ]
+  useEffect(() => {
+    let mounted = true;
+    const loadProjects = async () => {
+      const serverProjects = await fetchPortfolioProjectsApi();
+      if (mounted && serverProjects && serverProjects.length > 0) {
+        setProjects(prev => {
+          const map = new Map(prev.map(p => [p.id, p]));
+          serverProjects.forEach(sp => map.set(sp.id, sp));
+          return Array.from(map.values());
+        });
+      }
+    };
+    loadProjects();
+    return () => { mounted = false; };
+  }, []);
+
+  const handleToggleStep = async (projectId: string, stepId: string) => {
+    const updated = projects.map(p => {
+      if (p.id === projectId) {
+        const updatedSteps = p.steps.map(s => s.id === stepId ? { ...s, completed: !s.completed } : s);
+        const allCompleted = updatedSteps.every(s => s.completed);
+        return {
+          ...p,
+          steps: updatedSteps,
+          isVerifiedEvidence: allCompleted || p.isVerifiedEvidence
+        };
+      }
+      return p;
+    });
+
+    setProjects(updated);
+    const target = updated.find(p => p.id === projectId);
+    if (target) {
+      await savePortfolioProjectApi(target);
     }
-  ];
+  };
 
-  const current = pathways.find(p => p.id === selectedPathway) || pathways[0];
+  const handleSavePortfolioRecord = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!recordingProjectId) return;
+
+    const target = projects.find(p => p.id === recordingProjectId);
+    if (!target) return;
+
+    const updatedProject: ProjectPortfolioItem = {
+      ...target,
+      repoUrl: repoUrlInput || target.repoUrl,
+      demoUrl: demoUrlInput || target.demoUrl,
+      notes: notesInput || target.notes,
+      isVerifiedEvidence: true,
+      completedAt: new Date().toISOString().split('T')[0]
+    };
+
+    const res = await savePortfolioProjectApi(updatedProject);
+    if (res.success && res.projects) {
+      setProjects(res.projects);
+      setStatusMsg(`✅ "${target.title}" successfully added to verified recruiter portfolio!`);
+    } else {
+      setProjects(prev => prev.map(p => p.id === recordingProjectId ? updatedProject : p));
+      setStatusMsg(`✅ Project updated locally in portfolio.`);
+    }
+
+    setRecordingProjectId(null);
+    setRepoUrlInput('');
+    setDemoUrlInput('');
+    setNotesInput('');
+    setTimeout(() => setStatusMsg(null), 5000);
+  };
+
+  const filteredProjects = projects.filter(p => {
+    if (selectedLevel === 'all') return true;
+    return p.level.toLowerCase() === selectedLevel.toLowerCase();
+  });
 
   return (
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel p-6 rounded-2xl border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="glass-panel p-6 md:p-8 rounded-3xl border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
-            NEP 2020 Vocational & Practical Skill Credit Pathway
-          </span>
-          <h2 className="text-2xl font-bold text-white font-outfit mt-1">Vocational & Practical Skill Hub</h2>
-          <p className="text-sm text-slate-300">
-            Hands-on technical skilling pathways for clean energy, electric mobility, and smart agricultural technology.
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+              Practical Projects & Evidence Portfolio Hub
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-semibold">
+              NCrF Level 4.5 Aligned
+            </span>
+          </div>
+          <h2 className="text-2xl md:text-3xl font-extrabold text-white font-outfit mt-1">
+            Real-World Project Recommendations & Portfolio Builder
+          </h2>
+          <p className="text-sm text-slate-300 max-w-2xl mt-1 leading-relaxed">
+            Bridge academic theory into verifiable industry competence. Each project is divided into discrete actionable steps that feed directly into your skill readiness score and connect to genuine hackathons and scholarships.
           </p>
         </div>
 
-        <div className="bg-slate-900/90 px-4 py-3 rounded-xl border border-slate-800 text-right">
-          <p className="text-xs text-slate-400">Practical Credit Eligibility</p>
-          <p className="text-base font-bold text-emerald-400 font-outfit">NCrF Level 4.5</p>
+        <div className="bg-slate-900/90 p-4 rounded-2xl border border-slate-800 text-right shrink-0">
+          <p className="text-xs text-slate-400">Verified Portfolio Artifacts</p>
+          <p className="text-xl font-bold text-emerald-400 font-outfit">
+            {projects.filter(p => p.isVerifiedEvidence).length} / {projects.length} Completed
+          </p>
         </div>
       </div>
 
-      {/* Pathway Selection Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {pathways.map(p => {
-          const Icon = p.icon;
-          const isSelected = p.id === selectedPathway;
-          return (
+      {statusMsg && (
+        <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2">
+          <CheckCircle2 className="w-4 h-4" />
+          <span>{statusMsg}</span>
+        </div>
+      )}
+
+      {/* Level Filter Tabs */}
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <div className="flex items-center gap-2">
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mr-1">Experience Level:</span>
+          {['all', 'Beginner', 'Intermediate', 'Advanced'].map(lvl => (
             <button
-              key={p.id}
-              onClick={() => setSelectedPathway(p.id)}
-              className={`p-5 rounded-2xl border text-left transition-all flex flex-col justify-between space-y-3 ${
-                isSelected
-                  ? 'bg-indigo-600/20 border-indigo-500 shadow-xl shadow-indigo-600/20'
-                  : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
+              key={lvl}
+              onClick={() => setSelectedLevel(lvl)}
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition ${
+                selectedLevel.toLowerCase() === lvl.toLowerCase()
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'bg-slate-900 border border-slate-800 text-slate-400 hover:text-white'
               }`}
             >
-              <div className="flex items-center justify-between">
-                <div className={`p-2.5 rounded-xl border ${p.bg}`}>
-                  <Icon className={`w-5 h-5 ${p.color}`} />
-                </div>
-                {isSelected && <span className="text-[10px] px-2 py-0.5 rounded bg-indigo-500 text-white font-bold">Active</span>}
-              </div>
-              <div>
-                <h3 className="text-base font-bold text-white font-outfit">{p.title}</h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2">{p.description}</p>
-              </div>
+              {lvl === 'all' ? 'All Levels' : lvl}
             </button>
+          ))}
+        </div>
+
+        <span className="text-xs text-slate-400">
+          Completed projects directly boost your verified skill gap score
+        </span>
+      </div>
+
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {filteredProjects.map(proj => {
+          const completedStepCount = proj.steps.filter(s => s.completed).length;
+          const completionPct = Math.round((completedStepCount / proj.steps.length) * 100);
+
+          return (
+            <div
+              key={proj.id}
+              className={`p-6 rounded-3xl border transition-all flex flex-col justify-between space-y-4 ${
+                proj.isVerifiedEvidence
+                  ? 'bg-slate-900/90 border-emerald-500/40 shadow-lg shadow-emerald-500/5'
+                  : 'bg-slate-900/80 border-slate-800'
+              }`}
+            >
+              <div className="space-y-3">
+                {/* Header Pills */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
+                      {proj.category}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      proj.level === 'Beginner' ? 'bg-emerald-500/15 text-emerald-400' :
+                      proj.level === 'Intermediate' ? 'bg-amber-500/15 text-amber-400' :
+                      'bg-purple-500/15 text-purple-400'
+                    }`}>
+                      {proj.level}
+                    </span>
+                  </div>
+
+                  {proj.isVerifiedEvidence ? (
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>Verified in Portfolio</span>
+                    </span>
+                  ) : (
+                    <span className="text-xs text-slate-400 font-medium">
+                      {completionPct}% Complete
+                    </span>
+                  )}
+                </div>
+
+                {/* Title & Description */}
+                <div>
+                  <h3 className="text-lg font-bold text-white font-outfit">{proj.title}</h3>
+                  <p className="text-xs text-slate-300 mt-1 leading-relaxed">{proj.description}</p>
+                </div>
+
+                {/* Target Skills Reinforced */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  <span className="text-[10px] text-slate-500 uppercase font-semibold mr-1">Reinforces:</span>
+                  {proj.targetSkills.map((sk, idx) => (
+                    <span key={idx} className="px-2 py-0.5 rounded-md text-[10px] bg-slate-950 border border-slate-800 text-indigo-300 font-medium">
+                      {sk}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Step-by-Step Breakdown Checklist (Report Highlight #6) */}
+                <div className="space-y-2 pt-2 border-t border-slate-800">
+                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+                    <CheckSquare className="w-3.5 h-3.5 text-indigo-400" />
+                    <span>Discrete Actionable Steps ({completedStepCount}/{proj.steps.length}):</span>
+                  </h4>
+
+                  <div className="space-y-1.5">
+                    {proj.steps.map(step => (
+                      <div
+                        key={step.id}
+                        onClick={() => handleToggleStep(proj.id, step.id)}
+                        className={`p-2.5 rounded-xl border text-xs cursor-pointer flex items-start gap-2.5 transition ${
+                          step.completed
+                            ? 'bg-emerald-950/20 border-emerald-500/30 text-emerald-300'
+                            : 'bg-slate-950/60 border-slate-800 hover:border-slate-700 text-slate-300'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={step.completed}
+                          readOnly
+                          className="mt-0.5 accent-indigo-500 rounded"
+                        />
+                        <div className="min-w-0">
+                          <p className={`font-semibold ${step.completed ? 'line-through text-slate-400' : 'text-white'}`}>
+                            {step.title}
+                          </p>
+                          <p className="text-[11px] text-slate-400 leading-normal">{step.detail}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Repository / Evidence Artifact Links if Submitted */}
+                {proj.repoUrl && (
+                  <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs flex items-center justify-between">
+                    <div className="truncate pr-2">
+                      <span className="text-slate-400 text-[10px] block">GitHub Repository Artifact:</span>
+                      <a href={proj.repoUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-400 underline truncate block">
+                        {proj.repoUrl}
+                      </a>
+                    </div>
+                    <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-semibold shrink-0">
+                      Evidence Validated
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Action Buttons: Connect to Opportunities (Highlight #13) & Record Work */}
+              <div className="pt-3 border-t border-slate-800 space-y-2">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setRecordingProjectId(proj.id);
+                      setRepoUrlInput(proj.repoUrl || '');
+                      setDemoUrlInput(proj.demoUrl || '');
+                      setNotesInput(proj.notes || '');
+                    }}
+                    className="flex-1 py-2 px-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-md"
+                  >
+                    <FolderGit2 className="w-3.5 h-3.5" />
+                    <span>{proj.isVerifiedEvidence ? 'Update Portfolio Record' : 'Record Completed Work'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => onNavigateTab('opportunities')}
+                    className="py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 text-xs font-semibold flex items-center justify-center gap-1 transition"
+                    title="Connect to Matched Hackathons & Internships"
+                  >
+                    <span>Matched Contests</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+
+            </div>
           );
         })}
       </div>
 
-      {/* Selected Vocational Detail & Checklist */}
-      <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-6">
-        <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-          <div className="flex items-center gap-3">
-            <div className={`p-3 rounded-xl border ${current.bg}`}>
-              <current.icon className={`w-6 h-6 ${current.color}`} />
-            </div>
-            <div>
-              <h3 className="text-xl font-bold text-white font-outfit">{current.title}</h3>
-              <p className="text-xs text-slate-400">Verifiable Practical Execution Protocol</p>
-            </div>
-          </div>
-          
-          <button
-            onClick={() => onNavigateTab('learning')}
-            className="flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-xl transition-all shadow-md"
-          >
-            <span>Launch Practical Module</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
-        </div>
+      {/* Record Completed Work Modal */}
+      {recordingProjectId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+          <div className="max-w-md w-full rounded-3xl bg-slate-900 border border-indigo-500/40 p-6 shadow-2xl text-white space-y-4">
+            <h3 className="text-lg font-bold font-outfit">
+              Record Project in Recruiter Portfolio
+            </h3>
+            <p className="text-xs text-slate-400">
+              Provide verifiable evidence links to substantiate your practical credit and boost target role readiness.
+            </p>
 
-        <div className="space-y-4">
-          <h4 className="text-sm font-bold text-white flex items-center gap-2">
-            <CheckSquare className="w-4 h-4 text-emerald-400" />
-            <span>Practical Equipment & Execution Checklist:</span>
-          </h4>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {current.checklists.map((item, idx) => (
-              <div key={idx} className="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800 flex items-start gap-3">
+            <form onSubmit={handleSavePortfolioRecord} className="space-y-3.5 text-xs">
+              <div>
+                <label className="block font-semibold mb-1">GitHub / Code Repository URL</label>
                 <input
-                  type="checkbox"
-                  defaultChecked={idx === 0}
-                  className="mt-0.5 w-4 h-4 rounded accent-indigo-500 cursor-pointer"
+                  type="url"
+                  placeholder="https://github.com/..."
+                  value={repoUrlInput}
+                  onChange={e => setRepoUrlInput(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:ring-1 focus:ring-indigo-500"
                 />
-                <span className="text-xs text-slate-200 leading-relaxed">{item}</span>
               </div>
-            ))}
+
+              <div>
+                <label className="block font-semibold mb-1">Live Demo / Dashboard URL (Optional)</label>
+                <input
+                  type="url"
+                  placeholder="https://..."
+                  value={demoUrlInput}
+                  onChange={e => setDemoUrlInput(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold mb-1">Implementation Notes & Benchmarks</label>
+                <textarea
+                  rows={3}
+                  placeholder="Key metrics, models used, testing results..."
+                  value={notesInput}
+                  onChange={e => setNotesInput(e.target.value)}
+                  className="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-white outline-none focus:ring-1 focus:ring-indigo-500"
+                />
+              </div>
+
+              <div className="pt-2 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRecordingProjectId(null)}
+                  className="px-4 py-2 rounded-xl border border-slate-700 text-slate-400 hover:text-white"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold flex items-center gap-1.5 shadow-lg"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>Save to Verified DB</span>
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-
-      </div>
+      )}
 
     </div>
   );

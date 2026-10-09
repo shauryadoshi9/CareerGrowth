@@ -12,7 +12,9 @@ import {
   BookMarked,
   Layers,
   Award,
-  Compass
+  Compass,
+  Sliders,
+  RotateCcw
 } from 'lucide-react';
 import { ThemeMode, Language } from '../types';
 
@@ -38,8 +40,12 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
 }) => {
   const isDark = theme === 'dark';
 
+  // Highlight #3: Inputs for weak topics, previous results, learning goals, upcoming exams & study time
   const [availableTime, setAvailableTime] = useState<number>(45); // minutes
   const [examDaysRemaining, setExamDaysRemaining] = useState<number>(14);
+  const [selectedGoal, setSelectedGoal] = useState<string>('placement'); // placement, exam, portfolio
+  const [selectedWeakTopic, setSelectedWeakTopic] = useState<string>('vector-embeddings');
+  const [previousResultScore, setPreviousResultScore] = useState<number>(54); // % diagnostic
   const [streakDays, setStreakDays] = useState<number>(5);
 
   const [tasks, setTasks] = useState<RevisionTask[]>([
@@ -82,10 +88,99 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
     }));
   };
 
+  const handleRecalculateSchedule = () => {
+    let newTasks: RevisionTask[] = [];
+
+    if (availableTime <= 30) {
+      newTasks = [
+        {
+          id: 'recalc-1',
+          topic: `Bite-Sized Review: ${selectedWeakTopic.replace('-', ' ')} (Score: ${previousResultScore}%)`,
+          timeEstimate: '15 mins',
+          type: 'concept',
+          completed: false,
+          priority: 'high'
+        },
+        {
+          id: 'recalc-2',
+          topic: `Quick Diagnostic Check (${selectedGoal === 'exam' ? 'Midterm Exam Pattern' : 'Interview Q&A'})`,
+          timeEstimate: '15 mins',
+          type: 'quiz',
+          completed: false,
+          priority: 'medium'
+        }
+      ];
+    } else if (availableTime <= 60) {
+      newTasks = [
+        {
+          id: 'recalc-1',
+          topic: `Core Concept Clarification with AI Study Buddy: ${selectedWeakTopic.replace('-', ' ')}`,
+          timeEstimate: '15 mins',
+          type: 'concept',
+          completed: false,
+          priority: 'high'
+        },
+        {
+          id: 'recalc-2',
+          topic: `Hands-on Portfolio Task: Code Working Evidence Artifact (${selectedGoal === 'portfolio' ? 'Step 2' : 'Step 1'})`,
+          timeEstimate: '20 mins',
+          type: 'practical',
+          completed: false,
+          priority: 'high'
+        },
+        {
+          id: 'recalc-3',
+          topic: `Diagnostic Mastery Test (Targeting Exam in ${examDaysRemaining} Days)`,
+          timeEstimate: '10 mins',
+          type: 'quiz',
+          completed: false,
+          priority: 'medium'
+        }
+      ];
+    } else {
+      newTasks = [
+        {
+          id: 'recalc-1',
+          topic: `In-depth Deep Dive: ${selectedWeakTopic.replace('-', ' ')} & Real-world Analogies`,
+          timeEstimate: '25 mins',
+          type: 'concept',
+          completed: false,
+          priority: 'high'
+        },
+        {
+          id: 'recalc-2',
+          topic: `Project Sprint: Build Step in Recruiter Portfolio Hub`,
+          timeEstimate: '35 mins',
+          type: 'practical',
+          completed: false,
+          priority: 'high'
+        },
+        {
+          id: 'recalc-3',
+          topic: `Mock Interview Technical Q&A Practice for ${selectedGoal.toUpperCase()}`,
+          timeEstimate: '20 mins',
+          type: 'quiz',
+          completed: false,
+          priority: 'medium'
+        },
+        {
+          id: 'recalc-4',
+          topic: `Daily Retention Flash Review & Formula Mastery`,
+          timeEstimate: '10 mins',
+          type: 'concept',
+          completed: false,
+          priority: 'low'
+        }
+      ];
+    }
+
+    setTasks(newTasks);
+  };
+
   const completedCount = tasks.filter(t => t.completed).length;
   const progressPercent = Math.round((completedCount / tasks.length) * 100);
 
-  // 5-Stage Growth Journey Milestones (Report Highlighting)
+  // 5-Stage Growth Journey Milestones (Report Highlight #10)
   const journeyMilestones = [
     {
       stage: 1,
@@ -117,7 +212,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
     },
     {
       stage: 5,
-      title: 'Career & Internship Launch',
+      title: 'Career & Opportunity Launch',
       desc: 'Direct match with PM Scheme, Unstop & Devfolio portals.',
       tab: 'opportunities',
       status: 'locked',
@@ -148,11 +243,11 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
           </h2>
 
           <p className={`text-xs md:text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Smart scheduling that balances weak diagnostic areas, learning targets, upcoming examinations, and your available time into manageable bite-sized micro-goals.
+            Smart scheduling that calculates a manageable daily plan using your weak diagnostic topics, previous quiz results, target learning goals, upcoming examination timeline, and available study hours.
           </p>
         </div>
 
-        {/* Schedule Controls */}
+        {/* Schedule Quick Control */}
         <div className={`p-4 rounded-2xl border text-xs space-y-3 shrink-0 ${
           isDark ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
@@ -184,7 +279,81 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
         </div>
       </div>
 
-      {/* Revision Tasks Grid */}
+      {/* Multi-Factor Revision Customization Bar (Highlight #3) */}
+      <div className={`p-5 rounded-2xl border ${isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-md'} space-y-3`}>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-indigo-400">
+            <Sliders className="w-4 h-4" />
+            <span>AI Dynamic Schedule Calibration</span>
+          </div>
+          <button
+            onClick={handleRecalculateSchedule}
+            className="px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl text-xs flex items-center gap-1.5 shadow-md transition"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Recalculate Schedule</span>
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+          <div>
+            <label className="text-[11px] font-semibold text-slate-400 block mb-1">Diagnostic Weak Topic</label>
+            <select
+              value={selectedWeakTopic}
+              onChange={e => setSelectedWeakTopic(e.target.value)}
+              className={`w-full px-3 py-2 rounded-xl border outline-none ${
+                isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+              }`}
+            >
+              <option value="vector-embeddings">Vector Cosine Similarity (54%)</option>
+              <option value="neural-activation">Deep Neural Activation ReLU (48%)</option>
+              <option value="solar-mppt">Solar MPPT Tracking Algorithms (62%)</option>
+              <option value="bms-ekf">EV Battery BMS State-of-Charge (30%)</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-[11px] font-semibold text-slate-400 block mb-1">Previous Result Score ({previousResultScore}%)</label>
+            <input
+              type="range"
+              min="20"
+              max="90"
+              value={previousResultScore}
+              onChange={e => setPreviousResultScore(Number(e.target.value))}
+              className="w-full accent-indigo-500 mt-2"
+            />
+          </div>
+
+          <div>
+            <label className="text-[11px] font-semibold text-slate-400 block mb-1">Target Learning Goal</label>
+            <select
+              value={selectedGoal}
+              onChange={e => setSelectedGoal(e.target.value)}
+              className={`w-full px-3 py-2 rounded-xl border outline-none ${
+                isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+              }`}
+            >
+              <option value="placement">Crack Placement & Interviews</option>
+              <option value="exam">Semester Midterm / Final Exam</option>
+              <option value="portfolio">Build Recruiter Portfolio Project</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="text-[11px] font-semibold text-slate-400 block mb-1">Upcoming Exam Countdown ({examDaysRemaining} Days)</label>
+            <input
+              type="range"
+              min="3"
+              max="60"
+              value={examDaysRemaining}
+              onChange={e => setExamDaysRemaining(Number(e.target.value))}
+              className="w-full accent-purple-500 mt-2"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Revision Tasks Grid & Growth Journey Flow */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* Left: Today's Manageable Revision Tasks */}
@@ -255,7 +424,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
           </div>
 
           <div className="pt-2 flex items-center justify-between text-xs">
-            <span className="text-slate-400">Paced to keep cognitive load low without burnout.</span>
+            <span className="text-slate-400">Manageable cognitive load calculated to avoid burnout.</span>
             <button
               onClick={() => onNavigateTab('study-buddy')}
               className="text-indigo-400 font-semibold hover:underline flex items-center gap-1"
@@ -266,7 +435,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
           </div>
         </div>
 
-        {/* Right: My Growth Journey Progress Flow (Report Highlighting) */}
+        {/* Right: My Growth Journey Progress Flow (Report Highlight #10) */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between">
             <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -281,11 +450,11 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
             isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-md'
           }`}>
             <p className="text-xs text-slate-400 leading-relaxed">
-              Every learning action connects discovery, practical evidence, and industry placement in one structured journey.
+              Every learning action connects discovery, skill improvement, practical projects, and career opportunities in one progress view.
             </p>
 
             <div className="space-y-3 pt-1">
-              {journeyMilestones.map((m, idx) => (
+              {journeyMilestones.map((m) => (
                 <div
                   key={m.stage}
                   onClick={() => onNavigateTab(m.tab)}
@@ -323,7 +492,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
                 onClick={() => onNavigateTab('opportunities')}
                 className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-bold shadow-md transition"
               >
-                View Connected Opportunities
+                Launch Connected Opportunities
               </button>
             </div>
           </div>

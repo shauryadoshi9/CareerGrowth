@@ -243,6 +243,11 @@
   "copilotHistory": [],
   "activityLog": [
     {
+      "timestamp": "2026-10-09T15:52:26.171Z",
+      "action": "Opportunity Submitted",
+      "details": "NextGen Web3 & AI Hackathon"
+    },
+    {
       "timestamp": "2026-10-09T15:13:49.096Z",
       "action": "1:1 Mentorship Booked",
       "details": "Industry Mentor (Upcoming Slot)"
@@ -367,6 +372,36 @@
       "meetLink": "https://meet.google.com/sb-yk9a-gdc",
       "status": "confirmed",
       "createdAt": "2026-10-09T15:13:49.096Z"
+    }
+  ],
+  "opportunities": [
+    {
+      "id": "opp-custom-1791561146171",
+      "title": "NextGen Web3 & AI Hackathon",
+      "company": "Community Labs",
+      "location": "Remote / Pan-India",
+      "stipendOrSalary": "₹10,000 - ₹25,000 / month",
+      "prizeOrStipend": "Verified Stipend",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "SkillBridge Partner",
+      "sourceUrl": "https://unstop.com",
+      "deadline": "Open Registrations",
+      "registeredCount": "150+ Applicants",
+      "urgencyBadge": "⚡ New Listing",
+      "verifiedHost": true,
+      "tags": [
+        "Community Verified",
+        "Open Opportunity"
+      ],
+      "bannerGradient": "from-indigo-600 via-blue-600 to-purple-700",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 70
+        }
+      ]
     }
   ]
 }

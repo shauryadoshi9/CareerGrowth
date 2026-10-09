@@ -1,4 +1,4 @@
-import { Skill, JobApplication, ServerHealth, Mentor, MentorshipBooking } from '../types';
+import { Skill, JobApplication, ServerHealth, Mentor, MentorshipBooking, Opportunity, ProjectPortfolioItem, ProgressShareConsent } from '../types';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -244,5 +244,75 @@ export async function fetchMyMentorshipBookings(): Promise<MentorshipBooking[]> 
     return [];
   }
 }
+
+export async function fetchOpportunitiesApi(): Promise<Opportunity[]> {
+  try {
+    const res = await fetch(`${API_BASE}/opportunities`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
+export async function postCustomOpportunityApi(opp: Partial<Opportunity>): Promise<{ success: boolean; opportunity?: Opportunity; opportunities?: Opportunity[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/opportunities`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(opp)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function fetchPortfolioProjectsApi(): Promise<ProjectPortfolioItem[]> {
+  try {
+    const res = await fetch(`${API_BASE}/portfolio/projects`);
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (err) {
+    return [];
+  }
+}
+
+export async function savePortfolioProjectApi(proj: Partial<ProjectPortfolioItem>): Promise<{ success: boolean; project?: ProjectPortfolioItem; projects?: ProjectPortfolioItem[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/portfolio/projects`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(proj)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+export async function fetchProgressShareApi(): Promise<ProgressShareConsent | null> {
+  try {
+    const res = await fetch(`${API_BASE}/progress-share`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function saveProgressShareApi(payload: Partial<ProgressShareConsent>): Promise<{ success: boolean; progressShare?: ProgressShareConsent }> {
+  try {
+    const res = await fetch(`${API_BASE}/progress-share`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
 
 

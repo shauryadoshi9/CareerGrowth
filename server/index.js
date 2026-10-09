@@ -786,6 +786,126 @@ const server = http.createServer(async (req, res) => {
     return;
   }
 
+  // GET & POST /api/opportunities (Opportunities from Unstop, Devfolio, PM Scheme + Custom Submissions)
+  if (pathname === '/api/opportunities') {
+    const db = readDB();
+    if (method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(db.opportunities || []));
+      return;
+    }
+    if (method === 'POST') {
+      const body = await parseJSONBody(req);
+      const newOpp = {
+        id: body.id || `opp-custom-${Date.now()}`,
+        title: body.title || 'Community Opportunity',
+        company: body.company || 'Host Organization',
+        location: body.location || 'Remote / Pan-India',
+        stipendOrSalary: body.stipendOrSalary || '₹10,000 - ₹25,000 / month',
+        prizeOrStipend: body.prizeOrStipend || body.stipendOrSalary || 'Verified Stipend',
+        type: body.type || 'hackathon',
+        category: body.category || body.type || 'hackathon',
+        sourcePlatform: body.sourcePlatform || 'SkillBridge Partner',
+        sourceUrl: body.sourceUrl || 'https://unstop.com',
+        deadline: body.deadline || 'Open Registrations',
+        registeredCount: body.registeredCount || '150+ Applicants',
+        urgencyBadge: body.urgencyBadge || '⚡ New Listing',
+        verifiedHost: true,
+        tags: body.tags || ['Community Verified', 'Open Opportunity'],
+        bannerGradient: body.bannerGradient || 'from-indigo-600 via-blue-600 to-purple-700',
+        minGpa: Number(body.minGpa) || 6.0,
+        requiredSkills: body.requiredSkills || [{ skillName: 'Python & Data Structures', level: 70 }]
+      };
+      db.opportunities = db.opportunities || [];
+      db.opportunities.unshift(newOpp);
+      db.activityLog = db.activityLog || [];
+      db.activityLog.unshift({ timestamp: new Date().toISOString(), action: 'Opportunity Submitted', details: newOpp.title });
+      writeDB(db);
+      res.writeHead(201, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, opportunity: newOpp, opportunities: db.opportunities }));
+      return;
+    }
+  }
+
+  // GET & POST /api/portfolio/projects (Student Step-by-Step Practical Projects & Evidence)
+  if (pathname === '/api/portfolio/projects') {
+    const db = readDB();
+    if (method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(db.portfolioProjects || []));
+      return;
+    }
+    if (method === 'POST') {
+      const body = await parseJSONBody(req);
+      db.portfolioProjects = db.portfolioProjects || [];
+      const existingIdx = db.portfolioProjects.findIndex(p => p.id === body.id);
+      let updatedProject;
+      if (existingIdx >= 0) {
+        db.portfolioProjects[existingIdx] = { ...db.portfolioProjects[existingIdx], ...body };
+        updatedProject = db.portfolioProjects[existingIdx];
+      } else {
+        updatedProject = {
+          id: body.id || `proj-${Date.now()}`,
+          title: body.title || 'Practical Portfolio Project',
+          category: body.category || 'Software & AI',
+          level: body.level || 'Intermediate',
+          description: body.description || '',
+          targetSkills: body.targetSkills || ['Python & Data Structures'],
+          steps: body.steps || [],
+          repoUrl: body.repoUrl || '',
+          demoUrl: body.demoUrl || '',
+          notes: body.notes || '',
+          completedAt: body.completedAt || new Date().toISOString().split('T')[0],
+          isVerifiedEvidence: true,
+          matchedOpportunityIds: body.matchedOpportunityIds || []
+        };
+        db.portfolioProjects.unshift(updatedProject);
+      }
+      db.activityLog = db.activityLog || [];
+      db.activityLog.unshift({ timestamp: new Date().toISOString(), action: 'Portfolio Project Saved', details: updatedProject.title });
+      writeDB(db);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, project: updatedProject, projects: db.portfolioProjects }));
+      return;
+    }
+  }
+
+  // GET & POST /api/progress-share (Consent-Driven Family / Teacher Progress Summaries)
+  if (pathname === '/api/progress-share') {
+    const db = readDB();
+    if (method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(db.progressShare || {
+        consentGiven: true,
+        shareWith: 'both',
+        shareCode: 'SB-GROWTH-2026',
+        achievements: ['Completed 14 Micro-Modules', '12-Day Active Streak', '4 Verified Credential Badges', 'Top Placement Fit 85%'],
+        nextSteps: ['Complete RAG Semantic Search Project', 'Register for PM Internship Scheme or Flipkart GRiD', 'Schedule 1:1 with Priya Sharma'],
+        lastUpdated: new Date().toISOString()
+      }));
+      return;
+    }
+    if (method === 'POST') {
+      const body = await parseJSONBody(req);
+      db.progressShare = {
+        consentGiven: body.consentGiven !== undefined ? body.consentGiven : true,
+        shareWith: body.shareWith || 'both',
+        shareCode: body.shareCode || `SB-SHARE-${Math.random().toString(36).substring(2, 8).toUpperCase()}`,
+        parentEmail: body.parentEmail || '',
+        teacherEmail: body.teacherEmail || '',
+        achievements: body.achievements || ['Completed 14 Modules', 'Verified Skill Evidence on Record'],
+        nextSteps: body.nextSteps || ['Complete hands-on project', 'Review diagnostic weak areas'],
+        lastUpdated: new Date().toISOString()
+      };
+      db.activityLog = db.activityLog || [];
+      db.activityLog.unshift({ timestamp: new Date().toISOString(), action: 'Progress Share Consent Updated', details: db.progressShare.shareWith });
+      writeDB(db);
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: true, progressShare: db.progressShare }));
+      return;
+    }
+  }
+
   // 404 Fallback
   res.writeHead(404, { 'Content-Type': 'application/json' });
   res.end(JSON.stringify({ error: 'Endpoint Not Found', path: pathname }));

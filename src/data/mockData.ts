@@ -215,44 +215,144 @@ export const mockAtRiskStudents: AtRiskStudent[] = [
 
 export const mockOpportunities: Opportunity[] = [
   {
-    id: 'opp-1',
-    title: 'AI & Data Engineering Intern (Industry Partner)',
-    company: 'TechCorp AI Innovations (Gujarat Tech Hub)',
-    location: 'GIFT City, Gandhinagar (Hybrid)',
-    stipendOrSalary: '₹25,000 / month',
+    id: 'opp-pm-1',
+    title: 'Prime Minister Internship Scheme (Top 500 Industry Partners)',
+    company: 'Ministry of Corporate Affairs (Govt. of India)',
+    location: 'Pan-India (Major Districts & Industrial Hubs)',
+    stipendOrSalary: '₹5,000 / month + ₹6,000 Grant',
+    prizeOrStipend: '₹5,000 / mo + ₹6,000 Grant',
     type: 'internship',
-    minGpa: 7.5,
+    category: 'internship',
+    sourcePlatform: 'PM Internship Scheme',
+    sourceUrl: 'https://pminternship.mca.gov.in/',
+    deadline: 'Rolling Admissions 2026',
+    tags: ['Govt of India', 'Top 500 Corporates', 'Direct Benefit Transfer', 'Verified Certification'],
+    bannerGradient: 'from-amber-500 via-orange-600 to-red-600',
+    minGpa: 6.0,
     requiredSkills: [
-      { skillName: 'Python & Data Structures', level: 80 },
-      { skillName: 'Machine Learning & Scikit-Learn', level: 75 },
-      { skillName: 'Database & SQL / pgvector', level: 70 }
-    ]
-  },
-  {
-    id: 'opp-2',
-    title: 'Solar & Renewable Systems Apprentice',
-    company: 'SunPower Clean Energy Infrastructure',
-    location: 'Ahmedabad / Vadodara',
-    stipendOrSalary: '₹20,000 / month',
-    type: 'vocational_apprenticeship',
-    minGpa: 6.5,
-    requiredSkills: [
-      { skillName: 'Solar PV Systems & Grid Maintenance', level: 80 },
+      { skillName: 'Python & Data Structures', level: 65 },
       { skillName: 'Technical Problem Solving & Communication', level: 70 }
     ]
   },
   {
-    id: 'opp-3',
-    title: 'Junior Full-Stack AI Engineer',
-    company: 'Cognitive Cloud Solutions',
-    location: 'Remote / Bengaluru',
-    stipendOrSalary: '₹9.5 Lakhs / annum',
-    type: 'fulltime',
-    minGpa: 8.0,
+    id: 'opp-devfolio-1',
+    title: 'ETHIndia & Web3/AI Developer Hackathon',
+    company: 'Devfolio Ecosystem & Global Protocol Partners',
+    location: 'Bengaluru & Virtual Hybrid',
+    stipendOrSalary: '₹25,00,000+ Prize Pool',
+    prizeOrStipend: '₹25,00,000+ Pool',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Devfolio',
+    sourceUrl: 'https://devfolio.co/hackathons',
+    deadline: 'Applications Closing in 6 Days',
+    tags: ['Devfolio Verified', 'AI Track', 'Global Mentors', 'Fast-track Interviews'],
+    bannerGradient: 'from-blue-600 via-indigo-600 to-purple-700',
+    minGpa: 6.5,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 75 },
+      { skillName: 'Machine Learning & Scikit-Learn', level: 70 },
+      { skillName: 'Database & SQL / pgvector', level: 65 }
+    ]
+  },
+  {
+    id: 'opp-unstop-1',
+    title: 'Flipkart GRiD 6.0 National Tech & E-Commerce Challenge',
+    company: 'Flipkart Careers (Unstop Exclusive)',
+    location: 'Bengaluru (Remote Finalists)',
+    stipendOrSalary: '₹5,25,000 + SDE Pre-Placement Interviews',
+    prizeOrStipend: '₹5,25,000 + PPIs',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/hackathons',
+    deadline: 'Live on Unstop Portal',
+    tags: ['Unstop Verified', 'Hiring Challenge', 'High PPI Conversion', 'Engineering Students'],
+    bannerGradient: 'from-indigo-600 via-cyan-600 to-blue-700',
+    minGpa: 7.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 80 },
+      { skillName: 'Prompt Engineering & RAG', level: 75 }
+    ]
+  },
+  {
+    id: 'opp-h2s-1',
+    title: 'Hack2Skill Generative AI & Automation Sprint',
+    company: 'Hack2Skill & Tech Industry Alliance',
+    location: 'Virtual / Online India',
+    stipendOrSalary: '₹3,00,000 Cash Prizes + Cloud Credits',
+    prizeOrStipend: '₹3,00,000 + Credits',
+    type: 'hackathon',
+    category: 'hackathon',
+    sourcePlatform: 'Hack2Skill',
+    sourceUrl: 'https://hack2skill.com/',
+    deadline: 'Submissions Open',
+    tags: ['Hack2Skill', 'Hands-on Labs', 'Cloud Vouchers', 'Open to All Branches'],
+    bannerGradient: 'from-emerald-600 via-teal-600 to-cyan-600',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Python & Data Structures', level: 70 },
+      { skillName: 'Deep Learning & Neural Networks', level: 65 }
+    ]
+  },
+  {
+    id: 'opp-unstop-quiz',
+    title: 'Tata Crucible Campus Business & Technology Quiz',
+    company: 'Tata Sons (Unstop Partnered)',
+    location: 'National Multi-City & Online',
+    stipendOrSalary: '₹2,50,000 Prize Money + Leadership Recognition',
+    prizeOrStipend: '₹2,50,000 Cash',
+    type: 'quiz',
+    category: 'quiz',
+    sourcePlatform: 'Unstop',
+    sourceUrl: 'https://unstop.com/competitions',
+    deadline: 'Registrations Open',
+    tags: ['Unstop Quiz', 'General Tech & Business', 'Prestigious Credential'],
+    bannerGradient: 'from-purple-600 via-pink-600 to-rose-600',
+    minGpa: 6.0,
+    requiredSkills: [
+      { skillName: 'Technical Problem Solving & Communication', level: 80 }
+    ]
+  },
+  {
+    id: 'opp-aicte-1',
+    title: 'AICTE Smart Mobility & Clean Tech Apprenticeship',
+    company: 'AICTE & National Clean Energy Mission',
+    location: 'Ahmedabad / GIFT City Hub',
+    stipendOrSalary: '₹22,000 / month',
+    prizeOrStipend: '₹22,000 / month',
+    type: 'vocational_apprenticeship',
+    category: 'internship',
+    sourcePlatform: 'SkillBridge Partner',
+    sourceUrl: 'https://internship.aicte-india.org/',
+    deadline: 'Rolling Next Batch',
+    tags: ['NATS Accredited', 'NCrF Credits', 'Govt Verified', 'Stipendiary'],
+    bannerGradient: 'from-teal-600 via-emerald-700 to-green-700',
+    minGpa: 6.5,
+    requiredSkills: [
+      { skillName: 'Solar PV Systems & Grid Maintenance', level: 75 },
+      { skillName: 'Technical Problem Solving & Communication', level: 70 }
+    ]
+  },
+  {
+    id: 'opp-gsoc-1',
+    title: 'Google Summer of Code Open Source Fellowship',
+    company: 'Google Open Source Organizations',
+    location: 'Remote Work from Anywhere',
+    stipendOrSalary: '₹1,80,000 - ₹3,20,000 Stipend (USD Equivalent)',
+    prizeOrStipend: 'Up to ₹3,20,000',
+    type: 'internship',
+    category: 'scholarship',
+    sourcePlatform: 'SkillBridge Partner',
+    sourceUrl: 'https://summerofcode.withgoogle.com/',
+    deadline: 'Announced Annually',
+    tags: ['Global Open Source', '1-on-1 Mentorship', 'High Prestigious Value'],
+    bannerGradient: 'from-amber-600 via-red-600 to-purple-700',
+    minGpa: 7.5,
     requiredSkills: [
       { skillName: 'Python & Data Structures', level: 85 },
-      { skillName: 'Deep Learning & Neural Networks', level: 75 },
-      { skillName: 'Prompt Engineering & RAG', level: 80 }
+      { skillName: 'Database & SQL / pgvector', level: 75 }
     ]
   }
 ];
+

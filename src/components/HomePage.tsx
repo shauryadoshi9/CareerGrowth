@@ -20,7 +20,9 @@ import {
   Globe, 
   Send,
   Flame,
-  Bot
+  Bot,
+  Calendar,
+  MessageSquareCode
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -381,66 +383,144 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <BrainCircuit className="w-8 h-8 text-indigo-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          {/* 1. Skill Gap */}
+          <div 
+            onClick={() => onNavigateTab('skill-gap', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-indigo-500/60' : 'bg-white border-slate-200 hover:border-indigo-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <BrainCircuit className="w-6 h-6" />
+            </div>
+            <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
               Dynamic Skill Gap Analyzer
             </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Compares target career skill requirements against current proficiency levels and calculates real-time readiness scores.
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Calculates readiness index, identifies missing competencies, and maps personalized skill delta benchmarks.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-indigo-400 group-hover:underline">
+              <span>Analyze Gaps</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <Globe className="w-8 h-8 text-purple-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              10 Indian Language Support
-            </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Native translations for Hindi, Gujarati, Marathi, Tamil, Telugu, Kannada, Bengali, Punjabi, Malayalam, and English.
+          {/* 2. AI Study Buddy */}
+          <div 
+            onClick={() => onNavigateTab('study-buddy', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-purple-500/60' : 'bg-white border-slate-200 hover:border-purple-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <Bot className="w-6 h-6" />
+            </div>
+            <div className="flex items-center gap-2">
+              <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                AI Study Buddy
+              </h4>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">Voice</span>
+            </div>
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Breaks down difficult concepts into simple analogies with Hindi/Gujarati/English voice reading & micro-quizzes.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-purple-400 group-hover:underline">
+              <span>Open Study Buddy</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <WifiOff className="w-8 h-8 text-amber-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Rural Low-Bandwidth Mode
+          {/* 3. Daily Revision & Growth Journey */}
+          <div 
+            onClick={() => onNavigateTab('revision-planner', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-pink-500/60' : 'bg-white border-slate-200 hover:border-pink-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-pink-500/10 text-pink-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <Calendar className="w-6 h-6" />
+            </div>
+            <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              Daily Revision & Journey
             </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Compressed text & line-diagram offline packs designed for low-connectivity rural Anand & GTU polytechnic centers.
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Generates tailored 30m/45m micro-schedules for weak areas and tracks progress across 5 career progression stages.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-pink-400 group-hover:underline">
+              <span>Plan Revision</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <Zap className="w-8 h-8 text-emerald-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Vocational & Clean Energy Hub
+          {/* 4. Rubric Mock Interview Engine */}
+          <div 
+            onClick={() => onNavigateTab('mock-interview', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-cyan-500/60' : 'bg-white border-slate-200 hover:border-cyan-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <MessageSquareCode className="w-6 h-6" />
+            </div>
+            <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              Rubric Mock Interview
             </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Hands-on modules for Solar Rooftop PV, Electric Vehicle Battery Diagnostics, and Smart Agriculture IoT Sensors.
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Practice AI, Full-Stack, and Clean Tech interview questions with instant automated scoring & follow-up practice tasks.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-cyan-400 group-hover:underline">
+              <span>Practice Interview</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <Briefcase className="w-8 h-8 text-cyan-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Opportunity Placement Matcher
-            </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Algorithmic matching of student skills and GPA against internships and industry job openings with instant server application posting.
+          {/* 5. Opportunities (Unstop / Devfolio / PM Internship) */}
+          <div 
+            onClick={() => onNavigateTab('opportunities', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-emerald-500/60' : 'bg-white border-slate-200 hover:border-emerald-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <Zap className="w-6 h-6" />
+            </div>
+            <div className="flex items-center gap-2">
+              <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                Opportunities Hub
+              </h4>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300">Unstop / Devfolio</span>
+            </div>
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Curated genuine links to PM Internship Scheme, Devfolio hackathons, and Unstop challenges with AI match ranking.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-emerald-400 group-hover:underline">
+              <span>Find Opportunities</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
-          <div className={`p-6 rounded-2xl border ${isDark ? 'bg-slate-900/70 border-slate-800' : 'bg-white border-slate-200 shadow-md'}`}>
-            <Bot className="w-8 h-8 text-pink-400 mb-3" />
-            <h4 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Teacher Copilot & Risk Engine
+          {/* 6. Vocational & Clean Energy */}
+          <div 
+            onClick={() => onNavigateTab('vocational', 'student')}
+            className={`group cursor-pointer p-6 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+              isDark ? 'bg-slate-900/70 border-slate-800 hover:border-amber-500/60' : 'bg-white border-slate-200 hover:border-amber-400 shadow-md'
+            }`}
+          >
+            <div className="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+              <Flame className="w-6 h-6" />
+            </div>
+            <h4 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              Vocational & Clean Energy
             </h4>
-            <p className={`text-xs mt-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Automated lesson plan generator, diagnostic quiz creator, and at-risk student early warning intervention engine.
+            <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Hands-on practical sandboxes for Solar Rooftop PV, EV Battery Diagnostics, and IoT Agricultural Sensors.
             </p>
+            <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-amber-400 group-hover:underline">
+              <span>Open Sandbox</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </div>
           </div>
 
         </div>

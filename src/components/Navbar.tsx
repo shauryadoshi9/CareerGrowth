@@ -14,7 +14,11 @@ import {
   Sun, 
   Moon, 
   Home,
-  Server
+  Server,
+  Bot,
+  Calendar,
+  MessageSquareCode,
+  Zap
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -147,6 +151,51 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {t('learning_engine', language)}
               </button>
               <button
+                onClick={() => onTabChange('study-buddy')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'study-buddy' 
+                    ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                <Bot className="w-3.5 h-3.5 text-indigo-400" />
+                <span>{t('study_buddy', language)}</span>
+              </button>
+              <button
+                onClick={() => onTabChange('revision-planner')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'revision-planner' 
+                    ? 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                <Calendar className="w-3.5 h-3.5 text-pink-400" />
+                <span>{t('revision_planner', language)}</span>
+              </button>
+              <button
+                onClick={() => onTabChange('mock-interview')}
+                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 ${
+                  activeTab === 'mock-interview' 
+                    ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                <MessageSquareCode className="w-3.5 h-3.5 text-cyan-400" />
+                <span>{t('mock_interview', language)}</span>
+              </button>
+              <button
+                onClick={() => onTabChange('opportunities')}
+                className={`px-3 py-1.5 rounded-lg transition-all relative flex items-center gap-1.5 ${
+                  activeTab === 'opportunities' 
+                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
+                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
+                <span>{t('opportunity', language)}</span>
+                <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+              </button>
+              <button
                 onClick={() => onTabChange('vocational')}
                 className={`px-3 py-1.5 rounded-lg transition-all ${
                   activeTab === 'vocational' 
@@ -155,17 +204,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {t('vocational', language)}
-              </button>
-              <button
-                onClick={() => onTabChange('opportunities')}
-                className={`px-3 py-1.5 rounded-lg transition-all relative ${
-                  activeTab === 'opportunities' 
-                    ? 'bg-indigo-600 text-white font-semibold shadow-md' 
-                    : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('opportunity', language)}
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 rounded-full animate-ping"></span>
               </button>
               <button
                 onClick={() => onTabChange('offline-packs')}

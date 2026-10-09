@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { initialLearnerProfile, defaultSkills, careerPathways, mockOpportunities } from '../data/mockData';
 import { calculateSkillGap, calculateJobMatch } from '../services/aiEngine';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip } from 'recharts';
-import { Target, Award, ArrowUpRight, Zap, BookOpen, Briefcase, Plus, Save, Trash2, CheckCircle } from 'lucide-react';
+import { Target, Award, ArrowUpRight, Zap, BookOpen, Briefcase, Plus, Save, Trash2, CheckCircle, Bot, Calendar, MessageSquareCode, Sparkles, Flame } from 'lucide-react';
 import { Language, ThemeMode, Skill } from '../types';
 import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer } from '../services/api';
 
@@ -253,6 +253,127 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
             <span className="text-xs text-slate-400">Verified Match</span>
           </div>
           <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">Eligible for GIFT City Hybrid</p>
+        </div>
+
+      </div>
+
+      {/* Quick Acceleration Suites Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        {/* Card 1: AI Study Buddy */}
+        <div 
+          onClick={() => onNavigateTab('study-buddy')}
+          className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+            isDark 
+              ? 'bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-900 border-indigo-500/30 hover:border-indigo-400' 
+              : 'bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/50 border-indigo-200 hover:border-indigo-400 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Bot className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+              Multilingual Voice
+            </span>
+          </div>
+          <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            AI Study Buddy
+          </h4>
+          <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Simplifies complex concepts into plain analogies with Hindi/Gujarati voice synthesis & micro-quizzes.
+          </p>
+          <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-indigo-400 group-hover:text-indigo-300">
+            <span>Ask Buddy</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+        {/* Card 2: Daily Revision & Growth Journey */}
+        <div 
+          onClick={() => onNavigateTab('revision-planner')}
+          className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+            isDark 
+              ? 'bg-gradient-to-br from-pink-950/40 via-slate-900 to-slate-900 border-pink-500/30 hover:border-pink-400' 
+              : 'bg-gradient-to-br from-pink-50/70 via-white to-rose-50/50 border-pink-200 hover:border-pink-400 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Calendar className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/20">
+              Micro-Schedules
+            </span>
+          </div>
+          <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Revision & Growth Journey
+          </h4>
+          <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Generates 30m/45m schedules based on weak topics + 5-stage career progression milestones.
+          </p>
+          <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-pink-400 group-hover:text-pink-300">
+            <span>View Timeline</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+        {/* Card 3: Mock Interview Engine */}
+        <div 
+          onClick={() => onNavigateTab('mock-interview')}
+          className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+            isDark 
+              ? 'bg-gradient-to-br from-cyan-950/40 via-slate-900 to-slate-900 border-cyan-500/30 hover:border-cyan-400' 
+              : 'bg-gradient-to-br from-cyan-50/70 via-white to-sky-50/50 border-cyan-200 hover:border-cyan-400 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <MessageSquareCode className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+              Rubric Feedback
+            </span>
+          </div>
+          <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Mock Interview Engine
+          </h4>
+          <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Technical practice for AI, Full-Stack & Clean Tech roles with AI grading and targeted drill tasks.
+          </p>
+          <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-cyan-400 group-hover:text-cyan-300">
+            <span>Start Practice</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
+        </div>
+
+        {/* Card 4: Verified Opportunities */}
+        <div 
+          onClick={() => onNavigateTab('opportunities')}
+          className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
+            isDark 
+              ? 'bg-gradient-to-br from-emerald-950/40 via-slate-900 to-slate-900 border-emerald-500/30 hover:border-emerald-400' 
+              : 'bg-gradient-to-br from-emerald-50/70 via-white to-teal-50/50 border-emerald-200 hover:border-emerald-400 shadow-sm'
+          }`}
+        >
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Zap className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              Live National
+            </span>
+          </div>
+          <h4 className={`text-sm font-bold font-outfit mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Opportunities Hub
+          </h4>
+          <p className={`text-xs line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            Direct links & match scores for PM Internship Scheme, Devfolio, Unstop & Hack2Skill hackathons.
+          </p>
+          <div className="mt-3 pt-3 border-t border-slate-700/30 flex items-center justify-between text-xs font-semibold text-emerald-400 group-hover:text-emerald-300">
+            <span>Browse Contests</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </div>
         </div>
 
       </div>

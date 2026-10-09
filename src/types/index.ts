@@ -128,7 +128,14 @@ export interface Opportunity {
   company: string;
   location: string;
   stipendOrSalary: string;
-  type: 'internship' | 'fulltime' | 'vocational_apprenticeship';
+  type: 'internship' | 'fulltime' | 'vocational_apprenticeship' | 'hackathon' | 'quiz' | 'scholarship';
+  category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job';
+  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner';
+  sourceUrl: string;
+  deadline?: string;
+  prizeOrStipend?: string;
+  tags?: string[];
+  bannerGradient?: string;
   minGpa: number;
   requiredSkills: { skillName: string; level: number }[];
   matchScore?: number;

@@ -14,6 +14,9 @@ import { VocationalHub } from './components/VocationalHub';
 import { TeacherCopilot } from './components/TeacherCopilot';
 import { RiskInterventionEngine } from './components/RiskInterventionEngine';
 import { OpportunityMatcher } from './components/OpportunityMatcher';
+import { AIStudyBuddy } from './components/AIStudyBuddy';
+import { DailyRevisionPlanner } from './components/DailyRevisionPlanner';
+import { MockInterviewEngine } from './components/MockInterviewEngine';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
 import { checkServerHealth } from './services/api';
 
@@ -114,8 +117,11 @@ export function App() {
             {activeTab === 'skill-gap' && <SkillGapAnalyzer onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'career-navigator' && <CareerNavigator onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'learning' && <AdaptiveLearningEngine onNavigateTab={handleNavigateTab} language={language} />}
-            {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} />}
+            {activeTab === 'study-buddy' && <AIStudyBuddy onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'revision-planner' && <DailyRevisionPlanner onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'mock-interview' && <MockInterviewEngine onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'opportunities' && <OpportunityMatcher onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} />}
             {activeTab === 'offline-packs' && (
               <OfflinePackManager
                 isLowBandwidth={isLowBandwidth}

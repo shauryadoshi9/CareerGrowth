@@ -134,3 +134,42 @@ export async function askAiTutor(prompt: string, topic: string, language: string
     return { success: false, error: err.message || 'Failed to connect to AI server' };
   }
 }
+
+export async function loginUser(email: string, password: string): Promise<{ token: string; user: { id: string; name: string; email: string } }> {
+  const res = await fetch(`${API_BASE}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Invalid email or password');
+  }
+  return data;
+}
+
+export async function registerUser(name: string, email: string, password: string): Promise<{ token: string; user: { id: string; name: string; email: string } }> {
+  const res = await fetch(`${API_BASE}/auth/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, password })
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.message || 'Registration failed');
+  }
+  return data;
+}
+
+export async function fetchCurrentUser(token: string): Promise<{ user: { id: string; name: string; email: string } } | null> {
+  try {
+    const res = await fetch(`${API_BASE}/auth/me`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
+  }
+}
+

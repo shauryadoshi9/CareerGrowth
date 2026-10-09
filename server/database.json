@@ -290,5 +290,14 @@
       "apiUsed": "Built-in Expert Engine",
       "timestamp": "2026-10-09T03:55:11.700Z"
     }
+  ],
+  "users": [
+    {
+      "id": "usr_1791539644648",
+      "name": "Test User",
+      "email": "test@skillbridge.edu",
+      "password": "$2b$10$i39uhUzhSkc4YckHiBKM5uaCr/vW7gTF1u9ONeAAv2IG5WzvixxHC",
+      "createdAt": "2026-10-09T09:54:04.648Z"
+    }
   ]
 }

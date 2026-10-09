@@ -82,8 +82,18 @@ export function App() {
       {/* Main Body View */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
         {/* Auth Views */}
-        {activeTab === 'login' && <LoginForm />}
-        {activeTab === 'register' && <RegisterForm />}
+        {activeTab === 'login' && (
+          <LoginForm
+            onSuccess={() => setActiveTab('dashboard')}
+            onSwitchToRegister={() => setActiveTab('register')}
+          />
+        )}
+        {activeTab === 'register' && (
+          <RegisterForm
+            onSuccess={() => setActiveTab('dashboard')}
+            onSwitchToLogin={() => setActiveTab('login')}
+          />
+        )}
         {/* Home Landing View */}
         {activeTab === 'home' && (
           <HomePage

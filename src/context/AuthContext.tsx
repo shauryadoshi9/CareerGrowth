@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const stored = localStorage.getItem('skillbridge_token');
     if (stored) {
       setToken(stored);
-      fetchCurrentUser(stored).then(res => {
+      fetchCurrentUser(stored).then((res) => {
         if (res?.user) setUser(res.user);
       }).finally(() => setLoading(false));
     } else {

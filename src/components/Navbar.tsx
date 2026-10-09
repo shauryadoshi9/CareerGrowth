@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 import { UserRole, Language, ThemeMode, SUPPORTED_LANGUAGES } from '../types';
 import { t } from '../services/i18n';
 import { 
@@ -45,6 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   onTabChange,
   isServerConnected = true,
 }) => {
+  const { user, logout } = useContext(AuthContext);
   const isDark = theme === 'dark';
 
   return (
@@ -301,16 +303,48 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          {/* Auth Navigation Buttons */}
-          <div className="flex gap-2 ml-2">
-            <button
-              onClick={() => onTabChange('login')}
-              className="px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition"
-            >Login</button>
-            <button
-              onClick={() => onTabChange('register')}
-              className="px-3 py-1 rounded bg-purple-600 text-white hover:bg-purple-700 transition"
-            >Register</button>
+          {/* Auth Navigation Buttons / User Badge */}
+          <div className="flex items-center gap-2 ml-1">
+            {user ? (
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                  <span className="max-w-[100px] truncate">{user.name || user.email}</span>
+                </div>
+                <button
+                  onClick={() => {
+                    logout();
+                    onTabChange('home');
+                  }}
+                  className="px-2.5 py-1 text-xs rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-300 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  onClick={() => onTabChange('login')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                    activeTab === 'login'
+                      ? 'bg-indigo-600 text-white shadow'
+                      : isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  Login
+                </button>
+                <button
+                  onClick={() => onTabChange('register')}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${
+                    activeTab === 'register'
+                      ? 'bg-purple-600 text-white shadow'
+                      : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-sm'
+                  }`}
+                >
+                  Register
+                </button>
+              </>
+            )}
           </div>
 
           {/* SIH 2026 Interactive Demo Tour Button */}

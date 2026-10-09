@@ -3,22 +3,71 @@ import https from 'https';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DB_PATH = path.join(__dirname, 'database.json');
+const DIST_PATH = path.join(__dirname, '..', 'dist');
 const PORT = process.env.PORT || 5000;
+const JWT_SECRET = process.env.JWT_SECRET || 'skillbridge_sih_secret_key_2026';
+
+const MIME_TYPES = {
+  '.html': 'text/html; charset=UTF-8',
+  '.js': 'application/javascript; charset=UTF-8',
+  '.css': 'text/css; charset=UTF-8',
+  '.json': 'application/json; charset=UTF-8',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.gif': 'image/gif',
+  '.svg': 'image/svg+xml',
+  '.ico': 'image/x-icon',
+  '.webp': 'image/webp',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.ttf': 'font/ttf',
+  '.map': 'application/json'
+};
+
+function serveStatic(req, res, pathname) {
+  let relativePath = pathname === '/' ? 'index.html' : pathname;
+  let safePath = path.normalize(relativePath).replace(/^(\.\.[\/\\])+/, '');
+  let filePath = path.join(DIST_PATH, safePath);
+
+  if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+    const ext = path.extname(filePath).toLowerCase();
+    const contentType = MIME_TYPES[ext] || 'application/octet-stream';
+    res.writeHead(200, { 'Content-Type': contentType });
+    fs.createReadStream(filePath).pipe(res);
+    return;
+  }
+
+  // SPA fallback to index.html
+  const indexPath = path.join(DIST_PATH, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=UTF-8' });
+    fs.createReadStream(indexPath).pipe(res);
+    return;
+  }
+
+  res.writeHead(404, { 'Content-Type': 'text/plain' });
+  res.end('Static build not found. Please run npm run build.');
+}
 
 function readDB() {
   try {
     if (!fs.existsSync(DB_PATH)) {
-      return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [] };
+      return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [] };
     }
     const raw = fs.readFileSync(DB_PATH, 'utf-8');
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    parsed.users = parsed.users || [];
+    return parsed;
   } catch (err) {
     console.error('Error reading DB file:', err);
-    return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [] };
+    return { profile: {}, skills: [], careerPathways: [], quizSubmissions: [], applications: [], interventions: [], copilotHistory: [], aiTutorHistory: [], activityLog: [], users: [] };
   }
 }
 
@@ -145,6 +194,136 @@ const server = http.createServer(async (req, res) => {
   const parsedUrl = new URL(req.url, `http://${req.headers.host}`);
   const pathname = parsedUrl.pathname;
   const method = req.method;
+
+  // Serve frontend static assets for all non-API routes (Single Port 5000)
+  if (!pathname.startsWith('/api')) {
+    serveStatic(req, res, pathname);
+    return;
+  }
+
+  // --- AUTH ROUTES ---
+  // POST /api/auth/register
+  if (pathname === '/api/auth/register' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const { name, email, password } = body;
+    if (!email || !password) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Email and password are required' }));
+      return;
+    }
+    const db = readDB();
+    db.users = db.users || [];
+    const existing = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (existing) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'User already exists with this email' }));
+      return;
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      id: `usr_${Date.now()}`,
+      name: name || email.split('@')[0],
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      createdAt: new Date().toISOString()
+    };
+    db.users.push(newUser);
+    writeDB(db);
+    const token = jwt.sign({ id: newUser.id, email: newUser.email, name: newUser.name }, JWT_SECRET, { expiresIn: '7d' });
+    res.writeHead(201, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      token,
+      user: { id: newUser.id, name: newUser.name, email: newUser.email }
+    }));
+    return;
+  }
+
+  // POST /api/auth/login
+  if (pathname === '/api/auth/login' && method === 'POST') {
+    const body = await parseJSONBody(req);
+    const { email, password } = body;
+    if (!email || !password) {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Email and password are required' }));
+      return;
+    }
+    const db = readDB();
+    db.users = db.users || [];
+    const user = db.users.find(u => u.email.toLowerCase() === email.toLowerCase());
+    if (!user) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid credentials' }));
+      return;
+    }
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid credentials' }));
+      return;
+    }
+    const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      success: true,
+      token,
+      user: { id: user.id, name: user.name, email: user.email }
+    }));
+    return;
+  }
+
+  // GET /api/auth/me
+  if (pathname === '/api/auth/me' && method === 'GET') {
+    const authHeader = req.headers.authorization || '';
+    const token = authHeader.replace(/^Bearer\s+/i, '');
+    if (!token) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'No authorization token provided' }));
+      return;
+    }
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      const db = readDB();
+      db.users = db.users || [];
+      const user = db.users.find(u => u.id === decoded.id);
+      if (!user) {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'User not found' }));
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        user: { id: user.id, name: user.name, email: user.email }
+      }));
+      return;
+    } catch (err) {
+      res.writeHead(401, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Invalid or expired token' }));
+      return;
+    }
+  }
+
+  // GET /api/auth/google
+  if (pathname === '/api/auth/google' && method === 'GET') {
+    const db = readDB();
+    db.users = db.users || [];
+    let googleUser = db.users.find(u => u.email === 'google.demo@skillbridge.edu');
+    if (!googleUser) {
+      googleUser = {
+        id: `usr_google_${Date.now()}`,
+        name: 'Google Student Demo',
+        email: 'google.demo@skillbridge.edu',
+        password: '',
+        createdAt: new Date().toISOString()
+      };
+      db.users.push(googleUser);
+      writeDB(db);
+    }
+    const token = jwt.sign({ id: googleUser.id, email: googleUser.email, name: googleUser.name }, JWT_SECRET, { expiresIn: '7d' });
+    res.writeHead(302, { 'Location': `/?token=${token}&user=${encodeURIComponent(googleUser.name)}` });
+    res.end();
+    return;
+  }
 
   // GET /api/health
   if (pathname === '/api/health' && method === 'GET') {

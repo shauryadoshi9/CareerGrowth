@@ -301,6 +301,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
+          {/* Auth Navigation Buttons */}
+          <div className="flex gap-2 ml-2">
+            <button
+              onClick={() => onTabChange('login')}
+              className="px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-700 transition"
+            >Login</button>
+            <button
+              onClick={() => onTabChange('register')}
+              className="px-3 py-1 rounded bg-purple-600 text-white hover:bg-purple-700 transition"
+            >Register</button>
+          </div>
+
           {/* SIH 2026 Interactive Demo Tour Button */}
           <button
             onClick={onStartDemoTour}

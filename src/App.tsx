@@ -19,6 +19,8 @@ import { MockInterviewEngine } from './components/MockInterviewEngine';
 import { MentorHub } from './components/MentorHub';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
 import { checkServerHealth } from './services/api';
+import { LanguageProvider } from './context/LanguageContext';
+import { t } from './services/i18n';
 
 export function App() {
   const [currentRole, setCurrentRole] = useState<UserRole>('student');
@@ -63,7 +65,8 @@ export function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300`}>
+    <LanguageProvider language={language} onLanguageChange={setLanguage}>
+      <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300`}>
       
       {/* Top Header Navbar */}
       <Navbar
@@ -85,12 +88,14 @@ export function App() {
         {/* Auth Views */}
         {activeTab === 'login' && (
           <LoginForm
+            language={language}
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToRegister={() => setActiveTab('register')}
           />
         )}
         {activeTab === 'register' && (
           <RegisterForm
+            language={language}
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToLogin={() => setActiveTab('login')}
           />
@@ -155,15 +160,16 @@ export function App() {
           <div className="flex flex-wrap items-center gap-2">
             <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>SkillBridge OS</span>
             <span>•</span>
-            <span>Integrated Career & Employability Engine</span>
+            <span>{t('footer_tagline', language)}</span>
             <span>•</span>
-            <span className="text-emerald-500 font-semibold">Cloud Sync Active</span>
+            <span className="text-emerald-500 font-semibold">{t('footer_status', language)}</span>
           </div>
-          <p>© 2026 SkillBridge Platform. From Learning to Livelihood.</p>
+          <p>© 2026 SkillBridge Platform. {t('subtitle', language)}</p>
         </div>
       </footer>
 
-    </div>
+      </div>
+    </LanguageProvider>
   );
 }
 

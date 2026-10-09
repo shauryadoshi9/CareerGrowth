@@ -3,12 +3,16 @@ import { AuthContext } from '../context/AuthContext';
 import { UserPlus, User, Mail, Lock, AlertCircle, ArrowRight, CheckCircle, RefreshCw, KeyRound, ArrowLeft } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
+import { Language } from '../types';
+import { t } from '../services/i18n';
+
 interface RegisterFormProps {
   onSuccess?: () => void;
   onSwitchToLogin?: () => void;
+  language?: Language;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin, language = 'en' }) => {
   const { sendOtp, verifyOtp, googleLogin } = useContext(AuthContext);
   
   // Step 1: Info, Step 2: OTP
@@ -120,7 +124,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           <UserPlus className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Create Account</h2>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{t('create_account', language)}</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">
             {step === 'info' ? 'Join SkillBridge OS to accelerate your career' : 'Verify your email address to continue'}
           </p>
@@ -140,7 +144,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           <form onSubmit={handleSendOtp} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Full Name
+                {t('full_name', language)}
               </label>
               <div className="relative">
                 <User className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
@@ -157,7 +161,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Email Address (Institutional or Personal)
+                {t('email_address', language)}
               </label>
               <div className="relative">
                 <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
@@ -174,7 +178,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                Create Password
+                {t('password', language)}
               </label>
               <div className="relative">
                 <Lock className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
@@ -194,7 +198,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
               disabled={loading}
               className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2 transition"
             >
-              {loading ? 'Sending Verification Code...' : 'Verify Email with OTP'}
+              {loading ? '...' : t('send_otp', language)}
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -302,13 +306,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
       {/* Switch to Login */}
       {onSwitchToLogin && (
         <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
-          Already have an account?{' '}
+          {t('already_account', language)}{' '}
           <button
             type="button"
             onClick={onSwitchToLogin}
             className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
           >
-            Sign in here
+            {t('login', language)}
           </button>
         </p>
       )}

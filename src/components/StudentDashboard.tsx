@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { Language, ThemeMode, Skill, ProgressShareConsent } from '../types';
 import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer, saveProgressShareApi, fetchProgressShareApi } from '../services/api';
+import { t } from '../services/i18n';
 
 interface StudentDashboardProps {
   onNavigateTab: (tab: string) => void;
@@ -171,10 +172,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{initialLearnerProfile.institution}</span>
             </div>
             <h2 className={`text-2xl lg:text-3xl font-extrabold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Welcome back, <span className="gradient-text">{initialLearnerProfile.name}</span>!
+              {t('welcome_student', language)}, <span className="gradient-text">{initialLearnerProfile.name}</span>!
             </h2>
             <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              Target Pathway: <span className="text-indigo-500 font-semibold">{targetCareer.title}</span>
+              {t('target_career_pathway', language)}: <span className="text-indigo-500 font-semibold">{targetCareer.title}</span>
             </p>
           </div>
           
@@ -185,7 +186,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
             >
               <Share2 className="w-4 h-4 text-indigo-400" />
-              <span>Share Progress</span>
+              <span>{t('share_verified_profile', language)}</span>
             </button>
 
             <button
@@ -193,14 +194,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Custom Skill</span>
+              <span>{t('add_custom_skill', language)}</span>
             </button>
 
             <div className={`p-3 rounded-xl border flex items-center gap-3 ${
               isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}>
               <div className="text-right">
-                <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Readiness Score</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t('career_readiness_score', language)}</p>
                 <p className="text-2xl font-black text-indigo-500 font-outfit">{gapAnalysis.readinessScore}%</p>
               </div>
               <div className="w-10 h-10 rounded-full border-4 border-indigo-500 flex items-center justify-center bg-indigo-500/10 font-bold text-indigo-500 text-xs">

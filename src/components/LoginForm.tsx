@@ -3,12 +3,16 @@ import { AuthContext } from '../context/AuthContext';
 import { LogIn, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
+import { Language } from '../types';
+import { t } from '../services/i18n';
+
 interface LoginFormProps {
   onSuccess?: () => void;
   onSwitchToRegister?: () => void;
+  language?: Language;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister, language = 'en' }) => {
   const { login, googleLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,8 +53,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
           <LogIn className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome Back</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Sign in to your SkillBridge account</p>
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">{t('welcome_back', language)}</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{t('login_subtitle', language)}</p>
         </div>
       </div>
 
@@ -64,7 +68,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Email Address
+            {t('email_address', language)}
           </label>
           <div className="relative">
             <Mail className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
@@ -81,7 +85,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
 
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-            Password
+            {t('password', language)}
           </label>
           <div className="relative">
             <Lock className="w-4 h-4 absolute left-3.5 top-3.5 text-slate-400" />
@@ -101,7 +105,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
           disabled={loading}
           className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition"
         >
-          {loading ? 'Signing In...' : 'Sign In'}
+          {loading ? '...' : t('login_btn', language)}
           <ArrowRight className="w-4 h-4" />
         </button>
       </form>
@@ -131,13 +135,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
 
       {onSwitchToRegister && (
         <p className="text-center text-xs text-slate-500 dark:text-slate-400 mt-6">
-          Don't have an account?{' '}
+          {t('no_account', language)}{' '}
           <button
             type="button"
             onClick={onSwitchToRegister}
             className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
           >
-            Create an account
+            {t('create_account', language)}
           </button>
         </p>
       )}

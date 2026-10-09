@@ -6,7 +6,6 @@ import {
   BrainCircuit, 
   Globe, 
   Signal, 
-  PlayCircle, 
   Sparkles, 
   UserCheck, 
   ShieldCheck, 
@@ -31,7 +30,6 @@ interface NavbarProps {
   onToggleTheme: () => void;
   isLowBandwidth: boolean;
   onToggleLowBandwidth: () => void;
-  onStartDemoTour: () => void;
   activeTab: string;
   onTabChange: (tab: string) => void;
   isServerConnected?: boolean;
@@ -46,7 +44,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   onToggleTheme,
   isLowBandwidth,
   onToggleLowBandwidth,
-  onStartDemoTour,
   activeTab,
   onTabChange,
   isServerConnected = true,
@@ -396,15 +393,6 @@ export const Navbar: React.FC<NavbarProps> = ({
               </>
             )}
           </div>
-
-          {/* Interactive Platform Tour Button */}
-          <button
-            onClick={onStartDemoTour}
-            className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white font-semibold text-xs shadow-md hover:opacity-95 transition-all"
-          >
-            <PlayCircle className="w-4 h-4 text-white/90" />
-            <span>Platform Tour</span>
-          </button>
 
         </div>
 

@@ -4,7 +4,6 @@ import { RegisterForm } from './components/RegisterForm';
 import { UserRole, Language, ThemeMode } from './types';
 import { Navbar } from './components/Navbar';
 import { HomePage } from './components/HomePage';
-import { DemoTourModal } from './components/DemoTourModal';
 import { StudentDashboard } from './components/StudentDashboard';
 import { SkillGapAnalyzer } from './components/SkillGapAnalyzer';
 import { CareerNavigator } from './components/CareerNavigator';
@@ -27,7 +26,6 @@ export function App() {
   const [language, setLanguage] = useState<Language>('en');
   const [theme, setTheme] = useState<ThemeMode>('dark');
   const [isLowBandwidth, setIsLowBandwidth] = useState<boolean>(false);
-  const [isDemoTourOpen, setIsDemoTourOpen] = useState<boolean>(false);
   const [isServerConnected, setIsServerConnected] = useState<boolean>(true);
 
   useEffect(() => {
@@ -77,7 +75,6 @@ export function App() {
         onToggleTheme={toggleTheme}
         isLowBandwidth={isLowBandwidth}
         onToggleLowBandwidth={() => setIsLowBandwidth(!isLowBandwidth)}
-        onStartDemoTour={() => setIsDemoTourOpen(true)}
         activeTab={activeTab}
         onTabChange={setActiveTab}
         isServerConnected={isServerConnected}
@@ -106,7 +103,6 @@ export function App() {
             language={language}
             theme={theme}
             onNavigateTab={handleNavigateTab}
-            onStartDemoTour={() => setIsDemoTourOpen(true)}
           />
         )}
 
@@ -150,12 +146,6 @@ export function App() {
         )}
       </main>
 
-      {/* Interactive Platform Tour Modal */}
-      <DemoTourModal
-        isOpen={isDemoTourOpen}
-        onClose={() => setIsDemoTourOpen(false)}
-        onNavigateTab={handleNavigateTab}
-      />
 
       {/* Footer Bar */}
       <footer className={`border-t px-4 py-5 mt-auto transition-colors ${

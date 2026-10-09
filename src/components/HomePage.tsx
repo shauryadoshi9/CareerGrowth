@@ -39,7 +39,6 @@ interface HomePageProps {
   language: Language;
   theme: ThemeMode;
   onNavigateTab: (tab: string, role?: UserRole) => void;
-  onStartDemoTour: () => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = ({
@@ -48,7 +47,6 @@ export const HomePage: React.FC<HomePageProps> = ({
   language,
   theme,
   onNavigateTab,
-  onStartDemoTour,
 }) => {
   const [serverHealth, setServerHealth] = useState<ServerHealth | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -230,18 +228,6 @@ export const HomePage: React.FC<HomePageProps> = ({
             >
               <Users className="w-4 h-4 text-indigo-400" />
               Book 1:1 Industry Mentor
-            </button>
-
-            <button
-              onClick={onStartDemoTour}
-              className={`px-4 py-3.5 rounded-xl font-medium border text-xs transition-all duration-200 flex items-center gap-1.5 ${
-                isDark 
-                  ? 'bg-indigo-950/40 hover:bg-indigo-900/60 text-indigo-300 border-indigo-700/50' 
-                  : 'bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border-indigo-200'
-              }`}
-            >
-              <Sparkles className="w-4 h-4" />
-              Interactive Demo Tour
             </button>
           </div>
 

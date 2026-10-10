@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { UserRole, Language, ThemeMode, ServerHealth, Opportunity, LiveStreamEvent } from '../types';
+import { UserRole, Language, ThemeMode, ServerHealth, Opportunity, LiveStreamEvent, Mentor } from '../types';
 import { t } from '../services/i18n';
 import { checkServerHealth, postCustomData, fetchOpportunitiesApi, subscribeToLiveStream } from '../services/api';
 import { mockOpportunities, mockMentors } from '../data/mockData';

@@ -46,9 +46,14 @@ export const OfflinePackManager: React.FC<OfflinePackManagerProps> = ({
         isDark ? 'bg-slate-900/40 border-amber-500/30' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
-            NEP 2020 Inclusive Rural Access Protocol
-          </span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              NEP 2020 Inclusive Rural Access Protocol
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample curriculum packs
+            </span>
+          </div>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Rural Low-Bandwidth & Offline Packs</h2>
           <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Download lightweight offline learning modules, local quizzes, and sync progress automatically when connectivity returns.

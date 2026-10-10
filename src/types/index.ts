@@ -1,5 +1,20 @@
 export type UserRole = 'student' | 'teacher' | 'admin';
 
+export interface LearnerProfile {
+  id: string;
+  name: string;
+  role: string;
+  institution: string;
+  location: string;
+  preferredLanguage?: Language;
+  targetCareerId: string;
+  academicGpa: number;
+  completedModules: number;
+  streakDays: number;
+  offlineSyncStatus?: string;
+  isSample?: boolean;
+}
+
 export type Language = 
   | 'en' // English
   | 'hi' // Hindi

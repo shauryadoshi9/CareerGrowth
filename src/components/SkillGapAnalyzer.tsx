@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { defaultSkills as initialSkills, careerPathways } from '../data/mockData';
 import { calculateSkillGap } from '../services/aiEngine';
+import { fetchSkillsFromServer } from '../services/api';
 import { 
   Target, 
   Sliders, 
@@ -28,6 +29,18 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
   const [selectedCareerId, setSelectedCareerId] = useState<string>(careerPathways[0].id);
   const [skills, setSkills] = useState<Skill[]>(initialSkills);
   const [activeEvidenceModalSkill, setActiveEvidenceModalSkill] = useState<Skill | null>(null);
+  const [isUsingSample, setIsUsingSample] = useState<boolean>(true);
+
+  useEffect(() => {
+    let mounted = true;
+    fetchSkillsFromServer().then((srvSkills) => {
+      if (mounted && srvSkills && srvSkills.length > 0) {
+        setSkills(srvSkills);
+        setIsUsingSample(false);
+      }
+    });
+    return () => { mounted = false; };
+  }, []);
 
   const isDark = theme === 'dark';
   const selectedCareer = careerPathways.find(c => c.id === selectedCareerId) || careerPathways[0];
@@ -74,6 +87,11 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
               Multi-Factor Evidence Synthesizer
             </span>
+            {isUsingSample && (
+              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                📊 Sample data
+              </span>
+            )}
           </div>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Skill Gap Analyzer</h2>
           <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>

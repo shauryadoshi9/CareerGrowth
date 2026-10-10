@@ -49,8 +49,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
       return;
     }
 
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
       return;
     }
 
@@ -171,7 +171,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                   value={email}
                   onChange={e => setEmail(e.target.value)}
                   required
-                  placeholder="shaurya@example.com"
+                  placeholder="student@careergrowth.org"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
                 />
               </div>
@@ -188,7 +188,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
-                  placeholder="Min 6 characters"
+                  placeholder="Min 8 characters"
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
                 />
               </div>
@@ -226,7 +226,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
               <path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.6 7.2C.6 9.2 0 11 0 12.4s.6 3.2 1.6 5.2l3.7-2.9z"/>
               <path fill="#34A853" d="M12 23.8c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5.1L1.6 17c1.9 3.8 5.8 6.8 10.4 6.8z"/>
             </svg>
-            Sign up with Google
+            Sign up with Google (Demo Sign-In)
           </button>
         </>
       ) : (
@@ -240,6 +240,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
             <ArrowLeft className="w-3.5 h-3.5" />
             Change email address ({email})
           </button>
+
+          {/* Visible Demo Verification Notice */}
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs space-y-1">
+            <div className="font-bold flex items-center gap-1.5">
+              <span>⚡ Demo Verification Notice</span>
+            </div>
+            <p className="text-[11px] leading-relaxed">
+              In production, OTPs are dispatched via secure institutional SMTP. For hackathon evaluation, immediate preview is enabled below.
+            </p>
+          </div>
 
           {/* Demo OTP Banner with 1-click Auto-Fill */}
           {demoOtp && (

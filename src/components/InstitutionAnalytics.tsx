@@ -104,9 +104,14 @@ export const InstitutionAnalytics: React.FC<InstitutionAnalyticsProps> = ({ lang
         isDark ? 'bg-slate-900/40 border-pink-500/30' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/30 text-xs font-semibold">
-            Macro Intelligence & Empirical Pilot Framework
-          </span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-400 border border-pink-500/30 text-xs font-semibold">
+              Macro Intelligence & Empirical Pilot Framework
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample cohort data
+            </span>
+          </div>
           <h2 className={`text-2xl md:text-3xl font-extrabold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Institutional Skill Demand & Placement Analytics
           </h2>

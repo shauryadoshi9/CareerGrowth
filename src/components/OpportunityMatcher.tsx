@@ -316,6 +316,9 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               Live Industry & Government Pipelines
             </span>
+            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1.5">
+              📊 Demo Listings • Curated Sample Data
+            </span>
           </div>
 
           <h1 className={`text-2xl md:text-3xl font-bold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>

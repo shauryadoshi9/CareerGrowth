@@ -86,6 +86,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             <span className="px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-300 border border-pink-500/30 text-xs font-semibold">
               ● Institutional Governance & Macro Intelligence ({language.toUpperCase()})
             </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample cohort data
+            </span>
             <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               State Technical University & Polytechnic Board • NEP 2020 & NCrF Audit
             </span>

@@ -157,6 +157,9 @@ export const MentorHub: React.FC<MentorHubProps> = ({
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               Free 1:1 Sessions Available
             </span>
+            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1.5">
+              📊 Sample data
+            </span>
           </div>
 
           <h1 className={`text-2xl md:text-4xl font-bold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>

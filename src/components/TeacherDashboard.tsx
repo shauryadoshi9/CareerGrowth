@@ -49,8 +49,11 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
             <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/30 text-xs font-semibold">
               ● Faculty & Educator Operating Console ({language.toUpperCase()})
             </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample cohort data
+            </span>
             <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Gujarat Technological University (GTU) • Engineering & Polytechnic
+              Dharmsinh Desai University (DDU) • Engineering & Polytechnic
             </span>
           </div>
 

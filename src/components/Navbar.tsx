@@ -332,76 +332,29 @@ export const Navbar: React.FC<NavbarProps> = ({
             </select>
           </div>
 
-          {/* Role Segmented Switcher on Home Page, Clean Mode Pill on Dashboard */}
-          {activeTab === 'home' ? (
-            <div className={`flex items-center border rounded-md p-0.5 text-xs ${
-              isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-slate-100 border-slate-200'
-            }`}>
-              <button
-                onClick={() => onRoleChange('student')}
-                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                  currentRole === 'student' 
-                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <GraduationCap className="w-3.5 h-3.5" />
-                <span>{t('role_student', language)}</span>
-              </button>
-              <button
-                onClick={() => onRoleChange('teacher')}
-                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                  currentRole === 'teacher' 
-                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <UserCheck className="w-3.5 h-3.5" />
-                <span>{t('role_teacher', language)}</span>
-              </button>
-              <button
-                onClick={() => onRoleChange('admin')}
-                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                  currentRole === 'admin' 
-                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>{t('role_admin', language)}</span>
-              </button>
-            </div>
-          ) : (
-            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border ${
-              isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
-            }`}>
-              {currentRole === 'student' && (
-                <>
-                  <GraduationCap className="w-3.5 h-3.5 text-indigo-500" />
-                  <span>Student View</span>
-                </>
-              )}
-              {currentRole === 'teacher' && (
-                <>
-                  <UserCheck className="w-3.5 h-3.5 text-purple-500" />
-                  <span>Teacher View</span>
-                </>
-              )}
-              {currentRole === 'admin' && (
-                <>
-                  <ShieldCheck className="w-3.5 h-3.5 text-pink-500" />
-                  <span>Admin View</span>
-                </>
-              )}
-              <button
-                onClick={() => onTabChange('home')}
-                className="ml-1 text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
-                title="Go to Home to switch role"
-              >
-                (Switch)
-              </button>
-            </div>
-          )}
+          {/* Authenticated Role Badge (Role strictly determined by signed-in account) */}
+          <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border ${
+            isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
+          }`}>
+            {currentRole === 'student' && (
+              <>
+                <GraduationCap className="w-3.5 h-3.5 text-indigo-500" />
+                <span>Student</span>
+              </>
+            )}
+            {currentRole === 'teacher' && (
+              <>
+                <UserCheck className="w-3.5 h-3.5 text-purple-500" />
+                <span>Faculty / Teacher</span>
+              </>
+            )}
+            {currentRole === 'admin' && (
+              <>
+                <ShieldCheck className="w-3.5 h-3.5 text-pink-500" />
+                <span>Administrator</span>
+              </>
+            )}
+          </div>
 
           {/* Auth Navigation Buttons / User Badge */}
           <div className="flex items-center gap-1.5 ml-0.5">

@@ -59,6 +59,54 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
         </div>
       </div>
 
+      {/* Hackathon Demo Accounts Selector */}
+      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 border border-indigo-500/20">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
+            ⚡ Demo Accounts (Hackathon Evaluator)
+          </span>
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-semibold">1-Click</span>
+        </div>
+        <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">
+          Select any seeded role to immediately test real role-based permissions:
+        </p>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('student.demo@careergrowth.org');
+              setPassword('Demo@2026!');
+            }}
+            className="p-2.5 rounded-xl border border-indigo-500/30 bg-white dark:bg-slate-800 hover:border-indigo-500 text-left transition group"
+          >
+            <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-indigo-500">Student</div>
+            <div className="text-[10px] text-slate-500 truncate">Aarav Patel</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('teacher.demo@careergrowth.org');
+              setPassword('Demo@2026!');
+            }}
+            className="p-2.5 rounded-xl border border-purple-500/30 bg-white dark:bg-slate-800 hover:border-purple-500 text-left transition group"
+          >
+            <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-purple-500">Teacher</div>
+            <div className="text-[10px] text-slate-500 truncate">Dr. Sharma</div>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setEmail('admin.demo@careergrowth.org');
+              setPassword('Demo@2026!');
+            }}
+            className="p-2.5 rounded-xl border border-emerald-500/30 bg-white dark:bg-slate-800 hover:border-emerald-500 text-left transition group"
+          >
+            <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-emerald-500">Admin</div>
+            <div className="text-[10px] text-slate-500 truncate">Dean Verma</div>
+          </button>
+        </div>
+      </div>
+
       {error && (
         <div className="mb-5 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />

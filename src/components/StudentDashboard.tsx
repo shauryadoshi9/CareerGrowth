@@ -27,8 +27,8 @@ import {
   X,
   Edit3
 } from 'lucide-react';
-import { Language, ThemeMode, Skill, ProgressShareConsent } from '../types';
-import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer, saveProgressShareApi, fetchProgressShareApi } from '../services/api';
+import { Language, ThemeMode, Skill, ProgressShareConsent, LearnerProfile } from '../types';
+import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer, saveProgressShareApi, fetchProgressShareApi, fetchProfileFromServer } from '../services/api';
 import { AuthContext } from '../context/AuthContext';
 import { t } from '../services/i18n';
 
@@ -41,6 +41,11 @@ interface StudentDashboardProps {
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTab, language, theme = 'dark' }) => {
   const { user, updateUserName } = useContext(AuthContext);
   const [skills, setSkills] = useState<Skill[]>(defaultSkills);
+  const [learnerProfile, setLearnerProfile] = useState<LearnerProfile>({
+    ...initialLearnerProfile,
+    name: user?.name || initialLearnerProfile.name
+  });
+  const [isLoading, setIsLoading] = useState(true);
   const [isAddingSkill, setIsAddingSkill] = useState(false);
   const [newSkillName, setNewSkillName] = useState('');
   const [newSkillCategory, setNewSkillCategory] = useState<'core_tech' | 'practical_vocational' | 'domain_knowledge' | 'soft_skills'>('core_tech');
@@ -63,19 +68,29 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
   useEffect(() => {
     let isMounted = true;
     const loadData = async () => {
-      const [serverSkills, shareData] = await Promise.all([
-        fetchSkillsFromServer(),
-        fetchProgressShareApi()
-      ]);
+      try {
+        const [serverSkills, shareData, serverProfile] = await Promise.all([
+          fetchSkillsFromServer(),
+          fetchProgressShareApi(),
+          fetchProfileFromServer()
+        ]);
 
-      if (isMounted) {
-        if (serverSkills && serverSkills.length > 0) {
-          setSkills(serverSkills);
+        if (isMounted) {
+          if (serverSkills && serverSkills.length > 0) {
+            setSkills(serverSkills);
+          }
+          if (shareData) {
+            setConsentGiven(shareData.consentGiven);
+            setShareAudience(shareData.shareWith);
+          }
+          if (serverProfile) {
+            setLearnerProfile(serverProfile);
+          }
         }
-        if (shareData) {
-          setConsentGiven(shareData.consentGiven);
-          setShareAudience(shareData.shareWith);
-        }
+      } catch (err) {
+        // Fallback to demo profile
+      } finally {
+        if (isMounted) setIsLoading(false);
       }
     };
     loadData();
@@ -124,8 +139,8 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
       consentGiven,
       shareWith: shareAudience,
       achievements: [
-        `Completed ${initialLearnerProfile.completedModules} Learning Modules`,
-        `${initialLearnerProfile.streakDays}-Day Active Study Streak`,
+        `Completed ${learnerProfile.completedModules} Learning Modules`,
+        `${learnerProfile.streakDays}-Day Active Study Streak`,
         '4 Verified Badges (NPTEL, AICTE)',
         'Built 2 Recruiter Portfolio Projects (RAG Q&A Bot, Solar MPPT)'
       ],
@@ -150,7 +165,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
     setTimeout(() => setCopiedLink(false), 2500);
   };
 
-  const targetCareer = careerPathways.find(c => c.id === initialLearnerProfile.targetCareerId) || careerPathways[0];
+  const targetCareer = careerPathways.find(c => c.id === learnerProfile.targetCareerId) || careerPathways[0];
   const gapAnalysis = calculateSkillGap(skills, targetCareer);
   
   const radarData = skills.slice(0, 6).map(s => ({
@@ -159,7 +174,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
     Benchmark: s.requiredProficiency,
   }));
 
-  const topOpportunities = mockOpportunities.map(opp => calculateJobMatch(skills, initialLearnerProfile.academicGpa, opp)).slice(0, 2);
+  const topOpportunities = mockOpportunities.map(opp => calculateJobMatch(skills, learnerProfile.academicGpa, opp)).slice(0, 2);
 
   return (
     <div className="space-y-6">
@@ -176,7 +191,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
                 ● {t('verified_profile', language)}
               </span>
-              <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{initialLearnerProfile.institution}</span>
+              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                📊 Sample data
+              </span>
+              <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{learnerProfile.institution}</span>
             </div>
 
             {isEditingName ? (

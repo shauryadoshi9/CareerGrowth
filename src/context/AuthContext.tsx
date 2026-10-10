@@ -1,10 +1,12 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { loginUser, registerUser, fetchCurrentUser, sendOtpApi, verifyOtpApi, googleLoginApi } from '../services/api';
+import { UserRole } from '../types';
 
 export interface User {
   id: string;
   name: string;
   email: string;
+  role: UserRole;
   avatarUrl?: string;
   isVerified?: boolean;
   authProvider?: 'email' | 'google';
@@ -14,11 +16,11 @@ interface AuthContextProps {
   user: User | null;
   token: string | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string) => Promise<void>;
+  register: (name: string, email: string, password: string, role?: UserRole) => Promise<void>;
   updateUserName: (name: string) => void;
-  sendOtp: (email: string, type?: 'register' | 'login') => Promise<{ success: boolean; message: string; otpPreview?: string }>;
-  verifyOtp: (payload: { name?: string; email: string; password?: string; otp: string }) => Promise<void>;
-  googleLogin: (account: { email: string; name: string; avatarUrl?: string }) => Promise<void>;
+  sendOtp: (email: string, type?: 'register' | 'login') => Promise<{ success: boolean; message: string; otpPreview?: string; demoNotice?: string }>;
+  verifyOtp: (payload: { name?: string; email: string; password?: string; otp: string; role?: UserRole }) => Promise<void>;
+  googleLogin: (account: { email: string; name: string; avatarUrl?: string; role?: UserRole }) => Promise<void>;
   logout: () => void;
   loading: boolean;
 }
@@ -41,29 +43,57 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const logout = () => {
+    localStorage.removeItem('careergrowth_token');
+    localStorage.removeItem('careergrowth_user_name');
+    localStorage.removeItem('careergrowth_user_role');
+    localStorage.removeItem('skillbridge_token');
+    localStorage.removeItem('skillbridge_user_name');
+    setToken(null);
+    setUser(null);
+  };
+
   useEffect(() => {
-    const savedName = localStorage.getItem('careergrowth_user_name') || localStorage.getItem('skillbridge_user_name');
-    const stored = localStorage.getItem('careergrowth_token') || localStorage.getItem('skillbridge_token');
+    const handleUnauthorizedEvent = () => {
+      logout();
+    };
+
+    window.addEventListener('careergrowth:unauthorized', handleUnauthorizedEvent);
+    return () => {
+      window.removeEventListener('careergrowth:unauthorized', handleUnauthorizedEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    const savedName = localStorage.getItem('careergrowth_user_name');
+    const stored = localStorage.getItem('careergrowth_token');
+
     if (stored) {
       setToken(stored);
       fetchCurrentUser(stored).then((res) => {
         if (res?.user) {
-          setUser(res.user);
+          const userWithRole: User = {
+            id: res.user.id,
+            name: res.user.name,
+            email: res.user.email,
+            role: (res.user.role as UserRole) || 'student',
+            isVerified: true
+          };
+          setUser(userWithRole);
           if (res.user.name) {
             localStorage.setItem('careergrowth_user_name', res.user.name);
           }
-        } else if (savedName) {
-          setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
+          if (res.user.role) {
+            localStorage.setItem('careergrowth_user_role', res.user.role);
+          }
+        } else {
+          // Token invalid or expired
+          logout();
         }
       }).catch(() => {
-        if (savedName) {
-          setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
-        }
+        logout();
       }).finally(() => setLoading(false));
     } else {
-      if (savedName) {
-        setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
-      }
       setLoading(false);
     }
   }, []);
@@ -74,7 +104,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('careergrowth_user_name', trimmed);
     setUser(prev => {
       if (prev) return { ...prev, name: trimmed };
-      return { id: 'usr-local', name: trimmed, email: 'student@careergrowth.edu' };
+      return { id: 'usr-local', name: trimmed, email: 'student@careergrowth.org', role: 'student' };
     });
   };
 
@@ -85,18 +115,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       if (res.user?.name) {
         localStorage.setItem('careergrowth_user_name', res.user.name);
       }
+      if (res.user?.role) {
+        localStorage.setItem('careergrowth_user_role', res.user.role);
+      }
       setToken(res.token);
-      setUser(res.user);
+      setUser({
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        role: (res.user.role as UserRole) || 'student'
+      });
     }
   };
 
-  const register = async (name: string, email: string, password: string) => {
-    const res = await registerUser(name, email, password);
+  const register = async (name: string, email: string, password: string, role: UserRole = 'student') => {
+    const res = await registerUser(name, email, password, role);
     if (res?.token) {
       localStorage.setItem('careergrowth_token', res.token);
       localStorage.setItem('careergrowth_user_name', name);
+      localStorage.setItem('careergrowth_user_role', role);
       setToken(res.token);
-      setUser(res.user);
+      setUser({
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        role: (res.user.role as UserRole) || role
+      });
     }
   };
 
@@ -104,37 +148,45 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return await sendOtpApi(email, type);
   };
 
-  const verifyOtp = async (payload: { name?: string; email: string; password?: string; otp: string }) => {
+  const verifyOtp = async (payload: { name?: string; email: string; password?: string; otp: string; role?: UserRole }) => {
     const res = await verifyOtpApi(payload);
     if (res?.token) {
       localStorage.setItem('careergrowth_token', res.token);
       if (payload.name) {
         localStorage.setItem('careergrowth_user_name', payload.name);
       }
+      if (res.user?.role) {
+        localStorage.setItem('careergrowth_user_role', res.user.role);
+      }
       setToken(res.token);
-      setUser(res.user);
+      setUser({
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        role: (res.user.role as UserRole) || payload.role || 'student'
+      });
     }
   };
 
-  const googleLogin = async (account: { email: string; name: string; avatarUrl?: string }) => {
+  const googleLogin = async (account: { email: string; name: string; avatarUrl?: string; role?: UserRole }) => {
     const res = await googleLoginApi(account);
     if (res?.token) {
       localStorage.setItem('careergrowth_token', res.token);
       if (account.name) {
         localStorage.setItem('careergrowth_user_name', account.name);
       }
+      if (res.user?.role) {
+        localStorage.setItem('careergrowth_user_role', res.user.role);
+      }
       setToken(res.token);
-      setUser(res.user);
+      setUser({
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        role: (res.user.role as UserRole) || account.role || 'student',
+        avatarUrl: account.avatarUrl
+      });
     }
-  };
-
-  const logout = () => {
-    localStorage.removeItem('careergrowth_token');
-    localStorage.removeItem('careergrowth_user_name');
-    localStorage.removeItem('skillbridge_token');
-    localStorage.removeItem('skillbridge_user_name');
-    setToken(null);
-    setUser(null);
   };
 
   return (

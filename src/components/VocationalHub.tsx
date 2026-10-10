@@ -126,6 +126,9 @@ export const VocationalHub: React.FC<VocationalHubProps> = ({ language, onNaviga
             <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 border border-indigo-500/30 text-xs font-semibold">
               NCrF Level 4.5 Aligned
             </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample project templates
+            </span>
           </div>
           <h2 className={`text-2xl md:text-3xl font-extrabold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Real-World Project Recommendations & Portfolio Builder

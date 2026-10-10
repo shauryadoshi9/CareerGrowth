@@ -47,6 +47,9 @@ export const RiskInterventionEngine: React.FC<RiskInterventionEngineProps> = ({ 
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
               Supportive Growth Framework
             </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample cohort data
+            </span>
           </div>
           <h2 className={`text-2xl md:text-3xl font-extrabold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Learning Support & Remedial Intervention Spotlight

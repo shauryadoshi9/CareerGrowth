@@ -16,16 +16,16 @@ interface GoogleAccountChooserModalProps {
 
 const DEFAULT_ACCOUNTS: GoogleAccount[] = [
   {
-    id: 'g-1',
-    name: 'Shaurya Doshi',
-    email: 'shauryadoshi9@gmail.com',
+    id: 'g-demo-1',
+    name: 'Aarav Patel (Demo Learner)',
+    email: 'student.google@careergrowth.org',
     avatarColor: 'bg-indigo-600',
   },
   {
-    id: 'g-2',
-    name: 'GTU Scholar',
-    email: 'scholar.student@gmail.com',
-    avatarColor: 'bg-emerald-600',
+    id: 'g-demo-2',
+    name: 'Dr. Sharma (Demo Faculty)',
+    email: 'faculty.google@careergrowth.org',
+    avatarColor: 'bg-purple-600',
   }
 ];
 
@@ -128,8 +128,11 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
               <path fill="#34A853" d="M12 23.8c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.1-6.7-5.1L1.6 17c1.9 3.8 5.8 6.8 10.4 6.8z"/>
             </svg>
             <div>
-              <h3 className="text-base font-bold text-slate-900 dark:text-white">Sign in with Google</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Choose an account to continue to CareerGrowth</p>
+              <div className="flex items-center gap-2">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">Demo sign-in</h3>
+                <span className="text-[10px] uppercase font-bold tracking-wide px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-500 border border-indigo-500/20">Evaluation</span>
+              </div>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Select a demo identity to evaluate the application</p>
             </div>
           </div>
           <button

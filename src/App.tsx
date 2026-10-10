@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from './context/AuthContext';
 import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
 import { UserRole, Language, ThemeMode } from './types';
@@ -24,7 +25,8 @@ import { checkServerHealth } from './services/api';
 import { applyUniversalTranslation, triggerGoogleTranslate } from './services/i18n';
 
 export function App() {
-  const [currentRole, setCurrentRole] = useState<UserRole>('student');
+  const { user } = useContext(AuthContext);
+  const currentRole: UserRole = user?.role || 'student';
   const [activeTab, setActiveTab] = useState<string>('home');
   const [language, setLanguage] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
@@ -102,12 +104,18 @@ export function App() {
     };
   }, []);
 
-  const handleRoleChange = (newRole: UserRole) => {
-    setCurrentRole(newRole);
-    if (newRole === 'student' && activeTab !== 'home') setActiveTab('dashboard');
-    else if (newRole === 'teacher' && activeTab !== 'home') setActiveTab('teacher-copilot');
-    else if (newRole === 'admin' && activeTab !== 'home') setActiveTab('institution-analytics');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  useEffect(() => {
+    const handleUnauthorized = () => {
+      setActiveTab('login');
+    };
+    window.addEventListener('careergrowth:unauthorized', handleUnauthorized);
+    return () => window.removeEventListener('careergrowth:unauthorized', handleUnauthorized);
+  }, []);
+
+  const handleRoleChange = (_newRole: UserRole) => {
+    if (!user) {
+      setActiveTab('login');
+    }
   };
 
   const handleTabChange = (tab: string) => {
@@ -117,10 +125,7 @@ export function App() {
     }
   };
 
-  const handleNavigateTab = (tab: string, role?: UserRole) => {
-    if (role && role !== currentRole) {
-      setCurrentRole(role);
-    }
+  const handleNavigateTab = (tab: string, _role?: UserRole) => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };

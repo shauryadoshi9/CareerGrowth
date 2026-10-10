@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { careerPathways, defaultSkills } from '../data/mockData';
 import { generateAdaptiveRoadmap } from '../services/aiEngine';
+import { fetchSkillsFromServer } from '../services/api';
 import { Compass, Calendar, CheckCircle2, Lock, Clock, ArrowRight, BookOpen, Layers } from 'lucide-react';
-import { Language, ThemeMode } from '../types';
+import { Language, ThemeMode, Skill } from '../types';
 
 interface CareerNavigatorProps {
   language: Language;
@@ -13,9 +14,22 @@ interface CareerNavigatorProps {
 export const CareerNavigator: React.FC<CareerNavigatorProps> = ({ language, onNavigateTab, theme = 'dark' }) => {
   const isDark = theme === 'dark';
   const [selectedCareerId, setSelectedCareerId] = useState<string>(careerPathways[0].id);
+  const [skills, setSkills] = useState<Skill[]>(defaultSkills);
+  const [isUsingSample, setIsUsingSample] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    fetchSkillsFromServer().then((srvSkills) => {
+      if (mounted && srvSkills && srvSkills.length > 0) {
+        setSkills(srvSkills);
+        setIsUsingSample(false);
+      }
+    });
+    return () => { mounted = false; };
+  }, []);
 
   const selectedCareer = careerPathways.find(c => c.id === selectedCareerId) || careerPathways[0];
-  const roadmapSteps = generateAdaptiveRoadmap(defaultSkills, selectedCareer);
+  const roadmapSteps = generateAdaptiveRoadmap(skills, selectedCareer);
 
   return (
     <div className="space-y-6">
@@ -25,9 +39,16 @@ export const CareerNavigator: React.FC<CareerNavigatorProps> = ({ language, onNa
         isDark ? 'bg-slate-900/40 border-indigo-500/30' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-semibold">
-            Structured Skill-to-Career Roadmap
-          </span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-semibold">
+              Structured Skill-to-Career Roadmap
+            </span>
+            {isUsingSample && (
+              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                📊 Sample data
+              </span>
+            )}
+          </div>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>AI Career Navigator</h2>
           <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Explore industry career pathways and follow an evidence-backed milestone sequence to reach job readiness.

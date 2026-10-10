@@ -1,8 +1,8 @@
 # CareerGrowth — AI-Powered Integrated Education, Skill & Employability Platform
 
 > **From Learning to Livelihood • Career Acceleration OS**  
-> *Smart India Hackathon 2026 • Problem Statement ID: SIH26044*  
-> **Theme:** Education & Skill Development | **Category:** Software | **Team:** Disruptors VI (Team ID: 118701)
+> *Innovate for Bharat • Hack For Social Cause*  
+> **Registration ID:** `HSC|GJ|00051` | **Team Name:** Tatva | **Institute:** Dharmsinh Desai University, Nadiad
 
 [![Platform](https://img.shields.io/badge/Platform-CareerGrowth-emerald.svg)](https://github.com/shauryadoshi9/CareerGrowth)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
@@ -214,10 +214,15 @@ npm run build
 
 ---
 
-## 👨‍💻 Team: Disruptors VI
+## 👨‍💻 Team & Registration Details
 
-* **Problem Statement:** SIH26044 — *Portal for Academia-Industry collaboration for Skill Mapping, Internships and Placement*
-* **Submission Track:** Smart India Hackathon 2026
+* **Initiative:** Innovate for Bharat
+* **Track:** Hack For Social Cause
+* **Registration ID:** `HSC|GJ|00051`
+* **Team Name:** Tatva
+* **Team Size:** 1
+* **Team Lead:** Shaurya Doshi ([shauryadoshi9@gmail.com](mailto:shauryadoshi9@gmail.com))
+* **Institution:** Dharmsinh Desai University, Nadiad (Kheda, Gujarat)
 * **Repository:** [https://github.com/shauryadoshi9/CareerGrowth](https://github.com/shauryadoshi9/CareerGrowth)
 
 ---

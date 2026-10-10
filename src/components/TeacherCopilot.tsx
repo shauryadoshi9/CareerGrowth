@@ -153,7 +153,7 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language }) => {
 
           <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
             <span className="text-xs text-slate-400">
-              {isPublished ? '● Saved to Dynamic Server DB' : 'Draft Ready'}
+              {isPublished ? '● Published to Classroom' : 'Draft Ready'}
             </span>
 
             <div className="flex items-center gap-2">

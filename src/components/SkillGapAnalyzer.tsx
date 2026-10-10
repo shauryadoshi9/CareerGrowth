@@ -96,7 +96,7 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
       <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex items-start gap-3 text-xs leading-relaxed text-indigo-200">
         <Sparkles className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
         <div>
-          <span className="font-bold text-white block mb-0.5">Holistic Multi-Factor Skill Verification (Report Highlight #1)</span>
+          <span className="font-bold text-white block mb-0.5">Holistic Multi-Factor Skill Verification</span>
           Instead of relying solely on exam scores, SkillBridge synthesizes <strong>Diagnostic Quiz Results</strong>, <strong>Accredited Certifications</strong> (NPTEL/AICTE), and <strong>Real-World Portfolio Projects</strong> with public GitHub code artifacts.
         </div>
       </div>

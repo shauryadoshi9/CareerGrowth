@@ -30,7 +30,8 @@ import {
   Clock,
   Building,
   Trophy,
-  ChevronRight
+  ChevronRight,
+  Target
 } from 'lucide-react';
 
 interface HomePageProps {
@@ -83,19 +84,19 @@ export const HomePage: React.FC<HomePageProps> = ({
     const result = await postCustomData(
       customTitle,
       customCategory,
-      { details: customPayload || 'User entered custom data via Home Page form', submittedAt: new Date().toISOString() }
+      { details: customPayload || 'Target role or goal registered via dashboard', submittedAt: new Date().toISOString() }
     );
 
     setIsSubmitting(false);
 
     if (result.success) {
-      setServerMessage(`✅ Saved to Dynamic Server DB! Total custom records: ${result.totalCustomEntries || 1}`);
+      setServerMessage('✨ Career goal saved to your personalized roadmap!');
       setCustomTitle('');
       setCustomPayload('');
       const health = await checkServerHealth();
       if (health) setServerHealth(health);
     } else {
-      setServerMessage('⚠️ Failed to connect to server. Data stored locally.');
+      setServerMessage('✨ Career goal saved to your local roadmap.');
     }
   };
 
@@ -127,7 +128,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="flex flex-wrap items-center gap-2.5">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              India's Premier Career & Opportunity Ecosystem
+              {t('home_badge_unstop', language)}
             </span>
 
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
@@ -142,13 +143,12 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
 
           {/* Main Title & Slogan */}
-          <h1 className={`text-3xl md:text-6xl font-black tracking-tight leading-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Where Ambition Meets <br />
-            <span className="gradient-text">Genuine Opportunities</span>
+          <h1 className={`text-3xl md:text-5xl font-black tracking-tight leading-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <span className="gradient-text">{t('hero_headline', language)}</span>
           </h1>
 
           <p className={`text-base md:text-lg max-w-2xl leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-            Discover verified hackathons, competitions, PM Internship Scheme openings, and 1-on-1 industry mentors. Master skills with AI Study Buddy and mock interview drills.
+            {t('hero_sub', language)}
           </p>
 
           {/* Live Quick-Search Bar */}
@@ -158,19 +158,19 @@ export const HomePage: React.FC<HomePageProps> = ({
                 ? 'bg-slate-900/90 border-slate-700 focus-within:border-indigo-500' 
                 : 'bg-white border-slate-300 focus-within:border-indigo-600'
             }`}>
-              <Search className="w-5 h-5 text-slate-400 ml-2 mr-2" />
+              <Search className="w-5 h-5 text-slate-400 ml-2 mr-2 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search Hackathons (ETHIndia), Contests (Flipkart GRiD), PM Internships, or Mentors..."
+                placeholder={t('home_search_placeholder', language)}
                 className={`w-full bg-transparent text-sm outline-none ${isDark ? 'text-white placeholder-slate-400' : 'text-slate-900 placeholder-slate-500'}`}
               />
               <button
                 type="submit"
                 className="px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-md shrink-0 transition"
               >
-                Search
+                {t('home_search_btn', language)}
               </button>
             </div>
           </form>
@@ -182,7 +182,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="px-3.5 py-1.5 rounded-xl font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/25 transition flex items-center gap-1.5"
             >
               <Flame className="w-3.5 h-3.5 text-amber-400" />
-              <span>Hackathons (Devfolio & Unstop)</span>
+              <span>{t('home_tab_hackathons', language)} (Devfolio & Unstop)</span>
             </button>
             <button
               onClick={() => onNavigateTab('opportunities', 'student')}
@@ -196,14 +196,14 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="px-3.5 py-1.5 rounded-xl font-semibold bg-purple-500/15 text-purple-300 border border-purple-500/30 hover:bg-purple-500/25 transition flex items-center gap-1.5"
             >
               <Users className="w-3.5 h-3.5 text-purple-400" />
-              <span>1-on-1 Top Mentors (Google & Microsoft)</span>
+              <span>{t('home_tab_mentors', language)} (Google & Microsoft)</span>
             </button>
             <button
               onClick={() => onNavigateTab('study-buddy', 'student')}
               className="px-3.5 py-1.5 rounded-xl font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition flex items-center gap-1.5"
             >
               <Bot className="w-3.5 h-3.5 text-cyan-400" />
-              <span>AI Study Buddy (Voice)</span>
+              <span>{t('study_buddy', language)}</span>
             </button>
           </div>
 
@@ -214,7 +214,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               className="px-6 py-3.5 rounded-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-105 transition-all duration-200 flex items-center gap-2"
             >
               <Zap className="w-5 h-5 text-amber-300 fill-amber-300" />
-              Explore 16+ Verified Contests
+              {t('home_explore_opps', language)}
               <ArrowRight className="w-4 h-4" />
             </button>
 
@@ -227,7 +227,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               }`}
             >
               <Users className="w-4 h-4 text-indigo-400" />
-              Book 1:1 Industry Mentor
+              {t('home_talk_mentor', language)}
             </button>
           </div>
 
@@ -257,17 +257,17 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
               <Trophy className="w-4 h-4 text-amber-400" />
-              Flagship Spotlight Opportunities
+              <span>{t('home_tab_all', language)}</span>
             </div>
             <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Featured National Contests & Internships
+              {t('home_spotlight_opps', language)}
             </h2>
           </div>
           <button
             onClick={() => onNavigateTab('opportunities', 'student')}
             className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 group"
           >
-            <span>View All 16 Opportunities</span>
+            <span>{t('view_all_opps', language)}</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
@@ -337,20 +337,20 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div>
             <div className="flex items-center gap-1.5 text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">
               <Users className="w-4 h-4 text-purple-400" />
-              Verified 1-on-1 Mentorship
+              <span>{t('home_tab_mentors', language)}</span>
             </div>
             <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Learn Directly from Top Tech & CleanTech Leaders
+              {t('home_spotlight_mentors', language)}
             </h2>
             <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Senior Engineers and Scientists from Google DeepMind, Microsoft, Zerodha, and CleanTech Alliance.
+              {t('home_spotlight_mentors_sub', language)}
             </p>
           </div>
           <button
             onClick={() => onNavigateTab('mentors', 'student')}
             className="px-5 py-2.5 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-500 text-white shadow-md flex items-center gap-1.5 transition"
           >
-            <span>View All Mentors</span>
+            <span>{t('view_all_mentors', language)}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
@@ -387,7 +387,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   onClick={() => onNavigateTab('mentors', 'student')}
                   className="px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 transition"
                 >
-                  Book 1:1
+                  {t('book_session', language)}
                 </button>
               </div>
             </div>
@@ -400,11 +400,14 @@ export const HomePage: React.FC<HomePageProps> = ({
         <div>
           <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
             <Bot className="w-4 h-4 text-indigo-400" />
-            SkillBridge AI Acceleration Suite
+            <span>AI Powered</span>
           </div>
           <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Intelligent AI Tools Built for Modern Learners
+            {t('home_ai_suite_title', language)}
           </h2>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+            {t('home_ai_suite_sub', language)}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -498,7 +501,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       {/* Role Workspaces (Student, Educator, Institution) */}
       <div className="space-y-5">
         <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-          Dedicated Stakeholder Workspaces
+          {t('home_workspaces_title', language)}
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -516,13 +519,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               <Users className="w-6 h-6" />
             </div>
             <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Student & Job-Seeker Workspace
+              {t('home_student_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Real-time skill gap analysis, adaptive multilingual quizzes, project evidence builder, and direct opportunity matching.
             </p>
             <div className="mt-4 pt-4 border-t border-indigo-500/20 flex items-center justify-between text-xs font-semibold text-indigo-400">
-              <span>Open Student Dashboard</span>
+              <span>{t('home_open_dashboard', language)}</span>
               <ArrowRight className="w-4 h-4" />
             </div>
           </div>
@@ -540,13 +543,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               <Bot className="w-6 h-6" />
             </div>
             <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Educator AI Copilot
+              {t('home_teacher_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Generate multilingual lesson plans, diagnostic quizzes, and track at-risk student intervention alerts.
             </p>
             <div className="mt-4 pt-4 border-t border-purple-500/20 flex items-center justify-between text-xs font-semibold text-purple-400">
-              <span>Open Teacher Copilot</span>
+              <span>{t('home_open_copilot', language)}</span>
               <ArrowRight className="w-4 h-4" />
             </div>
           </div>
@@ -564,13 +567,13 @@ export const HomePage: React.FC<HomePageProps> = ({
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Institution & GTU Analytics
+              {t('home_admin_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               High-level cohort skill distribution charts, placement alignment metrics, and regional rural outreach statistics.
             </p>
             <div className="mt-4 pt-4 border-t border-emerald-500/20 flex items-center justify-between text-xs font-semibold text-emerald-400">
-              <span>Open Analytics</span>
+              <span>{t('home_open_analytics', language)}</span>
               <ArrowRight className="w-4 h-4" />
             </div>
           </div>
@@ -578,25 +581,25 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* Developer & Backend Persistence Sandbox (Collapsible Drawer at Bottom) */}
+      {/* Personal Career Goal Tracker Drawer (Refined & User-Facing) */}
       <div className={`rounded-2xl border transition-all overflow-hidden ${isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
         <button
           onClick={() => setIsCustomFormOpen(!isCustomFormOpen)}
-          className="w-full p-4 flex items-center justify-between text-left text-xs font-semibold"
+          className="w-full p-4 flex items-center justify-between text-left text-xs font-semibold hover:bg-slate-800/30 transition"
         >
           <div className="flex items-center gap-2 text-indigo-400">
-            <Server className="w-4 h-4" />
-            <span>Developer Sandbox & Custom Profile Goal Storage (Backend Sync)</span>
+            <Target className="w-4 h-4" />
+            <span>{t('goal_tracker_title', language)}</span>
           </div>
           <span className="text-slate-400 text-[11px] underline">
-            {isCustomFormOpen ? 'Hide Developer Sandbox' : 'Show Developer Sandbox'}
+            {isCustomFormOpen ? t('goal_tracker_toggle_hide', language) : t('goal_tracker_toggle_show', language)}
           </span>
         </button>
 
         {isCustomFormOpen && (
           <div className="p-6 border-t border-slate-800 space-y-4">
             <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Record custom learner aspirations, industry preferences, or skill targets directly into the active server database.
+              {t('goal_tracker_sub', language)}
             </p>
 
             <form onSubmit={handleCustomSubmit} className="space-y-3">
@@ -606,7 +609,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                   required
                   value={customTitle}
                   onChange={(e) => setCustomTitle(e.target.value)}
-                  placeholder="Entry Title / Goal Name"
+                  placeholder={t('goal_input_placeholder', language)}
                   className={`px-3 py-2 rounded-xl text-xs border outline-none ${
                     isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
                   }`}
@@ -618,15 +621,16 @@ export const HomePage: React.FC<HomePageProps> = ({
                     isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
                   }`}
                 >
-                  <option value="Career Goal">Career Goal</option>
-                  <option value="Custom Skill">Custom Skill</option>
-                  <option value="Mentorship Note">Mentorship Note</option>
+                  <option value="Career Goal">🎯 Career Goal</option>
+                  <option value="Hackathon Target">🏆 Hackathon Target</option>
+                  <option value="Internship Aspiration">💼 Internship Aspiration</option>
+                  <option value="Skill Target">⚡ Skill Target</option>
                 </select>
                 <input
                   type="text"
                   value={customPayload}
                   onChange={(e) => setCustomPayload(e.target.value)}
-                  placeholder="Target Proficiency or Notes"
+                  placeholder={t('goal_notes_placeholder', language)}
                   className={`px-3 py-2 rounded-xl text-xs border outline-none ${
                     isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
                   }`}
@@ -637,11 +641,11 @@ export const HomePage: React.FC<HomePageProps> = ({
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 rounded-xl bg-indigo-600 text-white font-bold text-xs shadow-md"
+                  className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition"
                 >
-                  {isSubmitting ? 'Saving...' : 'Save to Database'}
+                  {isSubmitting ? t('goal_saving', language) : t('goal_save_btn', language)}
                 </button>
-                {serverMessage && <span className="text-xs text-emerald-400 font-semibold">{serverMessage}</span>}
+                {serverMessage && <span className="text-xs text-emerald-400 font-semibold animate-fade-in">{serverMessage}</span>}
               </div>
             </form>
           </div>

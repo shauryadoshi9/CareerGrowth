@@ -3,12 +3,16 @@ import { AuthContext } from '../context/AuthContext';
 import { UserPlus, User, Mail, Lock, AlertCircle, ArrowRight, CheckCircle, RefreshCw, KeyRound, ArrowLeft } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
+import { Language } from '../types';
+import { t } from '../services/i18n';
+
 interface RegisterFormProps {
   onSuccess?: () => void;
   onSwitchToLogin?: () => void;
+  language?: Language;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin, language = 'en' }) => {
   const { sendOtp, verifyOtp, googleLogin } = useContext(AuthContext);
   
   // Step 1: Info, Step 2: OTP

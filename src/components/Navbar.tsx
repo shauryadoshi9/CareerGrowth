@@ -324,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <GraduationCap className="w-3.5 h-3.5" />
-              <span>Student</span>
+              <span>{t('role_student', language)}</span>
             </button>
             <button
               onClick={() => { onRoleChange('teacher'); onTabChange('teacher-copilot'); }}
@@ -335,7 +335,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <UserCheck className="w-3.5 h-3.5" />
-              <span>Teacher</span>
+              <span>{t('role_teacher', language)}</span>
             </button>
             <button
               onClick={() => { onRoleChange('admin'); onTabChange('institution-analytics'); }}
@@ -346,7 +346,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Admin</span>
+              <span>{t('role_admin', language)}</span>
             </button>
           </div>
 
@@ -354,9 +354,13 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex items-center gap-2 ml-1">
             {user ? (
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold">
+                <div 
+                  onClick={() => onTabChange('dashboard')}
+                  className="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold cursor-pointer hover:bg-indigo-500/20 transition"
+                  title="Open Dashboard"
+                >
                   <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-                  <span className="max-w-[100px] truncate">{user.name || user.email}</span>
+                  <span className="max-w-[120px] truncate">{user.name || user.email}</span>
                 </div>
                 <button
                   onClick={() => {
@@ -365,7 +369,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   }}
                   className="px-2.5 py-1 text-xs rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-300 transition"
                 >
-                  Logout
+                  {t('logout', language)}
                 </button>
               </div>
             ) : (
@@ -378,7 +382,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       : isDark ? 'text-slate-300 hover:bg-slate-800' : 'text-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  Login
+                  {t('login', language)}
                 </button>
                 <button
                   onClick={() => onTabChange('register')}
@@ -388,7 +392,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-sm'
                   }`}
                 >
-                  Register
+                  {t('register', language)}
                 </button>
               </>
             )}

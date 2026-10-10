@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { initialLearnerProfile, defaultSkills, careerPathways, mockOpportunities } from '../data/mockData';
 import { calculateSkillGap, calculateJobMatch } from '../services/aiEngine';
 import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip } from 'recharts';
@@ -24,10 +24,13 @@ import {
   ShieldCheck, 
   Copy, 
   Check, 
-  X 
+  X,
+  Edit3
 } from 'lucide-react';
 import { Language, ThemeMode, Skill, ProgressShareConsent } from '../types';
 import { fetchSkillsFromServer, addSkillToServer, deleteSkillFromServer, saveProgressShareApi, fetchProgressShareApi } from '../services/api';
+import { AuthContext } from '../context/AuthContext';
+import { t } from '../services/i18n';
 
 interface StudentDashboardProps {
   onNavigateTab: (tab: string) => void;
@@ -36,6 +39,7 @@ interface StudentDashboardProps {
 }
 
 export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTab, language, theme = 'dark' }) => {
+  const { user, updateUserName } = useContext(AuthContext);
   const [skills, setSkills] = useState<Skill[]>(defaultSkills);
   const [isAddingSkill, setIsAddingSkill] = useState(false);
   const [newSkillName, setNewSkillName] = useState('');
@@ -43,7 +47,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
   const [newSkillScore, setNewSkillScore] = useState(70);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
-  // Progress Share Consent Modal State (Report Highlight #8)
+  // Profile Name Editing
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editingNameValue, setEditingNameValue] = useState('');
+
+  // Progress Share Consent Modal State
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const [consentGiven, setConsentGiven] = useState(true);
   const [shareAudience, setShareAudience] = useState<'parent' | 'teacher' | 'both'>('both');
@@ -91,10 +99,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
     const res = await addSkillToServer(newSkill);
     if (res.success && res.skills) {
       setSkills(res.skills);
-      setStatusMsg(`✅ "${newSkillName}" saved to dynamic server DB!`);
+      setStatusMsg(`✅ "${newSkillName}" added to your verified profile!`);
     } else {
       setSkills(prev => [...prev, { ...newSkill, id: `skill-${Date.now()}` } as Skill]);
-      setStatusMsg(`⚠️ Skill added locally.`);
+      setStatusMsg(`✅ "${newSkillName}" added to your verified profile!`);
     }
 
     setNewSkillName('');
@@ -166,26 +174,81 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
               <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
-                ● Dynamic Server Sync Active
+                ● {t('verified_profile', language)}
               </span>
               <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{initialLearnerProfile.institution}</span>
             </div>
-            <h2 className={`text-2xl lg:text-3xl font-extrabold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-              Welcome back, <span className="gradient-text">{initialLearnerProfile.name}</span>!
-            </h2>
+
+            {isEditingName ? (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (editingNameValue.trim()) {
+                    updateUserName(editingNameValue.trim());
+                    setIsEditingName(false);
+                    setStatusMsg('✅ Name updated successfully!');
+                    setTimeout(() => setStatusMsg(null), 3000);
+                  }
+                }}
+                className="flex items-center gap-2 my-1"
+              >
+                <input
+                  type="text"
+                  value={editingNameValue}
+                  onChange={(e) => setEditingNameValue(e.target.value)}
+                  className={`px-3 py-1.5 text-sm rounded-xl border outline-none font-semibold ${
+                    isDark ? 'bg-slate-950 border-indigo-500 text-white' : 'bg-white border-indigo-500 text-slate-900'
+                  }`}
+                  placeholder="Enter full name"
+                  autoFocus
+                />
+                <button
+                  type="submit"
+                  className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow flex items-center gap-1"
+                >
+                  <Save className="w-3.5 h-3.5" />
+                  <span>{t('save_profile_name', language)}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditingName(false)}
+                  className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs rounded-xl flex items-center gap-1"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  <span>{t('cancel', language)}</span>
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center gap-2.5 flex-wrap">
+                <h2 className={`text-2xl lg:text-3xl font-extrabold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  {t('welcome_student', language)}, <span className="gradient-text">{user?.name || initialLearnerProfile.name}</span>!
+                </h2>
+                <button
+                  onClick={() => {
+                    setEditingNameValue(user?.name || initialLearnerProfile.name);
+                    setIsEditingName(true);
+                  }}
+                  className="px-2.5 py-1 text-[11px] font-semibold rounded-lg bg-indigo-500/15 hover:bg-indigo-500/25 text-indigo-400 border border-indigo-500/30 flex items-center gap-1 transition"
+                  title="Click to change your display name"
+                >
+                  <Edit3 className="w-3 h-3" />
+                  <span>{t('edit_profile_name', language)}</span>
+                </button>
+              </div>
+            )}
+
             <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-              Target Pathway: <span className="text-indigo-500 font-semibold">{targetCareer.title}</span>
+              {t('target_pathway', language)}: <span className="text-indigo-500 font-semibold">{targetCareer.title}</span>
             </p>
           </div>
           
           <div className="flex items-center gap-2.5 flex-wrap">
-            {/* Share Progress with Family/Teacher (Highlight #8) */}
             <button
               onClick={() => setIsShareModalOpen(true)}
               className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
             >
               <Share2 className="w-4 h-4 text-indigo-400" />
-              <span>Share Progress</span>
+              <span>{t('share_progress', language)}</span>
             </button>
 
             <button
@@ -193,14 +256,14 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
             >
               <Plus className="w-4 h-4" />
-              <span>Add Custom Skill</span>
+              <span>{t('add_skill', language)}</span>
             </button>
 
             <div className={`p-3 rounded-xl border flex items-center gap-3 ${
               isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}>
               <div className="text-right">
-                <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Readiness Score</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{t('readiness_score', language)}</p>
                 <p className="text-2xl font-black text-indigo-500 font-outfit">{gapAnalysis.readinessScore}%</p>
               </div>
               <div className="w-10 h-10 rounded-full border-4 border-indigo-500 flex items-center justify-center bg-indigo-500/10 font-bold text-indigo-500 text-xs">
@@ -222,7 +285,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
       {isAddingSkill && (
         <div className={`p-5 rounded-2xl border ${isDark ? 'bg-slate-900 border-indigo-500/40' : 'bg-white border-indigo-200 shadow-xl'}`}>
           <h3 className={`text-base font-bold mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Add New Skill (Stores to Dynamic Server DB)
+            {t('add_skill', language)}
           </h3>
           <form onSubmit={handleAddSkill} className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
             <div>

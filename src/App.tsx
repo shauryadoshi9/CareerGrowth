@@ -87,12 +87,14 @@ export function App() {
           <LoginForm
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToRegister={() => setActiveTab('register')}
+            language={language}
           />
         )}
         {activeTab === 'register' && (
           <RegisterForm
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToLogin={() => setActiveTab('login')}
+            language={language}
           />
         )}
         {/* Home Landing View */}

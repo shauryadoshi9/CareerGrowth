@@ -62,7 +62,7 @@ export const RiskInterventionEngine: React.FC<RiskInterventionEngineProps> = ({ 
       <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex items-start gap-3 text-xs leading-relaxed text-indigo-200">
         <HeartHandshake className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
         <div>
-          <span className="font-bold text-white block mb-0.5">Supportive & Non-Labeling Design (Report Highlight #9)</span>
+          <span className="font-bold text-white block mb-0.5">Supportive & Collaborative Guidance</span>
           Learning difficulties are dynamic temporary focus areas, never permanent student identities. Teachers and mentors are invited collaboratively to provide targeted encouragement, adaptive worksheets, and 1:1 guidance.
         </div>
       </div>

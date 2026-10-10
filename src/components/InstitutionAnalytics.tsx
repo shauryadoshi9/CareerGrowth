@@ -137,7 +137,7 @@ export const InstitutionAnalytics: React.FC<InstitutionAnalyticsProps> = ({ lang
         </div>
 
         <p className="text-xs text-slate-300 leading-relaxed">
-          <strong>Evaluation Integrity Standard (Report Highlight #14):</strong> Rather than claiming unsubstantiated outcome claims before rigorous testing, the pilot tracks 5 clearly defined empirical measures across college students and rural learners.
+          <strong>Institutional Performance Indicators:</strong> The dashboard benchmarks 5 high-impact outcome metrics across college cohorts, polytechnic institutions, and regional learners.
         </p>
 
         {/* 5 Empirical Measures Grid */}

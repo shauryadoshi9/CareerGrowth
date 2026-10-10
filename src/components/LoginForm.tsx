@@ -3,12 +3,16 @@ import { AuthContext } from '../context/AuthContext';
 import { LogIn, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
+import { Language } from '../types';
+import { t } from '../services/i18n';
+
 interface LoginFormProps {
   onSuccess?: () => void;
   onSwitchToRegister?: () => void;
+  language?: Language;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister, language = 'en' }) => {
   const { login, googleLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

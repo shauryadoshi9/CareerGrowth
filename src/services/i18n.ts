@@ -980,3 +980,927 @@ export function getComponentText(lang: Language) {
     apply_job: t('apply_job', lang),
   };
 }
+
+// =========================================================================
+// UNIVERSAL PHRASE DICTIONARY FOR AUTOMATED IN-PAGE MULTILINGUAL TRANSLATION
+// Translates across ALL pages: Opportunities, Mentors, Student Dashboard,
+// AI Study Buddy, Revision, Interview, Workspaces, and Headers
+// =========================================================================
+
+export const UNIVERSAL_PHRASE_DICTIONARY: Record<string, Record<Language, string>> = {
+  // Opportunities & Hackathons
+  'Explore Genuine Hackathons, Internships, Quizzes & Scholarships': {
+    en: 'Explore Genuine Hackathons, Internships, Quizzes & Scholarships',
+    hi: 'सत्यापित हैकाथॉन, इंटर्नशिप, क्विज और छात्रवृत्तियां खोजें',
+    gu: 'અધિકૃત હેકાથોન, ઇન્ટર્નશીપ, ક્વિઝ અને શિષ્યવૃત્તિ શોધો',
+    mr: 'सत्यापित हॅकाथॉन, इंटर्नशिप, क्विझ आणि शिष्यवृत्ती शोधा',
+    ta: 'உண்மையான ஹேக்கத்தான்கள், இன்டர்ன்ஷிப்கள், வினாடி வினாக்கள் & உதவித்தொகைகளை ஆராய்க',
+    te: 'నిజమైన హ్యాకథాన్‌లు, ఇంటర్న్‌షిప్‌లు, క్విజ్‌లు మరియు స్కాలర్‌షిప్‌లను అన్వేషించండి',
+    kn: 'ಅಧಿಕೃತ ಹ್ಯಾಕಥಾನ್‌ಗಳು, ಇಂಟರ್ನ್‌ಶಿಪ್‌ಗಳು, ರಸಪ್ರಶ್ನೆಗಳು & ವಿದ್ಯಾರ್ಥಿವೇತನಗಳನ್ನು ಅನ್ವೇಷಿಸಿ',
+    bn: 'যাচাইকৃত হ্যাকাথন, ইন্টার্নশিপ, কুইজ এবং বৃত্তি সন্ধান করুন',
+    pa: 'ਪ੍ਰਮਾਣਿਤ ਹੈਕਾਥੌਨ, ਇੰਟਰਨਸ਼ਿਪਾਂ, ਕੁਇਜ਼ ਅਤੇ ਵਜ਼ੀਫ਼ੇ ਖੋਜੋ',
+    ml: 'യഥാർത്ഥ ഹാക്കത്തോണുകൾ, ഇന്റേൺഷിപ്പുകൾ, ക്വിസുകൾ, സ്കോളർഷിപ്പുകൾ എന്നിവ പരിശോധിക്കുക'
+  },
+  'Verified Opportunity Explorer': {
+    en: 'Verified Opportunity Explorer',
+    hi: 'सत्यापित अवसर एक्सप्लोरर',
+    gu: 'ચકાસાયેલ તક એક્સપ્લોરર',
+    mr: 'सत्यापित संधी एक्सप्लोरर',
+    ta: 'சரிபார்க்கப்பட்ட வாய்ப்பு ஆய்வாளர்',
+    te: 'ధృవీకరించబడిన అవకాశాల అన్వేషకుడు',
+    kn: 'ಪರಿಶೀಲಿಸಿದ ಅವಕಾಶಗಳ ಎಕ್ಸ್‌ಪ್ಲೋರರ್',
+    bn: 'যাচাইকৃত সুযোগ অনুসন্ধানকারী',
+    pa: 'ਪ੍ਰਮਾਣਿਤ ਮੌਕਾ ਖੋਜੀ',
+    ml: 'പരിശോധിച്ച അവസര എക്സ്പ്ലോറർ'
+  },
+  'Live Industry & Government Pipelines': {
+    en: 'Live Industry & Government Pipelines',
+    hi: 'लाइव उद्योग एवं सरकारी पाइपलाइन',
+    gu: 'લાઈવ ઉદ્યોગ અને સરકારી પાઇપલાઇન',
+    mr: 'थेट उद्योग आणि सरकारी पाइपलाइन',
+    ta: 'நேரலை தொழில் மற்றும் அரசு வாய்ப்புகள்',
+    te: 'లైవ్ పరిశ్రమ & ప్రభుత్వ పైప్‌లైన్లు',
+    kn: 'ಲೈವ್ ಉದ್ಯಮ & ಸರ್ಕಾರಿ ಅವಕಾಶಗಳು',
+    bn: 'লাইভ ইন্ডাস্ট্রি এবং সরকারি সুযোগ',
+    pa: 'ਲਾਈਵ ਉਦਯੋਗ ਅਤੇ ਸਰਕਾਰੀ ਮੌਕੇ',
+    ml: 'തത്സമയ ഇൻഡസ്ട്രി & സർക്കാർ അവസരങ്ങൾ'
+  },
+  'Post Your Opportunity': {
+    en: 'Post Your Opportunity',
+    hi: 'अपना अवसर पोस्ट करें',
+    gu: 'તમારી તક પોસ્ટ કરો',
+    mr: 'तुमची संधी पोस्ट करा',
+    ta: 'உங்கள் வாய்ப்பைப் பதிவிடவும்',
+    te: 'మీ అవకాశాన్ని పోస్ట్ చేయండి',
+    kn: 'ನಿಮ್ಮ ಅವಕಾಶವನ್ನು ಪೋಸ್ಟ್ ಮಾಡಿ',
+    bn: 'আপনার সুযোগ পোস্ট করুন',
+    pa: 'ਆਪਣਾ ਮੌਕਾ ਪੋਸਟ ਕਰੋ',
+    ml: 'നിങ്ങളുടെ അവസരം പോസ്റ്റ് ചെയ്യുക'
+  },
+  'Filter Opportunities': {
+    en: 'Filter Opportunities',
+    hi: 'अवसर फ़िल्टर करें',
+    gu: 'તકો ફિલ્ટર કરો',
+    mr: 'संधी फिल्टर करा',
+    ta: 'வாய்ப்புகளை வடிகட்டவும்',
+    te: 'అవకాశాలను ఫిల్టర్ చేయండి',
+    kn: 'ಅವಕಾಶಗಳನ್ನು ಫಿಲ್ಟರ್ ಮಾಡಿ',
+    bn: 'সুযোগ ফিল্টার করুন',
+    pa: 'ਮੌਕੇ ਫਿਲਟਰ ਕਰੋ',
+    ml: 'അവസരങ്ങൾ ഫിൽട്ടർ ചെയ്യുക'
+  },
+  'Search opportunities...': {
+    en: 'Search opportunities...',
+    hi: 'अवसर खोजें...',
+    gu: 'તકો શોધો...',
+    mr: 'संधी शोधा...',
+    ta: 'வாய்ப்புகளைத் தேடுங்கள்...',
+    te: 'అవకాశాలను శోధించండి...',
+    kn: 'ಅವಕಾಶಗಳನ್ನು ಹುಡುಕಿ...',
+    bn: 'সুযোগ অনুসন্ধান করুন...',
+    pa: 'ਮੌਕੇ ਖੋਜੋ...',
+    ml: 'അവസരങ്ങൾ തിരയുക...'
+  },
+  'Apply on Portal': {
+    en: 'Apply on Portal',
+    hi: 'पोर्टल पर आवेदन करें',
+    gu: 'પોર્ટલ પર અરજી કરો',
+    mr: 'पोर्टलवर अर्ज करा',
+    ta: 'போர்ட்டலில் விண்ணப்பிக்கவும்',
+    te: 'పోర్టల్‌లో దరఖాస్తు చేయండి',
+    kn: 'ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
+    bn: 'পোর্টালে আবেদন করুন',
+    pa: 'ਪੋਰਟਲ ਤੇ ਅਰਜ਼ੀ ਦਿਓ',
+    ml: 'പോർട്ടലിൽ അപേക്ഷിക്കുക'
+  },
+  'Apply with Verified Evidence': {
+    en: 'Apply with Verified Evidence',
+    hi: 'सत्यापित साक्ष्य के साथ आवेदन करें',
+    gu: 'ચકાસાયેલ પુરાવા સાથે અરજી કરો',
+    mr: 'सत्यापित पुराव्यासह अर्ज करा',
+    ta: 'சான்றுடன் விண்ணப்பிக்கவும்',
+    te: 'ధృవీకరించబడిన ఆధారాలతో దరఖాస్తు చేయండి',
+    kn: 'ಪರಿಶೀಲಿಸಿದ ಸಾಕ್ಷ್ಯದೊಂದಿಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
+    bn: 'যাচাইকৃত প্রমাণ সহ আবেদন করুন',
+    pa: 'ਪ੍ਰਮਾਣਿਤ ਸਬੂਤ ਨਾਲ ਅਰਜ਼ੀ ਦਿਓ',
+    ml: 'പരിശോധിച്ച തെളിവുകളോടെ അപേക്ഷിക്കുക'
+  },
+  'Save to Wishlist': {
+    en: 'Save to Wishlist',
+    hi: 'विशलिस्ट में सहेजें',
+    gu: 'વિશલિસ્ટમાં સાચવો',
+    mr: 'विशलिस्टमध्ये जतन करा',
+    ta: 'விருப்பப்பட்டியலில் சேமி',
+    te: 'విష్‌లిస్ట్‌లో సేవ్ చేయండి',
+    kn: 'ವಿಶ್‌ಲಿಸ್ಟ್‌ಗೆ ಉಳಿಸಿ',
+    bn: 'উইশলিস্টে সংরক্ষণ করুন',
+    pa: 'ਵਿਸ਼ਲਿਸਟ ਵਿੱਚ ਸੰਭਾਲੋ',
+    ml: 'വിഷ്‌ലിസ്റ്റിൽ സംരക്ഷിക്കുക'
+  },
+  'View Skill Fit & Details': {
+    en: 'View Skill Fit & Details',
+    hi: 'कौशल उपयुक्तता और विवरण देखें',
+    gu: 'કૌશલ્ય ફિટ અને વિગતો જુઓ',
+    mr: 'कौशल्य योग्यता आणि तपशील पहा',
+    ta: 'திறன் பொருத்தம் மற்றும் விவரங்களைக் காண்க',
+    te: 'స్కిల్ ఫిట్ & వివరాలను చూడండి',
+    kn: 'ಕೌಶಲ್ಯ ಸರಿಹೊಂದುವಿಕೆ & ವಿವರಗಳನ್ನು ವೀಕ್ಷಿಸಿ',
+    bn: 'দক্ষতা মিল ও বিবরণ দেখুন',
+    pa: 'ਸਕਿੱਲ ਫਿੱਟ ਅਤੇ ਵੇਰਵੇ ਦੇਖੋ',
+    ml: 'സ്കിൽ ഫിറ്റും വിശദാംശങ്ങളും കാണുക'
+  },
+  'Prize / Stipend': {
+    en: 'Prize / Stipend',
+    hi: 'पुरस्कार / वजीफा',
+    gu: 'ઇનામ / સ્ટાઇપેન્ડ',
+    mr: 'बक्षीस / स्टायपेंड',
+    ta: 'பரிசு / உதவித்தொகை',
+    te: 'బహుమతి / స్టైపెండ్',
+    kn: 'ಬಹುಮಾನ / ಸ್ಟೈಫಂಡ್',
+    bn: 'পুরস্কার / বৃত্তি',
+    pa: 'ਇਨਾਮ / ਵਜ਼ੀਫ਼ਾ',
+    ml: 'സമ്മാനം / സ്റ്റൈപ്പൻഡ്'
+  },
+  'Prize Pool': {
+    en: 'Prize Pool',
+    hi: 'पुरस्कार राशि',
+    gu: 'ઇનામ રકમ',
+    mr: 'बक्षीस निधी',
+    ta: 'பரிசுத் தொகை',
+    te: 'ప్రైజ్ పూల్',
+    kn: 'ಬಹುಮಾನ ಮೊತ್ತ',
+    bn: 'পুরস্কার তহবিল',
+    pa: 'ਇਨਾਮੀ ਰਕਮ',
+    ml: 'പ്രൈസ് പൂൾ'
+  },
+  'Deadline': {
+    en: 'Deadline',
+    hi: 'अंतिम तिथि',
+    gu: 'છેલ્લી તારીખ',
+    mr: 'शेवटची तारीख',
+    ta: 'கடைசி தேதி',
+    te: 'గడువు తేదీ',
+    kn: 'ಕೊನೆಯ ದಿನಾಂಕ',
+    bn: 'শেষ তারিখ',
+    pa: 'ਆਖਰੀ ਮਿਤੀ',
+    ml: 'അവസാന തീയതി'
+  },
+  'Eligibility': {
+    en: 'Eligibility',
+    hi: 'पात्रता',
+    gu: 'પાત્રતા',
+    mr: 'पात्रता',
+    ta: 'தகுதி',
+    te: 'అర్హత',
+    kn: 'ಅರ್ಹತೆ',
+    bn: 'যোগ্যতা',
+    pa: 'ਯੋਗਤਾ',
+    ml: 'യോഗ്യത'
+  },
+  'Closing Soon': {
+    en: 'Closing Soon',
+    hi: 'शीघ्र समाप्त',
+    gu: 'ટૂંક સમયમાં સમાપ્ત',
+    mr: 'लवकरच संपत आहे',
+    ta: 'விரைவில் முடிவடைகிறது',
+    te: 'త్వరలో ముగుస్తుంది',
+    kn: 'ಶೀಘ್ರದಲ್ಲೇ ಮುಕ್ತಾಯ',
+    bn: 'শীঘ্রই শেষ হচ্ছে',
+    pa: 'ਛੇਤੀ ਬੰਦ ਹੋ ਰਿਹਾ ਹੈ',
+    ml: 'ഉടൻ അവസാനിക്കുന്നു'
+  },
+  'Trending': {
+    en: 'Trending',
+    hi: 'ट्रेंडिंग',
+    gu: 'ટ્રેન્ડિંગ',
+    mr: 'ट्रेंडिंग',
+    ta: 'பிரபலமானது',
+    te: 'ట్రెండింగ్',
+    kn: 'ಟ್ರೆಂಡಿಂಗ್',
+    bn: 'ট্রেন্ডিং',
+    pa: 'ਟ੍ਰੈਂਡਿੰਗ',
+    ml: 'ട്രെൻഡിംഗ്'
+  },
+  'Hot Opportunity': {
+    en: 'Hot Opportunity',
+    hi: 'प्रमुख अवसर',
+    gu: 'ખાસ તક',
+    mr: 'महत्त्वाची संधी',
+    ta: 'முக்கிய வாய்ப்பு',
+    te: 'హాట్ అవకాశం',
+    kn: 'ಪ್ರಮುಖ ಅವಕಾಶ',
+    bn: 'হট সুযোগ',
+    pa: 'ਖਾਸ ਮੌਕਾ',
+    ml: 'പ്രധാന അവസരം'
+  },
+  // 1:1 Mentors
+  'Learn Directly from Top Tech & CleanTech Leaders': {
+    en: 'Learn Directly from Top Tech & CleanTech Leaders',
+    hi: 'शीर्ष तकनीकी और उद्योग विशेषज्ञों से सीधे सीखें',
+    gu: 'ટોચના ટેક અને ઉદ્યોગ અગ્રણીઓ પાસેથી સીધું શીખો',
+    mr: 'शीर्ष तंत्रज्ञान आणि उद्योग नेत्यांकडून थेट शिका',
+    ta: 'முன்னணி தொழில்நுட்ப வல்லுநர்களிடமிருந்து நேரடியாகக் கற்றுக்கொள்ளுங்கள்',
+    te: 'అగ్ర టెక్ & పరిశ్రమ నాయకుల నుండి నేరుగా నేర్చుకోండి',
+    kn: 'ಉನ್ನತ ತಂತ್ರಜ್ಞಾನ ಮತ್ತು ಉದ್ಯಮ ಮುಖಂಡರಿಂದ ನೇರವಾಗಿ ಕಲಿಯಿರಿ',
+    bn: 'শীর্ষ প্রযুক্তি এবং শিল্প নেতাদের থেকে সরাসরি শিখুন',
+    pa: 'ਚੋਟੀ ਦੇ ਤਕਨੀਕੀ ਅਤੇ ਉਦਯੋਗ ਆਗੂਆਂ ਤੋਂ ਸਿੱਧਾ ਸਿੱਖੋ',
+    ml: 'മുൻനിര ടെക് വിദഗ്ദ്ധരിൽ നിന്ന് നേരിട്ട് പഠിക്കുക'
+  },
+  'Senior Engineers and Scientists from Google DeepMind, Microsoft, Zerodha, and CleanTech Alliance.': {
+    en: 'Senior Engineers and Scientists from Google DeepMind, Microsoft, Zerodha, and CleanTech Alliance.',
+    hi: 'Google DeepMind, Microsoft, Zerodha और CleanTech Alliance के वरिष्ठ इंजीनियर और वैज्ञानिक।',
+    gu: 'Google DeepMind, Microsoft, Zerodha અને CleanTech Alliance ના વરિષ્ઠ ઇજનેરો અને વૈજ્ઞાનિકો.',
+    mr: 'Google DeepMind, Microsoft, Zerodha आणि CleanTech Alliance चे वरिष्ठ अभियंते आणि शास्त्रज्ञ.',
+    ta: 'Google DeepMind, Microsoft, Zerodha மற்றும் CleanTech Alliance ஆகியவற்றின் மூத்த பொறியாளர்கள்.',
+    te: 'Google DeepMind, Microsoft, Zerodha మరియు CleanTech Alliance నుండి సీనియర్ ఇంజనీర్లు.',
+    kn: 'Google DeepMind, Microsoft, Zerodha ಮತ್ತು CleanTech Alliance ನ ಹಿರಿಯ ಎಂಜಿನಿಯರ್‌ಗಳು.',
+    bn: 'Google DeepMind, Microsoft, Zerodha এবং CleanTech Alliance-এর সিনিয়র প্রকৌশলীরা।',
+    pa: 'Google DeepMind, Microsoft, Zerodha ਅਤੇ CleanTech Alliance ਦੇ ਸੀਨੀਅਰ ਇੰਜੀਨੀਅਰ।',
+    ml: 'Google DeepMind, Microsoft, Zerodha എന്നിവയിലെ മുതിർന്ന എഞ്ചിനീയർമാർ.'
+  },
+  'Verified 1-on-1 Mentorship': {
+    en: 'Verified 1-on-1 Mentorship',
+    hi: 'सत्यापित 1-ऑन-1 मेंटरशिप',
+    gu: 'ચકાસાયેલ 1-ઓન-1 માર્ગદર્શન',
+    mr: 'सत्यापित 1-ऑन-1 मार्गदर्शन',
+    ta: 'சரிபார்க்கப்பட்ட 1-on-1 வழிகாட்டுதல்',
+    te: 'ధృవీకరించబడిన 1-on-1 మెంటార్‌షిప్',
+    kn: 'ಪರಿಶೀಲಿಸಿದ 1-on-1 ಮಾರ್ಗದರ್ಶನ',
+    bn: 'যাচাইকৃত ১-অন-১ মেন্টরশিপ',
+    pa: 'ਪ੍ਰਮਾਣਿਤ 1-on-1 ਮੈਂਟਰਸ਼ਿਪ',
+    ml: 'പരിശോധിച്ച 1-on-1 മെന്റർഷിപ്പ്'
+  },
+  'Book 1:1 Session': {
+    en: 'Book 1:1 Session',
+    hi: '1:1 सत्र बुक करें',
+    gu: '1:1 સત્ર બુક કરો',
+    mr: '1:1 सत्र बुक करा',
+    ta: '1:1 அமர்வை முன்பதிவு செய்க',
+    te: '1:1 సెషన్‌ను బుక్ చేయండి',
+    kn: '1:1 ಸೆಷನ್ ಬುಕ್ ಮಾಡಿ',
+    bn: '১:১ সেশন বুক করুন',
+    pa: '1:1 ਸੈਸ਼ਨ ਬੁੱਕ ਕਰੋ',
+    ml: '1:1 സെഷൻ ബുക്ക് ചെയ്യുക'
+  },
+  'Book 1:1': {
+    en: 'Book 1:1',
+    hi: '1:1 बुक करें',
+    gu: '1:1 બુક કરો',
+    mr: '1:1 बुक करा',
+    ta: '1:1 முன்பதிவு',
+    te: '1:1 బుక్ చేయండి',
+    kn: '1:1 ಬುಕ್ ಮಾಡಿ',
+    bn: '১:১ বুক করুন',
+    pa: '1:1 ਬੁੱਕ ਕਰੋ',
+    ml: '1:1 ബുക്ക് ചെയ്യുക'
+  },
+  'Free Community Session': {
+    en: 'Free Community Session',
+    hi: 'निःशुल्क कम्युनिटी सत्र',
+    gu: 'મફત સમુદાય સત્ર',
+    mr: 'मोफत समुदाय सत्र',
+    ta: 'இலவச சமூக அமர்வு',
+    te: 'ఉచిత కమ్యూనిటీ సెషన్',
+    kn: 'ಉಚಿತ ಸಮುದಾಯ ಸೆಷನ್',
+    bn: 'বিনামূল্যে কমিউনিটি সেশন',
+    pa: 'ਮੁਫ਼ਤ ਕਮਿਊਨਿਟੀ ਸੈਸ਼ਨ',
+    ml: 'സൗജന്യ കമ്മ്യൂണിറ്റി സെഷൻ'
+  },
+  'Per 45m Session': {
+    en: 'Per 45m Session',
+    hi: 'प्रति 45 मिनट सत्र',
+    gu: 'પ્રતિ 45 મિનિટ સત્ર',
+    mr: 'दर 45 मिनिटे सत्र',
+    ta: '45 நிமிட அமர்வுக்கு',
+    te: 'ప్రతి 45 నిమిషాల సెషన్‌కు',
+    kn: 'ಪ್ರತಿ 45 ನಿಮಿಷಗಳ ಸೆಷನ್‌ಗೆ',
+    bn: 'প্রতি ৪৫ মিনিট সেশন',
+    pa: 'ਪ੍ਰਤੀ 45 ਮਿੰਟ ਸੈਸ਼ਨ',
+    ml: 'ഓരോ 45 മിനിറ്റ് സെഷനും'
+  },
+  'Search mentors by skill, company, or domain...': {
+    en: 'Search mentors by skill, company, or domain...',
+    hi: 'कौशल, कंपनी या क्षेत्र द्वारा मेंटर्स खोजें...',
+    gu: 'કૌશલ્ય, કંપની અથવા ડોમેન દ્વારા માર્ગદર્શકો શોધો...',
+    mr: 'कौशल्य, कंपनी किंवा डोमेननुसार मार्गदर्शक शोधा...',
+    ta: 'திறன், நிறுவனம் அல்லது துறை மூலம் வழிகாட்டிகளைத் தேடுங்கள்...',
+    te: 'స్కిల్, కంపెనీ లేదా డొమైన్ ద్వారా మెంటార్‌లను శోధించండి...',
+    kn: 'ಕೌಶಲ್ಯ, ಕಂಪನಿ ಅಥವಾ ಡೊಮೇನ್ ಮೂಲಕ ಮಾರ್ಗದರ್ಶಕರನ್ನು ಹುಡುಕಿ...',
+    bn: 'দক্ষতা, কোম্পানি বা ডোমেন দ্বারা মেন্টর খুঁজুন...',
+    pa: 'ਸਕਿੱਲ, ਕੰਪਨੀ ਜਾਂ ਡੋਮੇਨ ਰਾਹੀਂ ਮੈਂਟਰ ਖੋਜੋ...',
+    ml: 'കഴിവ്, കമ്പനി എന്നിവ പ്രകാരം മെന്റർമാരെ തിരയുക...'
+  },
+  // Dashboard & Skills
+  'Target Career Pathway': {
+    en: 'Target Career Pathway',
+    hi: 'लक्ष्य करियर मार्ग',
+    gu: 'લક્ષ્ય કારકિર્દી માર્ગ',
+    mr: 'लक्ष्य करिअर मार्ग',
+    ta: 'இலக்கு தொழில் பாதை',
+    te: 'లక్ష్య కెరీర్ మార్గం',
+    kn: 'ಗುರಿ ವೃತ್ತಿಜೀವನ ಮಾರ್ಗ',
+    bn: 'টার্গেট ক্যারিয়ার পাথওয়ে',
+    pa: 'ਟਾਰਗੇਟ ਕਰੀਅਰ ਰਸਤਾ',
+    ml: 'ലക്ഷ്യ കരിയർ പാത'
+  },
+  'Career Readiness Score': {
+    en: 'Career Readiness Score',
+    hi: 'करियर तत्परता स्कोर',
+    gu: 'કારકિર્દી સજ્જતા સ્કોર',
+    mr: 'करिअर सज्जता स्कोर',
+    ta: 'தயார்நிலை மதிப்பெண்',
+    te: 'కెరీర్ సిద్ధత స్కోరు',
+    kn: 'ವೃತ್ತಿಜೀವನ ಸಿದ್ಧತೆ ಅಂಕಗಳು',
+    bn: 'ক্যারিয়ার রেডিনেস স্কোর',
+    pa: 'ਕਰੀਅਰ ਤਿਆਰੀ ਸਕੋਰ',
+    ml: 'കരിയർ സജ്ജീകരണ സ്കോർ'
+  },
+  'Readiness Score': {
+    en: 'Readiness Score',
+    hi: 'तत्परता स्कोर',
+    gu: 'સજ્જતા સ્કોર',
+    mr: 'सज्जता स्कोर',
+    ta: 'தயார்நிலை மதிப்பெண்',
+    te: 'సిద్ధత స్કોరు',
+    kn: 'ಸಿದ್ಧತೆಯ ಅಂಕಗಳು',
+    bn: 'রেডিনেস স্কোর',
+    pa: 'ਤਿਆਰੀ ਸਕੋਰ',
+    ml: 'സജ്ജീകരണ സ്കോർ'
+  },
+  'Verified Student Profile': {
+    en: 'Verified Student Profile',
+    hi: 'सत्यापित छात्र प्रोफाइल',
+    gu: 'ચકાસાયેલ વિદ્યાર્થી પ્રોફાઇલ',
+    mr: 'सत्यापित विद्यार्थी प्रोफाइल',
+    ta: 'சரிபார்க்கப்பட்ட மாணவர் விவரக்குறிப்பு',
+    te: 'ధృవీకరించబడిన విద్యార్థి ప్రొఫైల్',
+    kn: 'ಪರಿಶೀಲಿಸಿದ ವಿದ್ಯಾರ್ಥಿ ಪ್ರೊಫೈಲ್',
+    bn: 'যাচাইকৃত শিক্ষার্থী প্রোফাইল',
+    pa: 'ਪ੍ਰਮਾਣਿਤ ਵਿਦਿਆਰਥੀ ਪ੍ਰੋਫਾਈਲ',
+    ml: 'പരിശോധിച്ച വിദ്യാർത്ഥി പ്രൊഫൈൽ'
+  },
+  'Share Progress': {
+    en: 'Share Progress',
+    hi: 'प्रगति साझा करें',
+    gu: 'પ્રગતિ શેર કરો',
+    mr: 'प्रगती शेअर करा',
+    ta: 'முன்னேற்றத்தைப் பகிர்',
+    te: 'ప్రగతిని పంచుకోండి',
+    kn: 'ಪ್ರಗತಿ ಹಂಚಿಕೊಳ್ಳಿ',
+    bn: 'অগ্রগতি শেয়ার করুন',
+    pa: 'ਤਰੱਕੀ ਸਾਂਝੀ ਕਰੋ',
+    ml: 'പുരോഗതി പങ്കിടുക'
+  },
+  'Add Custom Skill': {
+    en: 'Add Custom Skill',
+    hi: 'कस्टम कौशल जोड़ें',
+    gu: 'કસ્ટમ કૌશલ્ય ઉમેરો',
+    mr: 'कस्टम कौशल्य जोडा',
+    ta: 'புதிய திறனைச் சேர்',
+    te: 'కస్టమ్ స్కిల్ జోడించండి',
+    kn: 'ಹೊಸ ಕೌಶಲ್ಯ ಸೇರಿಸಿ',
+    bn: 'নতুন স্কিল যুক্ত করুন',
+    pa: 'ਕਸਟਮ ਸਕਿੱਲ ਜੋੜੋ',
+    ml: 'ഇഷ്ടാനുസൃത സ്കിൽ ചേർക്കുക'
+  },
+  'Add Verified Skill': {
+    en: 'Add Verified Skill',
+    hi: 'सत्यापित कौशल जोड़ें',
+    gu: 'ચકાસાયેલ કૌશલ્ય ઉમેરો',
+    mr: 'सत्यापित कौशल्य जोडा',
+    ta: 'சரிபார்க்கப்பட்ட திறனைச் சேர்',
+    te: 'ధృవీకరించబడిన స్కిల్ జోడించండి',
+    kn: 'ಪರಿಶೀಲಿಸಿದ ಕೌಶಲ್ಯ ಸೇರಿಸಿ',
+    bn: 'যাচাইকৃত স্কিল যোগ করুন',
+    pa: 'ਪ੍ਰਮਾਣਿਤ ਸਕਿੱਲ ਜੋੜੋ',
+    ml: 'പരിശോധിച്ച സ്കിൽ ചേർക്കുക'
+  },
+  'Edit Name': {
+    en: 'Edit Name',
+    hi: 'नाम बदलें',
+    gu: 'નામ બદલો',
+    mr: 'नाव बदला',
+    ta: 'பெயரைத் திருத்து',
+    te: 'పేరు మార్చు',
+    kn: 'ಹೆಸರು ಬದಲಾಯಿಸಿ',
+    bn: 'নাম পরিবর্তন করুন',
+    pa: 'ਨਾਮ ਬਦਲੋ',
+    ml: 'പേര് മാറ്റുക'
+  },
+  'Save Name': {
+    en: 'Save Name',
+    hi: 'नाम सहेजें',
+    gu: 'નામ સાચવો',
+    mr: 'नाव जतन करा',
+    ta: 'பெயரைச் சேமி',
+    te: 'పేరును సేవ్ చేయండి',
+    kn: 'ಹೆಸರು ಉಳಿಸಿ',
+    bn: 'নাম সংরক্ষণ করুন',
+    pa: 'ਨਾਮ ਸੰਭਾਲੋ',
+    ml: 'പേര് സംരക്ഷിക്കുക'
+  },
+  'Cancel': {
+    en: 'Cancel',
+    hi: 'रद्द करें',
+    gu: 'રદ કરો',
+    mr: 'रद्द करा',
+    ta: 'ரத்து செய்',
+    te: 'రద్దు చేయి',
+    kn: 'ರದ್ದುಮಾಡು',
+    bn: 'বাতিল',
+    pa: 'ਰੱਦ ਕਰੋ',
+    ml: 'റദ്ദാക്കുക'
+  },
+  'Search': {
+    en: 'Search',
+    hi: 'खोजें',
+    gu: 'શોધો',
+    mr: 'शोधा',
+    ta: 'தேடு',
+    te: 'శోధించు',
+    kn: 'ಹುಡುಕು',
+    bn: 'অনুসন্ধান',
+    pa: 'ਖੋਜ',
+    ml: 'തിരയുക'
+  },
+  'Filter': {
+    en: 'Filter',
+    hi: 'फ़िल्टर',
+    gu: 'ફિલ્ટર',
+    mr: 'फिल्टर',
+    ta: 'வடிகட்டு',
+    te: 'ఫిల్టర్',
+    kn: 'ಫಿಲ್ಟರ್',
+    bn: 'ফিল্টার',
+    pa: 'ਫਿਲਟਰ',
+    ml: 'ഫിൽട്ടർ'
+  },
+  // AI Study Buddy & Tools
+  'AI Study Buddy': {
+    en: 'AI Study Buddy',
+    hi: 'एआई स्टडी बडी',
+    gu: 'AI સ્ટડી બડી',
+    mr: 'एआय स्टडी बडी',
+    ta: 'AI படிப்பு நண்பன்',
+    te: 'AI స్టడీ బడ్డీ',
+    kn: 'AI ಸ್ಟಡಿ ಬಡ್ಡೀ',
+    bn: 'এআই স্টাডি বাডি',
+    pa: 'AI ਸਟੱਡੀ ਬੱਡੀ',
+    ml: 'AI സ്റ്റഡി ബഡ്ഡി'
+  },
+  'Ask AI Study Buddy...': {
+    en: 'Ask AI Study Buddy...',
+    hi: 'एआई स्टडी बडी से पूछें...',
+    gu: 'AI સ્ટડી બડીને પૂછો...',
+    mr: 'एआय स्टडी बडीला विचारा...',
+    ta: 'AI படிப்பு நண்பனிடம் கேளுங்கள்...',
+    te: 'AI స్టడీ బడ్డీని అడగండి...',
+    kn: 'AI ಸ್ಟಡಿ ಬಡ್ಡಿಯನ್ನು ಕೇಳಿ...',
+    bn: 'এআই স্টাডি বাডিকে জিজ্ঞাসা করুন...',
+    pa: 'AI ਸਟੱਡੀ ਬੱਡੀ ਨੂੰ ਪੁੱਛੋ...',
+    ml: 'AI സ്റ്റഡി ബഡ്ഡിയോട് ചോദിക്കുക...'
+  },
+  'Send': {
+    en: 'Send',
+    hi: 'भेजें',
+    gu: 'મોકલો',
+    mr: 'पाठवा',
+    ta: 'அனுப்பு',
+    te: 'పంపండి',
+    kn: 'ಕಳುಹಿಸಿ',
+    bn: 'পাঠান',
+    pa: 'ਭੇਜੋ',
+    ml: 'അയക്കുക'
+  },
+  'Explain Concept': {
+    en: 'Explain Concept',
+    hi: 'अवधारणा समझाएं',
+    gu: 'ખ્યાલ સમજાવો',
+    mr: 'संकल्पना स्पष्ट करा',
+    ta: 'கருத்தை விளக்குக',
+    te: 'కాన్సెప్ట్‌ను వివరించండి',
+    kn: 'ಕಾನ್ಸೆಪ್ಟ್ ವಿವರಿಸಿ',
+    bn: 'ধারণা ব্যাখ্যা করুন',
+    pa: 'ਸੰਕਲਪ ਸਮਝਾਓ',
+    ml: 'കൺസെപ്റ്റ് വിശദീകരിക്കുക'
+  },
+  'Voice Tutor': {
+    en: 'Voice Tutor',
+    hi: 'वॉयस ट्यूटर',
+    gu: 'વોઇસ ટ્યુટર',
+    mr: 'व्हॉइस ट्यूटर',
+    ta: 'குரல் ஆசிரியர்',
+    te: 'వాయిస్ ట్యూటర్',
+    kn: 'ಧ್ವನಿ ಶಿಕ್ಷಕ',
+    bn: 'ভয়েস টিউটর',
+    pa: 'ਵੌਇਸ ਟਿਊਟਰ',
+    ml: 'വോയ്സ് ട്യൂട്ടർ'
+  },
+  // Workspaces
+  'Dedicated Stakeholder Workspaces': {
+    en: 'Dedicated Stakeholder Workspaces',
+    hi: 'समर्पित हितधारक कार्यक्षेत्र',
+    gu: 'સમર્પિત હિતધારક કાર્યસ્થળો',
+    mr: 'समर्पित हितधारक कार्यक्षेत्र',
+    ta: 'பிரத்யேக பணியிடங்கள்',
+    te: 'ప్రత్యేక స్టేక్‌హోల్డర్ వర్క్‌స్పేస్‌లు',
+    kn: 'ಮೀಸಲಾದ ಕಾರ್ಯಕ್ಷೇತ್ರಗಳು',
+    bn: 'ডেডিকেটেড স্টেকহোল্ডার ওয়ার্কস্পেস',
+    pa: 'ਸਮਰਪਿਤ ਵਰਕਸਪੇਸ',
+    ml: 'പ്രത്യേക വർക്ക്‌സ്‌പേസുകൾ'
+  },
+  'Student & Job-Seeker Workspace': {
+    en: 'Student & Job-Seeker Workspace',
+    hi: 'छात्र एवं नौकरी चाहने वाले कार्यक्षेत्र',
+    gu: 'વિદ્યાર્થી અને નોકરી શોધનાર કાર્યક્ષેત્ર',
+    mr: 'विद्यार्थी आणि नोकरी शोधक कार्यक्षेत्र',
+    ta: 'மாணவர் & வேலை தேடுபவர் பணியிடம்',
+    te: 'విద్యార్థి & ఉద్యోగార్ధుల వర్క్‌స్పేస్',
+    kn: 'ವಿದ್ಯಾರ್ಥಿ & ಉದ್ಯೋಗಾಕಾಂಕ್ಷಿಗಳ ಕಾರ್ಯಕ್ಷೇತ್ರ',
+    bn: 'শিক্ষার্থী ও চাকরি সন্ধানীদের ওয়ার্কস্পেস',
+    pa: 'ਵਿਦਿਆਰਥੀ ਅਤੇ ਨੌਕਰੀ ਲੱਭਣ ਵਾਲਾ ਵਰਕਸਪੇਸ',
+    ml: 'വിദ്യാർത്ഥി തൊഴിലന്വേഷക വർക്ക്‌സ്‌പേസ്'
+  },
+  'Educator AI Copilot': {
+    en: 'Educator AI Copilot',
+    hi: 'शिक्षक एआई कोपायलट',
+    gu: 'શિક્ષક AI કો-પાયલોટ',
+    mr: 'शिक्षक एआय कोपायलट',
+    ta: 'ஆசிரியர் AI உதவி',
+    te: 'ఎడ್ಯుకేటర్ AI కోపైలట్',
+    kn: 'ಶಿಕ್ಷಕರ AI ಕೋಪೈಲಟ್',
+    bn: 'শিক্ষক এআই কোপাইলট',
+    pa: 'ਅਧਿਆਪਕ AI ਕੋਪਾਇਲਟ',
+    ml: 'അധ്യാപക AI കോപൈലറ്റ്'
+  },
+  'Institution & GTU Analytics': {
+    en: 'Institution & GTU Analytics',
+    hi: 'संस्थान एवं विश्वविद्यालय विश्लेषण',
+    gu: 'સંસ્થાકીય એનાલિટિક્સ',
+    mr: 'संस्था विश्लेषण',
+    ta: 'நிறுவன பகுப்பாய்வு',
+    te: 'సంస్థ విశ్లేషణలు',
+    kn: 'ಸಂಸ್ಥೆಯ ವಿಶ್ಲೇಷಣೆ',
+    bn: 'প্রাতিষ্ঠানিক বিশ্লেষণ',
+    pa: 'ਸੰਸਥਾ ਵਿਸ਼ਲੇਸ਼ਣ',
+    ml: 'സ്ഥാപന അനലിറ്റിക്സ്'
+  },
+  'Open Student Dashboard': {
+    en: 'Open Student Dashboard',
+    hi: 'छात्र डैशबोर्ड खोलें',
+    gu: 'વિદ્યાર્થી ડૅશબોર્ડ ખોલો',
+    mr: 'विद्यार्थी डॅशबोर्ड उघडा',
+    ta: 'மாணவர் டாஷ்போர்டைத் திறக்க',
+    te: 'విద్యార్థి డ్యాష్‌బోర్డ్ తెరవండి',
+    kn: 'ವಿದ್ಯಾರ್ಥಿ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್ ತೆರೆಯಿರಿ',
+    bn: 'ড্যাশবোর্ড খুলুন',
+    pa: 'ਵਿਦਿਆਰਥੀ ਡੈਸ਼ਬੋਰਡ ਖੋਲ੍ਹੋ',
+    ml: 'ഡാഷ്‌ബോർഡ് തുറക്കുക'
+  },
+  'Open Teacher Copilot': {
+    en: 'Open Teacher Copilot',
+    hi: 'शिक्षक कोपायलट खोलें',
+    gu: 'શિક્ષક કો-પાયલોટ ખોલો',
+    mr: 'शिक्षक कोपायलट उघडा',
+    ta: 'ஆசிரியர் உதவியைத் திறக்க',
+    te: 'టీచర్ కోపైలట్ తెరవండి',
+    kn: 'ಶಿಕ್ಷಕರ ಕೋಪೈಲಟ್ ತೆರೆಯಿರಿ',
+    bn: 'টিচার কোপাইলট খুলুন',
+    pa: 'ਅਧਿਆਪਕ ਕੋਪਾਇਲਟ ਖੋਲ੍ਹੋ',
+    ml: 'ടീച്ചർ കോപൈലറ്റ് തുറക്കുക'
+  },
+  'Open Analytics': {
+    en: 'Open Analytics',
+    hi: 'एनालिटिक्स खोलें',
+    gu: 'એનાલિટિક્સ ખોલો',
+    mr: 'विश्लेषण उघडा',
+    ta: 'பகுப்பாய்வைத் திறக்க',
+    te: 'విశ్లేషణలను తెరవండి',
+    kn: 'ವಿಶ್ಲೇಷಣೆ ತೆರೆಯಿರಿ',
+    bn: 'অ্যানালিটিক্স খুলুন',
+    pa: 'ਐਨਾਲਿਟਿਕਸ ਖੋਲ੍ਹੋ',
+    ml: 'അനലിറ്റിക്സ് തുറക്കുക'
+  },
+  'Personal Career Target & Goal Tracker': {
+    en: 'Personal Career Target & Goal Tracker',
+    hi: 'व्यक्तिगत करियर लक्ष्य ट्रैकर',
+    gu: 'વ્યક્તિગત કારકિર્દી લક્ષ્ય ટ્રેકર',
+    mr: 'वैयक्तिक करिअर ध्येय ट्रॅकर',
+    ta: 'தனிப்பட்ட தொழில் இலக்கு கண்காணிப்பாளர்',
+    te: 'వ్యక్తిగత కెరీర్ లక్ష్య ట్రాకర్',
+    kn: 'ವೈಯಕ್ತಿಕ ವೃತ್ತಿಜೀವನ ಗುರಿ ಟ್ರ್ಯಾಕರ್',
+    bn: 'ব্যক্তিগত ক্যারিয়ার লক্ষ্য ট্র্যাকার',
+    pa: 'ਨਿੱਜੀ ਕਰੀਅਰ ਟੀਚਾ ਟਰੈਕਰ',
+    ml: 'വ്യക്തിഗത കരിയർ ലക്ഷ്യ ട്രാക്കർ'
+  },
+  'Save Career Target': {
+    en: 'Save Career Target',
+    hi: 'करियर लक्ष्य सहेजें',
+    gu: 'કારકિર્દી લક્ષ્ય સાચવો',
+    mr: 'करिअर लक्ष्य जतन करा',
+    ta: 'தொழில் இலக்கைச் சேமி',
+    te: 'కెరీర్ లక్ష్యాన్ని సేవ్ చేయండి',
+    kn: 'ವೃತ್ತಿ ಗುರಿಯನ್ನು ಉಳಿಸಿ',
+    bn: 'ক্যারিয়ার টার্গেট সংরক্ষণ করুন',
+    pa: 'ਕਰੀਅਰ ਟੀਚਾ ਸੰਭਾਲੋ',
+    ml: 'കരിയർ ലക്ഷ്യം സംരക്ഷിക്കുക'
+  },
+  'Apply Now': {
+    en: 'Apply Now',
+    hi: 'अभी आवेदन करें',
+    gu: 'હવે અરજી કરો',
+    mr: 'आत्ताच अर्ज करा',
+    ta: 'இப்போதே விண்ணப்பிக்கவும்',
+    te: 'ఇప్పుడే దరఖాస్తు చేసుకోండి',
+    kn: 'ಈಗಲೇ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ',
+    bn: 'এখনই আবেদন করুন',
+    pa: 'ਹੁਣੇ ਅਰਜ਼ੀ ਦਿਓ',
+    ml: 'ഇപ്പോൾ അപേക്ഷിക്കുക'
+  },
+  'Applied': {
+    en: 'Applied',
+    hi: 'आवेदन किया गया',
+    gu: 'અરજી કરી',
+    mr: 'अर्ज केला',
+    ta: 'விண்ணப்பிக்கப்பட்டது',
+    te: 'దరఖాస్తు చేయబడింది',
+    kn: 'ಅರ್ಜಿ ಸಲ್ಲಿಸಲಾಗಿದೆ',
+    bn: 'আবেদন করা হয়েছে',
+    pa: 'ਅਰਜ਼ੀ ਦਿੱਤੀ ਗਈ',
+    ml: 'അപേക്ഷിച്ചു'
+  },
+  'View Details': {
+    en: 'View Details',
+    hi: 'विवरण देखें',
+    gu: 'વિગતો જુઓ',
+    mr: 'तपशील पहा',
+    ta: 'விவரங்களைக் காண்க',
+    te: 'వివరాలను చూడండి',
+    kn: 'ವಿವರಗಳನ್ನು ನೋಡಿ',
+    bn: 'বিস্তারিত দেখুন',
+    pa: 'ਵੇਰਵੇ ਦੇਖੋ',
+    ml: 'വിശദാംശങ്ങൾ കാണുക'
+  },
+  'All Opportunities': {
+    en: 'All Opportunities',
+    hi: 'सभी अवसर',
+    gu: 'બધી તકો',
+    mr: 'सर्व संधी',
+    ta: 'அனைத்து வாய்ப்புகள்',
+    te: 'అన్ని అవకాశాలు',
+    kn: 'ಎಲ್ಲಾ ಅವಕಾಶಗಳು',
+    bn: 'সমস্ত সুযোগ',
+    pa: 'ਸਾਰੇ ਮੌਕੇ',
+    ml: 'ಎಲ್ಲಾ അവസരങ്ങളും'
+  },
+  'Hackathons': {
+    en: 'Hackathons',
+    hi: 'हैकाथॉन',
+    gu: 'હેકાથોન',
+    mr: 'हॅकाथॉन',
+    ta: 'ஹேக்கத்தான்கள்',
+    te: 'హ్యాకథాన్‌లు',
+    kn: 'ಹ್ಯಾಕಥಾನ್‌ಗಳು',
+    bn: 'হ্যাকাথন',
+    pa: 'ਹੈਕਾਥੌਨ',
+    ml: 'ഹാക്കത്തോണുകൾ'
+  },
+  'Internships': {
+    en: 'Internships',
+    hi: 'इंटर्नशिप',
+    gu: 'ઇન્ટર્નશીપ',
+    mr: 'इंटरर्नशिप',
+    ta: 'இன்டர்ன்ஷிப்கள்',
+    te: 'ఇంటర్న్‌షిప్‌లు',
+    kn: 'ಇಂಟರ್ನ್‌ಶಿಪ್‌ಗಳು',
+    bn: 'ইন্টার্নশিপ',
+    pa: 'ਇੰਟਰਨਸ਼ਿਪਾਂ',
+    ml: 'ഇന്റേൺഷിപ്പുകൾ'
+  },
+  'Quizzes': {
+    en: 'Quizzes',
+    hi: 'क्विज प्रतियोगिताएं',
+    gu: 'ક્વિઝ સ્પર્ધાઓ',
+    mr: 'ક્વિઝ स्पर्धा',
+    ta: 'வினாடி வினாக்கள்',
+    te: 'క్విజ్‌లు',
+    kn: 'ರಸಪ್ರಶ್ನೆಗಳು',
+    bn: 'কুইজ',
+    pa: 'ਕੁਇਜ਼',
+    ml: 'ക്വിസുകൾ'
+  },
+  'Scholarships': {
+    en: 'Scholarships',
+    hi: 'छात्रवृत्तियां',
+    gu: 'શિષ્યવૃત્તિઓ',
+    mr: 'શિષ્યવૃત્તિ',
+    ta: 'உதவித்தொகைகள்',
+    te: 'స్కాలర్‌షిప్‌లు',
+    kn: 'ವಿದ್ಯಾರ್ಥಿವೇತನಗಳು',
+    bn: 'বৃত্তি',
+    pa: 'ਵਜ਼ੀਫ਼ੇ',
+    ml: 'സ്കോളർഷിപ്പുകൾ'
+  },
+  'Free Courses': {
+    en: 'Free Courses',
+    hi: 'निःशुल्क पाठ्यक्रम',
+    gu: 'મફત અભ્યાસક્રમો',
+    mr: 'मोफत अभ्यासक्रम',
+    ta: 'இலவச படிப்புகள்',
+    te: 'ఉచిత కోర్సులు',
+    kn: 'ಉಚಿತ ಕೋರ್ಸ್‌ಗಳು',
+    bn: 'বিনামূল্যে কোর্স',
+    pa: 'ਮੁਫ਼ਤ ਕੋਰਸ',
+    ml: 'സൗജന്യ കോഴ്സുകൾ'
+  },
+  'Jobs': {
+    en: 'Jobs',
+    hi: 'नौकरियां',
+    gu: 'નોકરીઓ',
+    mr: 'नोकऱ्या',
+    ta: 'வேலைகள்',
+    te: 'ఉద్యోగాలు',
+    kn: 'ಉದ್ಯೋಗಗಳು',
+    bn: 'চাকরি',
+    pa: 'ਨੌਕਰੀਆਂ',
+    ml: 'ജോലികൾ'
+  },
+  'Get Started': {
+    en: 'Get Started',
+    hi: 'शुरू करें',
+    gu: 'શરૂ કરો',
+    mr: 'सुरू करा',
+    ta: 'தொடங்கவும்',
+    te: 'ప్రారంభించండి',
+    kn: 'ಪ್ರಾರಂಭಿಸಿ',
+    bn: 'শুরু করুন',
+    pa: 'ਸ਼ੁਰੂ ਕਰੋ',
+    ml: 'ആരംഭിക്കുക'
+  },
+  'Learn More': {
+    en: 'Learn More',
+    hi: 'अधिक जानें',
+    gu: 'વધુ જાણો',
+    mr: 'अधिक जाणून घ्या',
+    ta: 'மேலும் அறிய',
+    te: 'మరింత తెలుసుకోండి',
+    kn: 'ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ',
+    bn: 'আরও জানুন',
+    pa: 'ਹੋਰ ਜਾਣੋ',
+    ml: 'കൂടുതലറിയുക'
+  },
+  'Verified': {
+    en: 'Verified',
+    hi: 'सत्यापित',
+    gu: 'ચકાસાયેલ',
+    mr: 'सत्यापित',
+    ta: 'சரிபார்க்கப்பட்டது',
+    te: 'ధృవీకరించబడింది',
+    kn: 'ಪರಿಶೀಲಿಸಲಾಗಿದೆ',
+    bn: 'যাচাইকৃত',
+    pa: 'ਪ੍ਰਮਾਣਿਤ',
+    ml: 'പരിശോധിച്ചു'
+  }
+};
+
+/**
+ * Triggers client-side Google Translate element seamlessly for full-page coverage
+ */
+export function triggerGoogleTranslate(lang: Language) {
+  if (typeof window === 'undefined') return;
+
+  const cookieVal = lang === 'en' ? '/en/en' : `/en/${lang}`;
+  const host = window.location.hostname;
+
+  document.cookie = `googtrans=${cookieVal}; path=/;`;
+  if (host && host !== 'localhost' && !host.startsWith('127.')) {
+    document.cookie = `googtrans=${cookieVal}; domain=.${host}; path=/;`;
+  }
+
+  const triggerSelect = () => {
+    const select = document.querySelector('.goog-te-combo') as HTMLSelectElement | null;
+    if (select) {
+      if (select.value !== lang) {
+        select.value = lang;
+        select.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+      return true;
+    }
+    return false;
+  };
+
+  if (!triggerSelect()) {
+    let retries = 0;
+    const interval = setInterval(() => {
+      retries++;
+      if (triggerSelect() || retries > 12) {
+        clearInterval(interval);
+      }
+    }, 250);
+  }
+}
+
+// Node text cache using WeakMap to prevent memory leaks and preserve original English strings
+const originalTextCache = new WeakMap<Node, string>();
+
+/**
+ * Pure, safe DOM translator that transforms English text nodes in the container
+ * into the selected language WITHOUT using MutationObserver or causing freezing.
+ */
+export function applyUniversalTranslation(container: HTMLElement | Document = document, lang: Language) {
+  if (!container || typeof document === 'undefined') return;
+
+  const root = container instanceof Document ? container.body : container;
+  if (!root) return;
+
+  const walker = document.createTreeWalker(
+    root,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+        const tag = parent.tagName.toLowerCase();
+        // Skip code, script, style, inputs, selects, textareas, contenteditable
+        if (
+          tag === 'script' ||
+          tag === 'style' ||
+          tag === 'input' ||
+          tag === 'textarea' ||
+          tag === 'select' ||
+          tag === 'option' ||
+          tag === 'pre' ||
+          tag === 'code' ||
+          parent.isContentEditable ||
+          parent.closest('input, textarea, select, [contenteditable="true"]')
+        ) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        const text = node.nodeValue;
+        if (!text || !text.trim()) return NodeFilter.FILTER_REJECT;
+        // Don't translate pure numbers or symbols
+        if (/^[\d\s.,:;!?%₹$#@()\/\\|*+-]+$/.test(text.trim())) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    }
+  );
+
+  const updates: { node: Node; text: string }[] = [];
+  let currentNode = walker.nextNode();
+
+  while (currentNode) {
+    let orig = originalTextCache.get(currentNode);
+    if (orig === undefined) {
+      orig = currentNode.nodeValue || '';
+      originalTextCache.set(currentNode, orig);
+    }
+
+    if (lang === 'en') {
+      if (currentNode.nodeValue !== orig) {
+        updates.push({ node: currentNode, text: orig });
+      }
+    } else {
+      let translated = orig;
+      const trimmed = orig.trim();
+
+      // Check exact match in Universal Phrase Dictionary
+      if (UNIVERSAL_PHRASE_DICTIONARY[trimmed] && UNIVERSAL_PHRASE_DICTIONARY[trimmed][lang]) {
+        translated = orig.replace(trimmed, UNIVERSAL_PHRASE_DICTIONARY[trimmed][lang]);
+      } else {
+        // Check exact match in i18nDictionary values (if it was an English term)
+        for (const key of Object.keys(i18nDictionary)) {
+          const entry = i18nDictionary[key];
+          if (entry.en && entry[lang] && trimmed === entry.en) {
+            translated = orig.replace(trimmed, entry[lang]);
+            break;
+          }
+        }
+
+        // Substring / phrase matching for common phrases
+        if (translated === orig) {
+          for (const phrase of Object.keys(UNIVERSAL_PHRASE_DICTIONARY)) {
+            if (phrase.length > 3 && orig.includes(phrase)) {
+              const replacement = UNIVERSAL_PHRASE_DICTIONARY[phrase][lang];
+              if (replacement) {
+                translated = translated.split(phrase).join(replacement);
+              }
+            }
+          }
+        }
+      }
+
+      if (translated !== currentNode.nodeValue) {
+        updates.push({ node: currentNode, text: translated });
+      }
+    }
+
+    currentNode = walker.nextNode();
+  }
+
+  // Apply text updates in a batch
+  for (const { node, text } of updates) {
+    node.nodeValue = text;
+  }
+}
+

@@ -19,14 +19,51 @@ import { MockInterviewEngine } from './components/MockInterviewEngine';
 import { MentorHub } from './components/MentorHub';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
 import { checkServerHealth } from './services/api';
+import { applyUniversalTranslation, triggerGoogleTranslate } from './services/i18n';
 
 export function App() {
   const [currentRole, setCurrentRole] = useState<UserRole>('student');
   const [activeTab, setActiveTab] = useState<string>('home');
-  const [language, setLanguage] = useState<Language>('en');
+  const [language, setLanguage] = useState<Language>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('skillbridge_language');
+      if (saved) return saved as Language;
+    }
+    return 'en';
+  });
   const [theme, setTheme] = useState<ThemeMode>('dark');
   const [isLowBandwidth, setIsLowBandwidth] = useState<boolean>(false);
   const [isServerConnected, setIsServerConnected] = useState<boolean>(true);
+
+  // Synchronize universal translation across the entire application on tab and language updates
+  useEffect(() => {
+    // 1. Trigger Google Translate client for full-site coverage
+    triggerGoogleTranslate(language);
+
+    // 2. Perform zero-latency local TreeWalker translation without any thread locking or freezing
+    const runInstantPass = () => {
+      applyUniversalTranslation(document.body, language);
+    };
+
+    runInstantPass();
+    const t1 = setTimeout(runInstantPass, 60);
+    const t2 = setTimeout(runInstantPass, 300);
+    const t3 = setTimeout(runInstantPass, 800);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, [language, activeTab]);
+
+  const handleLanguageChange = (newLang: Language) => {
+    setLanguage(newLang);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('skillbridge_language', newLang);
+    }
+    triggerGoogleTranslate(newLang);
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -70,7 +107,7 @@ export function App() {
         currentRole={currentRole}
         onRoleChange={handleRoleChange}
         language={language}
-        onLanguageChange={setLanguage}
+        onLanguageChange={handleLanguageChange}
         theme={theme}
         onToggleTheme={toggleTheme}
         isLowBandwidth={isLowBandwidth}

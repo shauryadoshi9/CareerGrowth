@@ -208,54 +208,54 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
   return (
     <div className="space-y-8 animate-fade-in">
       
-      {/* Hero Explorer Banner (Unstop / Devfolio Aesthetic) */}
-      <div className={`relative overflow-hidden rounded-3xl p-8 border ${
-        isDark ? 'bg-gradient-to-br from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500/30' : 'bg-gradient-to-br from-indigo-50 via-white to-blue-50 border-indigo-200'
-      } shadow-2xl transition-all`}>
+      {/* Hero Explorer Banner (Minimalist Style) */}
+      <div className={`relative overflow-hidden rounded-2xl p-6 lg:p-8 border ${
+        isDark ? 'bg-slate-900/40 border-slate-800/80' : 'bg-white border-slate-200 shadow-sm'
+      } transition-all`}>
         
         <div className="relative z-10 max-w-4xl space-y-4">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               Verified Opportunity Explorer
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
-              <Zap className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               Live Industry & Government Pipelines
             </span>
           </div>
 
-          <h1 className={`text-3xl md:text-4xl font-extrabold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <h1 className={`text-2xl md:text-3xl font-bold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
             Explore Genuine Hackathons, Internships, Quizzes & Scholarships
           </h1>
 
-          <p className={`text-sm md:text-base max-w-3xl leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-xs md:text-sm max-w-3xl leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Direct authenticated integration with national initiatives and premier developer portals: 
             <strong> PM Internship Scheme (Govt of India MCA)</strong>, <strong>Devfolio</strong>, <strong>Unstop</strong>, <strong>Hack2Skill</strong>, <strong>NSP Scholarships</strong>, and <strong>AICTE</strong>. Apply directly or link your verified portfolio evidence.
           </p>
 
           {/* Quick Metrics Bar & Post Opportunity Action */}
-          <div className="pt-2 flex flex-wrap items-center justify-between gap-4 text-xs font-semibold">
-            <div className="flex flex-wrap items-center gap-6">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+          <div className="pt-2 flex flex-wrap items-center justify-between gap-4 text-xs font-medium">
+            <div className="flex flex-wrap items-center gap-5 text-slate-400">
+              <div className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>₹45L+ Verified Grants & Stipends</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-4 h-4 text-amber-400" />
+              <div className="flex items-center gap-1.5">
+                <Award className="w-3.5 h-3.5 text-slate-400" />
                 <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>Top 500 National Corporates</span>
               </div>
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4 text-blue-400" />
+              <div className="flex items-center gap-1.5">
+                <Globe className="w-3.5 h-3.5 text-slate-400" />
                 <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>100% Genuine External Portals</span>
               </div>
             </div>
 
             <button
               onClick={() => setIsPostModalOpen(true)}
-              className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/20 flex items-center gap-1.5 transition"
+              className="px-3.5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs rounded-lg shadow-sm flex items-center gap-1.5 transition"
             >
-              <Plus className="w-4 h-4" />
+              <Plus className="w-3.5 h-3.5" />
               <span>Post Your Opportunity</span>
             </button>
           </div>

@@ -10,128 +10,110 @@
   }
 }
 
-/* Dark Mode Theme (Default) */
+/* Dark Mode Theme (Minimalist Slate/Zinc) */
 .dark {
-  --bg-primary: #020617;
+  --bg-primary: #090d16;
   --bg-secondary: #0f172a;
-  --bg-card: rgba(30, 41, 59, 0.65);
-  --bg-card-hover: rgba(30, 41, 59, 0.9);
+  --bg-card: #0f172a;
+  --bg-card-hover: #1e293b;
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
   --border-color: rgba(255, 255, 255, 0.08);
-  --border-highlight: rgba(99, 102, 241, 0.35);
+  --border-highlight: rgba(255, 255, 255, 0.16);
 }
 
-/* Light Mode Theme */
+/* Light Mode Theme (Minimalist Clean) */
 .light {
-  --bg-primary: #f8fafc;
+  --bg-primary: #fafafa;
   --bg-secondary: #ffffff;
-  --bg-card: rgba(255, 255, 255, 0.85);
-  --bg-card-hover: rgba(255, 255, 255, 1);
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
   --text-primary: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
   --border-color: rgba(0, 0, 0, 0.08);
-  --border-highlight: rgba(79, 70, 229, 0.4);
+  --border-highlight: rgba(0, 0, 0, 0.16);
 }
 
-/* Custom Glassmorphism & Light/Dark Theme Utilities */
+/* Minimalist Card & Panel Utilities */
 .glass-panel {
   background: var(--bg-card);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border-color);
 }
 
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 
 .glass-card:hover {
   background: var(--bg-card-hover);
   border-color: var(--border-highlight);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px -10px rgba(99, 102, 241, 0.25);
 }
 
 .light .glass-panel {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(226, 232, 240, 0.8);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  background: #ffffff;
+  border-color: #e2e8f0;
 }
 
 .light .glass-card {
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(226, 232, 240, 0.9);
+  background: #ffffff;
+  border-color: #e2e8f0;
   color: #1e293b;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
 }
 
 .light .glass-card:hover {
-  background: #ffffff;
-  border-color: rgba(99, 102, 241, 0.4);
-  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15);
+  background: #f8fafc;
+  border-color: #cbd5e1;
 }
 
+/* Clean, Minimalist Text Emphasis */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+  background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.light .gradient-text {
+  background: none;
+  -webkit-background-clip: unset;
+  -webkit-text-fill-color: #0f172a;
+  color: #0f172a;
 }
 
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #0284c7 0%, #6366f1 50%, #9333ea 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #38bdf8;
 }
 
 .gradient-border {
   position: relative;
   border-radius: 0.75rem;
+  border: 1px solid var(--border-color);
 }
 
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 0.8rem;
-  padding: 1px;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.5), rgba(168, 85, 247, 0.5), rgba(236, 72, 153, 0.5));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Custom Scrollbars */
+/* Clean, Discreet Scrollbars */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.2);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.35);
-  border-radius: 3px;
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.6);
-}
-
-@keyframes pulse-subtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.88; transform: scale(1.02); }
+  background: rgba(148, 163, 184, 0.4);
 }
 
 .animate-pulse-subtle {
-  animation: pulse-subtle 4s ease-in-out infinite;
+  opacity: 1;
 }
 
 /* Google Translate Widget Suppression & Styling */

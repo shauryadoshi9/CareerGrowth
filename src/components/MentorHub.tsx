@@ -141,70 +141,66 @@ export const MentorHub: React.FC<MentorHubProps> = ({
   return (
     <div className="space-y-8 animate-fade-in pb-12">
       
-      {/* Hero Header */}
-      <div className={`relative overflow-hidden rounded-3xl p-8 lg:p-12 border ${
+      {/* Hero Header (Minimalist Style) */}
+      <div className={`relative overflow-hidden rounded-2xl p-6 lg:p-10 border ${
         isDark 
-          ? 'bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 border-indigo-500/30' 
-          : 'bg-gradient-to-br from-indigo-50 via-white to-purple-50 border-indigo-200 shadow-xl'
+          ? 'bg-slate-900/40 border-slate-800/80' 
+          : 'bg-white border-slate-200 shadow-sm'
       }`}>
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -mb-10 -ml-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-
         <div className="relative z-10 max-w-4xl space-y-4">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60 flex items-center gap-1.5">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               Verified Industry Mentors
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
+            <span className="px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60 flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
               Free 1:1 Sessions Available
             </span>
           </div>
 
-          <h1 className={`text-3xl lg:text-5xl font-black tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            Accelerate Your Career with <br />
-            <span className="gradient-text">1-on-1 Top Tech Mentors</span>
+          <h1 className={`text-2xl md:text-4xl font-bold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Accelerate Your Career with 1-on-1 Industry Mentors
           </h1>
 
-          <p className={`text-sm lg:text-base max-w-2xl leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-xs md:text-sm max-w-2xl leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Book personalized 1:1 guidance with Senior Engineers, Scientists, and Recruiters from Google DeepMind, Microsoft, ISRO, Zerodha, and CleanTech leaders.
           </p>
 
           {/* Quick Metrics Bar */}
-          <div className="pt-2 flex flex-wrap items-center gap-6 text-xs">
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-amber-400" />
-              <span className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>4.96 ★ Average Rating</span>
+          <div className="pt-1 flex flex-wrap items-center gap-5 text-xs text-slate-400">
+            <div className="flex items-center gap-1.5">
+              <Award className="w-3.5 h-3.5 text-slate-400" />
+              <span className={`font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>4.96 ★ Rating</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Users className="w-4 h-4 text-indigo-400" />
-              <span className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>1,200+ Mentees Guided</span>
+            <div className="flex items-center gap-1.5">
+              <Users className="w-3.5 h-3.5 text-slate-400" />
+              <span className={`font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>1,200+ Guided</span>
             </div>
-            <div className="flex items-center gap-2">
-              <Video className="w-4 h-4 text-emerald-400" />
-              <span className={`font-semibold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>Direct Google Meet Sync</span>
+            <div className="flex items-center gap-1.5">
+              <Video className="w-3.5 h-3.5 text-slate-400" />
+              <span className={`font-medium ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Direct Google Meet Sync</span>
             </div>
           </div>
 
           {/* Navigation View Switcher */}
-          <div className="pt-4 flex items-center gap-3">
+          <div className="pt-3 flex items-center gap-2.5">
             <button
               onClick={() => setActiveView('explore')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-medium transition ${
                 activeView === 'explore'
-                  ? 'bg-indigo-600 text-white shadow-lg'
-                  : isDark ? 'bg-slate-900/80 text-slate-300 hover:bg-slate-800' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-sm'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : isDark ? 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm'
               }`}
             >
               Browse All Mentors ({mentors.length})
             </button>
             <button
               onClick={() => setActiveView('my-bookings')}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-medium transition flex items-center gap-1.5 ${
                 activeView === 'my-bookings'
-                  ? 'bg-indigo-600 text-white shadow-lg'
-                  : isDark ? 'bg-slate-900/80 text-slate-300 hover:bg-slate-800' : 'bg-white text-slate-700 hover:bg-slate-100 shadow-sm'
+                  ? 'bg-indigo-600 text-white shadow-sm'
+                  : isDark ? 'bg-slate-900 border border-slate-800 text-slate-300 hover:bg-slate-800' : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-sm'
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />

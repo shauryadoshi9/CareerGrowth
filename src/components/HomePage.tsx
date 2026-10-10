@@ -111,64 +111,60 @@ export const HomePage: React.FC<HomePageProps> = ({
   return (
     <div className="space-y-12 pb-16 animate-fade-in">
 
-      {/* Hero Section (Unstop & Devfolio High-Impact Style) */}
-      <div className={`relative overflow-hidden rounded-3xl p-8 lg:p-14 border ${
+      {/* Hero Section (Minimalist Tech Aesthetic) */}
+      <div className={`relative overflow-hidden rounded-2xl p-7 lg:p-12 border ${
         isDark 
-          ? 'bg-gradient-to-br from-slate-950 via-indigo-950/70 to-slate-900 border-indigo-500/30' 
-          : 'bg-gradient-to-br from-indigo-50/80 via-white to-purple-50/60 border-indigo-200'
-      } shadow-2xl transition-all duration-300`}>
+          ? 'bg-slate-900/40 border-slate-800/80' 
+          : 'bg-white border-slate-200 shadow-sm'
+      } transition-all duration-200`}>
         
-        {/* Ambient Glows */}
-        <div className="absolute top-0 right-0 -mt-16 -mr-16 w-[30rem] h-[30rem] bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -mb-16 -ml-16 w-[30rem] h-[30rem] bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 max-w-4xl space-y-6">
+        <div className="relative z-10 max-w-4xl space-y-5">
           
-          {/* Badge & Telemetry Bar */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 shadow-sm">
+          {/* Metadata & Status Badges */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
               {t('home_badge_unstop', language)}
             </span>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
               Live Pipelines: Devfolio • Unstop • PM Scheme
             </span>
 
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-300 border border-purple-400/30">
-              <Globe className="w-3.5 h-3.5" />
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
+              <Globe className="w-3.5 h-3.5 text-slate-400" />
               10 Indian Languages
             </span>
           </div>
 
           {/* Main Title & Slogan */}
-          <h1 className={`text-3xl md:text-5xl font-black tracking-tight leading-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-            <span className="gradient-text">{t('hero_headline', language)}</span>
+          <h1 className={`text-3xl md:text-5xl font-bold tracking-tight leading-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            {t('hero_headline', language)}
           </h1>
 
-          <p className={`text-base md:text-lg max-w-2xl leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+          <p className={`text-sm md:text-base max-w-2xl leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             {t('hero_sub', language)}
           </p>
 
           {/* Live Quick-Search Bar */}
           <form onSubmit={handleSearchSubmit} className="relative max-w-2xl">
-            <div className={`flex items-center rounded-2xl p-2 border shadow-lg transition-all ${
+            <div className={`flex items-center rounded-xl p-1.5 border transition-all ${
               isDark 
-                ? 'bg-slate-900/90 border-slate-700 focus-within:border-indigo-500' 
-                : 'bg-white border-slate-300 focus-within:border-indigo-600'
+                ? 'bg-slate-950 border-slate-800 focus-within:border-slate-700' 
+                : 'bg-white border-slate-300 focus-within:border-indigo-600 shadow-sm'
             }`}>
-              <Search className="w-5 h-5 text-slate-400 ml-2 mr-2 shrink-0" />
+              <Search className="w-4 h-4 text-slate-400 ml-2.5 mr-2 shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t('home_search_placeholder', language)}
-                className={`w-full bg-transparent text-sm outline-none ${isDark ? 'text-white placeholder-slate-400' : 'text-slate-900 placeholder-slate-500'}`}
+                className={`w-full bg-transparent text-xs outline-none ${isDark ? 'text-white placeholder-slate-500' : 'text-slate-900 placeholder-slate-400'}`}
               />
               <button
                 type="submit"
-                className="px-5 py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-md shrink-0 transition"
+                className="px-4 py-2 rounded-lg font-medium text-xs text-white bg-indigo-600 hover:bg-indigo-500 shadow-sm shrink-0 transition"
               >
                 {t('home_search_btn', language)}
               </button>
@@ -179,54 +175,54 @@ export const HomePage: React.FC<HomePageProps> = ({
           <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
             <button
               onClick={() => onNavigateTab('opportunities', 'student')}
-              className="px-3.5 py-1.5 rounded-xl font-semibold bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/25 transition flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg font-medium bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white transition flex items-center gap-1.5"
             >
-              <Flame className="w-3.5 h-3.5 text-amber-400" />
+              <Flame className="w-3.5 h-3.5 text-indigo-400" />
               <span>{t('home_tab_hackathons', language)} (Devfolio & Unstop)</span>
             </button>
             <button
               onClick={() => onNavigateTab('opportunities', 'student')}
-              className="px-3.5 py-1.5 rounded-xl font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30 hover:bg-amber-500/25 transition flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg font-medium bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white transition flex items-center gap-1.5"
             >
-              <Briefcase className="w-3.5 h-3.5 text-amber-400" />
+              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
               <span>PM Internship Scheme (₹5k/mo)</span>
             </button>
             <button
               onClick={() => onNavigateTab('mentors', 'student')}
-              className="px-3.5 py-1.5 rounded-xl font-semibold bg-purple-500/15 text-purple-300 border border-purple-500/30 hover:bg-purple-500/25 transition flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg font-medium bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white transition flex items-center gap-1.5"
             >
-              <Users className="w-3.5 h-3.5 text-purple-400" />
+              <Users className="w-3.5 h-3.5 text-indigo-400" />
               <span>{t('home_tab_mentors', language)} (Google & Microsoft)</span>
             </button>
             <button
               onClick={() => onNavigateTab('study-buddy', 'student')}
-              className="px-3.5 py-1.5 rounded-xl font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 hover:bg-cyan-500/25 transition flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-lg font-medium bg-slate-900/80 text-slate-300 border border-slate-800 hover:border-slate-700 hover:text-white transition flex items-center gap-1.5"
             >
-              <Bot className="w-3.5 h-3.5 text-cyan-400" />
+              <Bot className="w-3.5 h-3.5 text-indigo-400" />
               <span>{t('study_buddy', language)}</span>
             </button>
           </div>
 
           {/* Call to Actions */}
-          <div className="flex flex-wrap items-center gap-4 pt-3">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
               onClick={() => onNavigateTab('opportunities', 'student')}
-              className="px-6 py-3.5 rounded-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-105 transition-all duration-200 flex items-center gap-2"
+              className="px-5 py-2.5 rounded-lg font-medium text-xs bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm transition flex items-center gap-1.5"
             >
-              <Zap className="w-5 h-5 text-amber-300 fill-amber-300" />
+              <Zap className="w-4 h-4" />
               {t('home_explore_opps', language)}
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
 
             <button
               onClick={() => onNavigateTab('mentors', 'student')}
-              className={`px-5 py-3.5 rounded-xl font-semibold border transition-all duration-200 flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-lg font-medium text-xs border transition flex items-center gap-1.5 ${
                 isDark 
-                  ? 'bg-slate-900 hover:bg-slate-800 text-slate-200 border-slate-700' 
-                  : 'bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-sm'
+                  ? 'bg-slate-900/80 hover:bg-slate-800 text-slate-300 border-slate-800 hover:text-white' 
+                  : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-300 shadow-sm'
               }`}
             >
-              <Users className="w-4 h-4 text-indigo-400" />
+              <Users className="w-3.5 h-3.5 text-slate-400" />
               {t('home_talk_mentor', language)}
             </button>
           </div>
@@ -234,19 +230,24 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* Official Platform Sources & Credibility Ticker */}
-      <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-900/60 border-slate-800/80' : 'bg-white border-slate-200 shadow-sm'}`}>
-        <div className="flex flex-wrap items-center justify-between gap-4 text-xs">
-          <span className={`font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-            Direct Partner & Ecosystem Pipelines:
+      {/* Official Platform Sources & Credibility Ticker (Minimalist) */}
+      <div className={`p-3.5 rounded-xl border ${isDark ? 'bg-slate-900/30 border-slate-800/80' : 'bg-white border-slate-200 shadow-sm'}`}>
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
+          <span className={`font-semibold uppercase tracking-wider text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+            Ecosystem Pipelines:
           </span>
-          <div className="flex flex-wrap items-center gap-5 font-semibold text-slate-300">
-            <span className="text-amber-400 flex items-center gap-1">🇮🇳 PM Internship Scheme (MCA)</span>
-            <span className="text-blue-400 flex items-center gap-1">🔵 Devfolio Hackathons</span>
-            <span className="text-cyan-400 flex items-center gap-1">🔷 Unstop Challenges</span>
-            <span className="text-emerald-400 flex items-center gap-1">🟢 Hack2Skill Sprints</span>
-            <span className="text-teal-400 flex items-center gap-1">🏛️ AICTE Portal</span>
-            <span className="text-pink-400 flex items-center gap-1">⭐ Google Summer of Code</span>
+          <div className="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-400">
+            <span className="flex items-center gap-1">PM Internship Scheme</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">Devfolio Hackathons</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">Unstop Challenges</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">Hack2Skill</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">AICTE Portal</span>
+            <span>•</span>
+            <span className="flex items-center gap-1">GSoC</span>
           </div>
         </div>
       </div>
@@ -331,15 +332,15 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* 1-on-1 Mentorship Spotlight Section */}
-      <div className={`p-8 rounded-3xl border ${isDark ? 'bg-gradient-to-r from-purple-950/40 via-slate-900 to-indigo-950/40 border-purple-500/30' : 'bg-gradient-to-r from-purple-50 via-white to-indigo-50 border-purple-200 shadow-lg'}`}>
+      {/* 1-on-1 Mentorship Spotlight Section (Minimalist) */}
+      <div className={`p-6 lg:p-8 rounded-2xl border ${isDark ? 'bg-slate-900/30 border-slate-800/80' : 'bg-white border-slate-200 shadow-sm'}`}>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-bold text-purple-400 uppercase tracking-wider mb-1">
-              <Users className="w-4 h-4 text-purple-400" />
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
+              <Users className="w-4 h-4 text-indigo-400" />
               <span>{t('home_tab_mentors', language)}</span>
             </div>
-            <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <h2 className={`text-2xl font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
               {t('home_spotlight_mentors', language)}
             </h2>
             <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -348,7 +349,7 @@ export const HomePage: React.FC<HomePageProps> = ({
           </div>
           <button
             onClick={() => onNavigateTab('mentors', 'student')}
-            className="px-5 py-2.5 rounded-xl font-bold text-xs bg-purple-600 hover:bg-purple-500 text-white shadow-md flex items-center gap-1.5 transition"
+            className="px-4 py-2 rounded-lg font-medium text-xs bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm flex items-center gap-1.5 transition"
           >
             <span>{t('view_all_mentors', language)}</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -359,8 +360,8 @@ export const HomePage: React.FC<HomePageProps> = ({
           {featuredMentors.map((mentor) => (
             <div
               key={mentor.id}
-              className={`p-5 rounded-2xl border flex flex-col justify-between ${
-                isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+              className={`p-5 rounded-xl border flex flex-col justify-between transition hover:border-slate-700 ${
+                isDark ? 'bg-slate-900/60 border-slate-800/90' : 'bg-white border-slate-200 shadow-sm'
               }`}
             >
               <div>
@@ -368,24 +369,24 @@ export const HomePage: React.FC<HomePageProps> = ({
                   <img
                     src={mentor.avatarUrl}
                     alt={mentor.name}
-                    className="w-12 h-12 rounded-xl object-cover border border-purple-500/30"
+                    className="w-11 h-11 rounded-lg object-cover border border-slate-800"
                   />
                   <div className="min-w-0">
                     <h3 className={`text-sm font-bold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{mentor.name}</h3>
-                    <p className="text-xs text-purple-400 font-semibold truncate">{mentor.role}</p>
+                    <p className="text-xs text-indigo-400 font-medium truncate">{mentor.role}</p>
                     <p className={`text-[11px] truncate ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{mentor.company}</p>
                   </div>
                 </div>
-                <p className={`text-xs line-clamp-2 mb-3 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                <p className={`text-xs line-clamp-2 mb-3 leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   {mentor.bio}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-slate-800 flex items-center justify-between">
-                <span className="text-[11px] font-bold text-emerald-400">{mentor.sessionPrice}</span>
+              <div className="pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                <span className="text-xs font-semibold text-emerald-400">{mentor.sessionPrice}</span>
                 <button
                   onClick={() => onNavigateTab('mentors', 'student')}
-                  className="px-3 py-1.5 rounded-lg text-xs font-bold bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/30 transition"
+                  className="px-3 py-1.5 rounded-md text-xs font-medium bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 transition"
                 >
                   {t('book_session', language)}
                 </button>
@@ -395,14 +396,14 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* AI Facilities Suite Showcase */}
-      <div className="space-y-5">
+      {/* AI Facilities Suite Showcase (Minimalist) */}
+      <div className="space-y-4">
         <div>
-          <div className="flex items-center gap-1.5 text-xs font-bold text-indigo-400 uppercase tracking-wider mb-1">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
             <Bot className="w-4 h-4 text-indigo-400" />
-            <span>AI Powered</span>
+            <span>AI Platform Suite</span>
           </div>
-          <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          <h2 className={`text-2xl font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
             {t('home_ai_suite_title', language)}
           </h2>
           <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
@@ -415,21 +416,21 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Tool 1: AI Study Buddy */}
           <div 
             onClick={() => onNavigateTab('study-buddy', 'student')}
-            className={`cursor-pointer p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-              isDark ? 'bg-slate-900/80 border-slate-800 hover:border-purple-500/60' : 'bg-white border-slate-200 hover:border-purple-400 shadow-md'
+            className={`cursor-pointer p-5 rounded-xl border transition hover:border-slate-700 ${
+              isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-3">
-              <Bot className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <Bot className="w-4 h-4" />
             </div>
             <div className="flex items-center gap-2">
               <h3 className={`text-sm font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>AI Study Buddy</h3>
-              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300">Voice</span>
+              <span className="text-[10px] font-medium px-1.5 py-0.5 rounded bg-slate-800 text-slate-300">Voice</span>
             </div>
-            <p className={`text-xs mt-1.5 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Simplifies complex concepts into analogies with Hindi/Gujarati voice synthesis.
+            <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Simplifies complex concepts into analogies with multi-language voice synthesis.
             </p>
-            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-purple-400">
+            <div className="mt-3 flex items-center gap-1 text-xs font-medium text-indigo-400">
               <span>Ask AI Buddy</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -438,18 +439,18 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Tool 2: Mock Interview */}
           <div 
             onClick={() => onNavigateTab('mock-interview', 'student')}
-            className={`cursor-pointer p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-              isDark ? 'bg-slate-900/80 border-slate-800 hover:border-cyan-500/60' : 'bg-white border-slate-200 hover:border-cyan-400 shadow-md'
+            className={`cursor-pointer p-5 rounded-xl border transition hover:border-slate-700 ${
+              isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-3">
-              <MessageSquareCode className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <MessageSquareCode className="w-4 h-4" />
             </div>
             <h3 className={`text-sm font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>Mock Interview Engine</h3>
-            <p className={`text-xs mt-1.5 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Practice AI, Full-Stack & CleanTech questions with automated rubric feedback.
+            <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Practice technical and soft skill questions with real-time rubric evaluation.
             </p>
-            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-cyan-400">
+            <div className="mt-3 flex items-center gap-1 text-xs font-medium text-indigo-400">
               <span>Start Interview</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -458,18 +459,18 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Tool 3: Revision Planner */}
           <div 
             onClick={() => onNavigateTab('revision-planner', 'student')}
-            className={`cursor-pointer p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-              isDark ? 'bg-slate-900/80 border-slate-800 hover:border-pink-500/60' : 'bg-white border-slate-200 hover:border-pink-400 shadow-md'
+            className={`cursor-pointer p-5 rounded-xl border transition hover:border-slate-700 ${
+              isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-pink-500/20 text-pink-400 flex items-center justify-center mb-3">
-              <Calendar className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <Calendar className="w-4 h-4" />
             </div>
-            <h3 className={`text-sm font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>Revision & Growth Journey</h3>
-            <p className={`text-xs mt-1.5 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              30m/45m micro-schedules tailored to weak topics + 5-stage milestone tracking.
+            <h3 className={`text-sm font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>Daily Revision Planner</h3>
+            <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Micro-schedules tailored to weak topics with milestone growth tracking.
             </p>
-            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-pink-400">
+            <div className="mt-3 flex items-center gap-1 text-xs font-medium text-indigo-400">
               <span>Plan Daily Habits</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -478,18 +479,18 @@ export const HomePage: React.FC<HomePageProps> = ({
           {/* Tool 4: Skill Gap Analyzer */}
           <div 
             onClick={() => onNavigateTab('skill-gap', 'student')}
-            className={`cursor-pointer p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-              isDark ? 'bg-slate-900/80 border-slate-800 hover:border-indigo-500/60' : 'bg-white border-slate-200 hover:border-indigo-400 shadow-md'
+            className={`cursor-pointer p-5 rounded-xl border transition hover:border-slate-700 ${
+              isDark ? 'bg-slate-900/50 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-3">
-              <BrainCircuit className="w-5 h-5" />
+            <div className="w-9 h-9 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <BrainCircuit className="w-4 h-4" />
             </div>
             <h3 className={`text-sm font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>Skill Gap Analyzer</h3>
-            <p className={`text-xs mt-1.5 line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Benchmark your current verified proficiency against target role taxonomies.
+            <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Benchmark verified proficiency against current industry job taxonomies.
             </p>
-            <div className="mt-3 flex items-center gap-1 text-xs font-semibold text-indigo-400">
+            <div className="mt-3 flex items-center gap-1 text-xs font-medium text-indigo-400">
               <span>Analyze Gaps</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </div>
@@ -498,83 +499,83 @@ export const HomePage: React.FC<HomePageProps> = ({
         </div>
       </div>
 
-      {/* Role Workspaces (Student, Educator, Institution) */}
-      <div className="space-y-5">
-        <h2 className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+      {/* Role Workspaces (Minimalist Unified Style) */}
+      <div className="space-y-4">
+        <h2 className={`text-2xl font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
           {t('home_workspaces_title', language)}
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           
           {/* Student Card */}
           <div 
             onClick={() => { onRoleChange('student'); onNavigateTab('dashboard', 'student'); }}
-            className={`cursor-pointer rounded-2xl p-6 border transition-all duration-300 hover:scale-[1.02] ${
+            className={`cursor-pointer rounded-xl p-5 border transition hover:border-slate-700 ${
               currentRole === 'student'
-                ? 'border-indigo-500 ring-2 ring-indigo-500/40 bg-indigo-950/30'
-                : isDark ? 'bg-slate-900/60 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-indigo-300 shadow-md'
+                ? 'border-indigo-500 bg-slate-900/80 ring-1 ring-indigo-500/30'
+                : isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4">
-              <Users className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <Users className="w-5 h-5" />
             </div>
-            <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               {t('home_student_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Real-time skill gap analysis, adaptive multilingual quizzes, project evidence builder, and direct opportunity matching.
+              Real-time skill gap analysis, adaptive multilingual quizzes, project evidence builder, and opportunity matching.
             </p>
-            <div className="mt-4 pt-4 border-t border-indigo-500/20 flex items-center justify-between text-xs font-semibold text-indigo-400">
+            <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-medium text-indigo-400">
               <span>{t('home_open_dashboard', language)}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Educator / Teacher Card */}
           <div 
             onClick={() => { onRoleChange('teacher'); onNavigateTab('teacher-copilot', 'teacher'); }}
-            className={`cursor-pointer rounded-2xl p-6 border transition-all duration-300 hover:scale-[1.02] ${
+            className={`cursor-pointer rounded-xl p-5 border transition hover:border-slate-700 ${
               currentRole === 'teacher'
-                ? 'border-purple-500 ring-2 ring-purple-500/40 bg-purple-950/30'
-                : isDark ? 'bg-slate-900/60 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-purple-300 shadow-md'
+                ? 'border-indigo-500 bg-slate-900/80 ring-1 ring-indigo-500/30'
+                : isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center mb-4">
-              <Bot className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <Bot className="w-5 h-5" />
             </div>
-            <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               {t('home_teacher_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Generate multilingual lesson plans, diagnostic quizzes, and track at-risk student intervention alerts.
             </p>
-            <div className="mt-4 pt-4 border-t border-purple-500/20 flex items-center justify-between text-xs font-semibold text-purple-400">
+            <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-medium text-indigo-400">
               <span>{t('home_open_copilot', language)}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 
           {/* Institution Admin Card */}
           <div 
             onClick={() => { onRoleChange('admin'); onNavigateTab('institution-analytics', 'admin'); }}
-            className={`cursor-pointer rounded-2xl p-6 border transition-all duration-300 hover:scale-[1.02] ${
+            className={`cursor-pointer rounded-xl p-5 border transition hover:border-slate-700 ${
               currentRole === 'admin'
-                ? 'border-emerald-500 ring-2 ring-emerald-500/40 bg-emerald-950/30'
-                : isDark ? 'bg-slate-900/60 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-emerald-300 shadow-md'
+                ? 'border-indigo-500 bg-slate-900/80 ring-1 ring-indigo-500/30'
+                : isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
             }`}
           >
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
-              <ShieldCheck className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-lg bg-slate-800 text-indigo-400 flex items-center justify-center mb-3">
+              <ShieldCheck className="w-5 h-5" />
             </div>
-            <h3 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            <h3 className={`text-base font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
               {t('home_admin_workspace', language)}
             </h3>
             <p className={`text-xs mt-2 leading-relaxed ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              High-level cohort skill distribution charts, placement alignment metrics, and regional rural outreach statistics.
+              High-level cohort skill distribution charts, placement alignment metrics, and regional outreach statistics.
             </p>
-            <div className="mt-4 pt-4 border-t border-emerald-500/20 flex items-center justify-between text-xs font-semibold text-emerald-400">
+            <div className="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs font-medium text-indigo-400">
               <span>{t('home_open_analytics', language)}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </div>
           </div>
 

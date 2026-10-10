@@ -1,155 +1,76 @@
-# CareerGrowth — AI-Powered Integrated Education, Skill & Employability Platform
+# CareerGrowth — AI-Powered Skill Mapping & Employability Platform
 
-> **From Learning to Livelihood • Career Acceleration OS**  
-> *Innovate for Bharat • Hack For Social Cause*  
-> **Registration ID:** `HSC|GJ|00051` | **Team Name:** Tatva | **Institute:** Dharmsinh Desai University, Nadiad
+> **Hack for Social Cause 2026 (Innovate for Bharat)**  
+> **Team Name:** Tatva | **Team ID:** `HSC|GJ|00051`  
+> **Team Lead:** Shaurya Doshi | **Institute:** Dharmsinh Desai University (DDU), Nadiad, Gujarat  
 
-[![Platform](https://img.shields.io/badge/Platform-CareerGrowth-emerald.svg)](https://github.com/shauryadoshi9/CareerGrowth)
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.0-646cff.svg)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-6.1-646cff.svg)](https://vitejs.dev/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-38bdf8.svg)](https://tailwindcss.com/)
 [![NodeJS](https://img.shields.io/badge/Node.js-v20+-green.svg)](https://nodejs.org/)
 
 ---
 
-## 📌 Executive Summary
+## 📌 Project Overview
 
-**CareerGrowth** is a unified, production-ready digital ecosystem for Education, Skill Development, and Employability that bridges the persistent chasm between academic learning and industry expectations. 
+**CareerGrowth** is a unified digital platform built for **Hack for Social Cause (Team Tatva, ID: HSC|GJ|00051)** that addresses youth unemployability and skill gaps in Indian higher education. 
 
-Rather than presenting isolated, disjointed tools, **CareerGrowth** operates on a central **Student Intelligence Engine** and shared learner state to unify the full development journey:
+Rather than isolated point solutions, CareerGrowth provides an end-to-end continuum:
+1. **Explainable Skill-Gap Diagnostics**: Mathematical gap calculation against industry taxonomies.
+2. **Adaptive Learning & AI Study Buddy**: Low-latency multilingual learning with audio speech support.
+3. **Vocational & Practical Portfolio Hub**: Evidence-backed project records aligned with NCrF guidelines.
+4. **Opportunity Matcher & Runtime Live Ingestion**: GPA and skill-weighted matching with Devfolio, Unstop, and PM Internship Scheme listings.
+5. **1:1 Industry Mentorship Booking**: Verified scheduling with calendar and Google Meet preview links.
+6. **Teacher Copilot & Remedial Intervention Spotlight**: Faculty lesson generator in 10 Indian languages with proactive learning hurdle tracking.
+7. **Institutional Analytics Console**: Departmental placement readiness and empirical pilot testing benchmarks.
 
-$$\text{ASSESS} \longrightarrow \text{DISCOVER} \longrightarrow \text{LEARN} \longrightarrow \text{PRACTICE} \longrightarrow \text{IMPROVE} \longrightarrow \text{SKILL} \longrightarrow \text{GUIDE} \longrightarrow \text{OPPORTUNITY}$$
-
----
-
-## 🎯 The Problem Statement (SIH26044)
-
-* **Title:** Portal for Academia-Industry Collaboration for Skill Mapping, Internships, and Placement
-* **Challenge:** Traditional education and placement systems remain severely fragmented:
-  1. **Skill–Job Gap:** Students lack transparency regarding exact missing capabilities between current syllabi and target industry benchmarks.
-  2. **One-Size-Fits-All Learning:** Students learn at varying speeds but receive identical, static course tracks.
-  3. **Rural & Underserved Disparity:** Learners in low-connectivity regions face limited access to specialized mentors, digital resources, and high-speed video.
-  4. **Unstructured Career Decisions:** Career choices are often made without diagnostic evidence or actionable milestone roadmaps.
-  5. **Vocational-Academic Divide:** Academic degrees rarely validate employable, hands-on vocational capabilities (e.g. Solar PV, Electric Vehicles, Agritech).
-  6. **Language Exclusion:** Quality technical content is predominantly locked in English, hindering regional-language students across India.
-  7. **Teacher Workload:** Faculty spend countless hours drafting lesson plans, assignments, and diagnostic assessments manually.
-  8. **Hidden Learning Difficulties:** Academic distress often remains invisible until major examination failures occur.
+> **Origin Note**: Conceptualized to address systemic skill-mapping barriers across universities, polytechnics, and rural colleges.
 
 ---
 
-## 🚀 Key Solution Architecture: The 8 Core Pillars
+## 📸 Screenshots & Demo Video
 
-```
-                     ┌─────────────────────────────────────────────────────────┐
-                     │            CareerGrowth Intelligence Core               │
-                     └────────────────────────────┬────────────────────────────┘
-                                                  │
-         ┌───────────────────┬────────────────────┼───────────────────┬───────────────────┐
-         ▼                   ▼                    ▼                   ▼                   ▼
-  1. Skill Gap        2. Adaptive          3. AI Career        4. Vocational       5. Multilingual
-     Analyzer            Learning             Navigator           Skill Hub           Layer (10 Langs)
-  (Taxonomy Match)   (Dynamic Mastery)    (Comparative Fit)  (Solar, EV, Agri)   (TreeWalker & AI)
-         │                   │                    │                   │                   │
-         └───────────────────┼────────────────────┴───────────────────┼───────────────────┘
-                             │                                        │
-                             ▼                                        ▼
-                      6. Rural Offline                         7. Teacher Copilot
-                         Learning Packs                           & Risk Engine
-                      (Low-Bandwidth Sync)                     (Early Interventions)
-                                                  │
-                                                  ▼
-                                      8. Live Opportunity Matcher
-                                   (PM Scheme, Unstop, Devfolio, AICTE)
-```
+| Student Dashboard & Skill Gap | Opportunity Matcher & Live Stream |
+|:---:|:---:|
+| *(Screenshot Slot: Student Analytics & Gap Radar)* | *(Screenshot Slot: Hackathons & PM Scheme Matcher)* |
 
-### 1. 📊 Skill Gap Analyzer
-* Maps learner profiles against standardized skill taxonomies (aligned with **NSDC National Occupational Standards**).
-* Calculates explainable readiness using a deterministic formula:
-  $$\text{Gap Score} = \text{Required Proficiency} - \text{Current Proficiency}$$
-* Identifies aligned strengths, missing competencies, and prioritizes remediation rather than dumping generic course lists.
+| Multilingual AI Tutor (10 Indian Languages) | Faculty Copilot & Remedial Interventions |
+|:---:|:---:|
+| *(Screenshot Slot: AI Study Buddy & Quiz)* | *(Screenshot Slot: Teacher Copilot Lesson Generator)* |
 
-### 2. ⚡ Adaptive Learning Engine
-* Pre-evaluates topic-level competence before delivering content.
-* Dynamically adjusts content complexity based on confidence, assessment attempts, and repeated errors.
-* Delivers a structured pedagogic cycle: `Concept` $\rightarrow$ `Example` $\rightarrow$ `Practice` $\rightarrow$ `Diagnostic Quiz` $\rightarrow$ `Remediation`.
-
-### 3. 🧭 AI Career Navigator
-* Comparative career pathway modeling (e.g., AI/ML Systems Engineer vs. Full-Stack Developer vs. Clean Energy Specialist).
-* Details required prerequisite trees, industry certifications, practical portfolio milestones, and estimated learning timeframes.
-
-### 4. 🛠️ Vocational & Practical Skill Hub
-* Bridges academic curricula with practical livelihood vocations: Solar Rooftop PV Installation, Electric Mobility Maintenance, IoT Sensor Hardware, and Precision Agritech.
-* Tracks micro-credentials backed by verifiable project evidence.
-
-### 5. 🌐 10-Language Multilingual Layer
-* Universal translation supporting **Hindi, Gujarati, Marathi, Tamil, Telugu, Kannada, Bengali, Punjabi, Malayalam, and English**.
-* Non-blocking client-side TreeWalker translation engine paired with Gemini-powered educational analogies.
-
-### 6. 📶 Rural & Low-Bandwidth Offline Packs
-* Downloadable offline learning bundles optimized for 2G/3G rural environments.
-* Local state persistence with automated synchronization whenever connectivity is restored.
-
-### 7. 👩‍🏫 Teacher Copilot & Student Risk Intervention Engine
-* **Teacher Copilot:** Generates structured lesson plans, remedial practice sheets, diagnostic quizzes, and classroom analytics in seconds.
-* **Risk Intervention Engine:** Monitors engagement drops and concept struggles to alert teachers early, suggesting personalized interventions before exams.
-
-### 8. 💼 Live Opportunity Matcher & External Schemes Ingestion
-* Authenticated integration with national schemes and top developer portals:
-  * **PM Internship Scheme (Govt of India MCA)**
-  * **AICTE Internship Portal & Smart India Hackathon (SIH)**
-  * **Devfolio (ETHIndia, Web3 & AI tracks)**
-  * **Unstop (Flipkart GRiD, Amazon ML Challenge, Tata Crucible)**
-  * **Hack2Skill & Google Summer of Code (GSoC)**
-* **On-Demand Manual Refresh:** Features a manual harvesting pipeline that pulls fresh hackathons, internships, and government stipends directly from external pipelines on demand without page flickering.
+> 📹 **Live Demonstration Video:** [Watch Demo Video](https://youtube.com) *(Insert your recorded hackathon video link here)*
 
 ---
 
-## 👥 Role-Adaptive User Experience
+## 🔐 Seeded Demo Accounts (Role-Based Access)
 
-CareerGrowth features tailored experiences for three key stakeholders:
+To test role-based access control (RBAC), the login page features 1-click quick-fill buttons for all three seeded roles:
 
-| Role | Core Capabilities |
-| :--- | :--- |
-| **🎓 Student** | Personalized Dashboard, Skill Gap Diagnostics, Career Roadmaps, AI Study Buddy, Mock Interviewer, Verified Portfolio, and 1-Click Scheme Applications. |
-| **👨‍🏫 Teacher / Mentor** | Classroom Analytics, AI Lesson Plan Generator, Diagnostic Quiz Builder, At-Risk Student Intervention Flags, and 1:1 Mentorship Session Calendar. |
-| **🏛️ Institution Admin** | Cohort Skill Intelligence, Department Placement Readiness Index, Curriculum Gap Insights, and Industry Hiring Benchmark Reports. |
-
----
-
-## 🛠️ Technology Stack
-
-| Layer | Technology | Details |
-| :--- | :--- | :--- |
-| **Frontend** | React 19 + TypeScript | High-performance, strictly typed component architecture |
-| **Build Tool** | Vite 6.0 | Sub-second HMR, optimized production code splitting |
-| **Styling** | Vanilla CSS + Tailwind CSS | Minimalist design tokens, dark & light mode support |
-| **Icons & Charts**| Lucide React & Recharts | Clean visual iconography and dynamic polar radar skill charts |
-| **Backend API** | Node.js REST Server | Fast HTTP API with JWT authentication and bcrypt hashing |
-| **Data Layer** | Relational JSON / PostgreSQL ready | Atomic transactional storage for profiles, skills, and activities |
-| **AI / LLM** | Google Gemini 2.0 API | Contextual educational explanations and copilot generation |
-| **Fallbacks** | Built-in Smart Expert Engine | Zero-latency local algorithmic fallback when API keys are absent |
-| **Watch Config** | Vite Watch Filter | Configured to ignore backend database writes and prevent reload loops |
+| Role | Email | Password | Name | Default Landing View |
+|---|---|---|---|---|
+| **Student** | `student.demo@careergrowth.org` | `Demo@2026!` | Aarav Patel | Student Dashboard (`/dashboard`) |
+| **Faculty / Teacher** | `teacher.demo@careergrowth.org` | `Demo@2026!` | Dr. Sharma | Teacher Dashboard (`/teacher-dashboard`) |
+| **Administrator** | `admin.demo@careergrowth.org` | `Demo@2026!` | Dean Verma | Institutional Analytics (`/admin-dashboard`) |
 
 ---
 
-## 🏛️ Policy & National Framework Alignment
+## 🛠️ Tech Stack Architecture
 
-CareerGrowth is built to support the statutory directives of:
-* **NEP 2020 (National Education Policy 2020):** Seamless integration of vocational education, regional language pedagogy, and experiential learning.
-* **NCrF (National Credit Framework):** Blending academic credits, technical assessments, and vocational competencies.
-* **NSDC National Occupational Standards (NOS):** Standardized competency matrices matching job roles in top sectors.
-* **UGC Guidelines on Academia-Industry Linkages:** Evidence-based student internship tracking and transparent skill evaluation.
-* **AICTE & MoE Initiatives:** Direct connectivity with the PM Internship Scheme, SIH, and National Career Service (NCS).
+* **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, Lucide Icons, Recharts, Canvas Confetti.
+* **Backend**: Node.js raw `http` engine, JSON Web Tokens (`jsonwebtoken`), `bcrypt` password hashing.
+* **Storage**: Local atomic file storage (`server/database.json`), seeded automatically from `server/database.seed.json`.
+* **Real-Time Layer**: Server-Sent Events (SSE) streaming live opportunity tickers and applicant counters.
+* **AI Engine**: Google Gemini 2.0 Flash API with zero-downtime built-in expert pedagogical engine fallback.
 
 ---
 
-## ⚡ Quickstart & Installation
+## ⚙️ Local Development Setup
 
 ### Prerequisites
-* **Node.js** (v18.0.0 or higher)
-* **npm** (v9.0.0 or higher)
+* Node.js v20.x or v24.x LTS
+* npm v10+
 
 ### 1. Clone the Repository
 ```bash
@@ -162,71 +83,112 @@ cd CareerGrowth
 npm install
 ```
 
-### 3. Environment Configuration
-Create a `.env` file in the project root:
+### 3. Configure Environment Variables
+Create a `.env` file in the project root (see `.env.example`):
 ```env
 PORT=5000
-JWT_SECRET=careergrowth_secret_key_prod_2026
-GEMINI_API_KEY=your_gemini_api_key_here # Optional: Built-in smart tutor operates automatically if left empty
+JWT_SECRET=your_secure_random_jwt_secret_at_least_32_characters_long
+GEMINI_API_KEY=your_optional_google_gemini_api_key
+ALLOWED_ORIGIN=http://localhost:3000,http://localhost:3001
+DEMO_MODE=true
 ```
 
-### 4. Run the Development Environment
-Start both the backend server and frontend development server:
+> ⚠️ **Security Rule**: `JWT_SECRET` must be at least 32 characters long. The server will refuse to start if it is missing or insecure.
 
+### 4. Run in Development Mode
+In two terminal tabs (or run dev script):
+
+**Terminal 1 (Backend Server):**
 ```bash
-# Terminal 1: Start Backend API (Port 5000)
 npm run start
+```
+*Backend active on `http://localhost:5000`*
 
-# Terminal 2: Start Frontend Application (Port 3000 / 3001)
+**Terminal 2 (Frontend Dev Server):**
+```bash
 npm run dev
 ```
+*Frontend dev server opens on `http://localhost:3000` (proxies `/api` to port 5000)*
 
-Open your browser at `http://localhost:3000` (or `http://localhost:3001`).
-
-### 5. Production Build & Verification
+### 5. Production Build & Single-Port Serving
 ```bash
-# Verify TypeScript types
-npx tsc --noEmit
-
-# Compile production bundle
 npm run build
+npm run start
 ```
+The Node.js server automatically serves the compiled `/dist` single-page application and all `/api` endpoints simultaneously on `PORT` (default 5000).
 
 ---
 
-## 🔌 API Endpoints Summary
+## 🚀 Free Deployment Guide (Render Web Service)
 
-| Endpoint | Method | Description |
-| :--- | :--- | :--- |
-| `/api/health` | `GET` | Health status and operational database statistics |
-| `/api/auth/register` | `POST` | Register a new user account with hashed credentials |
-| `/api/auth/login` | `POST` | Authenticate user and receive a secure JWT token |
-| `/api/auth/me` | `GET` | Retrieve the authenticated user's current session |
-| `/api/skills` | `GET` | Fetch tracked skills and proficiency benchmarks |
-| `/api/skills` | `POST` | Add a new tracked skill with assessment scores |
-| `/api/skills/:id` | `DELETE` | Remove a tracked skill from the student profile |
-| `/api/opportunities` | `GET` | Fetch list of active hackathons, internships & jobs |
-| `/api/opportunities` | `POST` | Post a new community or verified opportunity |
-| `/api/opportunities/refresh`| `POST` / `GET` | **Manual Ingest:** Harvests 3 fresh listings from external portals on demand |
-| `/api/mentors/book` | `POST` | Schedule and confirm a 1:1 industry mentorship session |
-| `/api/ai-tutor` | `POST` | Query Gemini 2.0 / smart expert engine for concepts |
-| `/api/progress/share` | `POST` | Save parental/teacher progress sharing consent and access links |
+You can host both the frontend and backend together as a single Render Web Service for free:
+
+1. Push your repository to GitHub.
+2. Sign in to [Render](https://dashboard.render.com/) and click **New + > Web Service**.
+3. Connect your GitHub repository `CareerGrowth`.
+4. Configure the service settings:
+   - **Environment:** `Node`
+   - **Build Command:** `npm run build`
+   - **Start Command:** `npm run start`
+   - **Instance Type:** `Free`
+5. In the **Environment Variables** tab, configure:
+   - `JWT_SECRET`: *(A random string of 32+ characters)*
+   - `ALLOWED_ORIGIN`: `*` (or your assigned `https://careergrowth.onrender.com` domain)
+   - `DEMO_MODE`: `true`
+   - `GEMINI_API_KEY`: *(Optional: your Google Gemini API key)*
+6. Click **Deploy Web Service**.
+
+> ℹ️ **Storage Note on Free Tiers**: Render free tier instances use ephemeral disks. The database resets to `server/database.seed.json` on cold restarts, which preserves demo integrity for hackathon judges.
 
 ---
 
-## 👨‍💻 Team & Registration Details
+## 📡 API Endpoints & Role Permissions
 
-* **Initiative:** Innovate for Bharat
-* **Track:** Hack For Social Cause
-* **Registration ID:** `HSC|GJ|00051`
-* **Team Name:** Tatva
-* **Team Size:** 1
-* **Team Lead:** Shaurya Doshi ([shauryadoshi9@gmail.com](mailto:shauryadoshi9@gmail.com))
-* **Institution:** Dharmsinh Desai University, Nadiad (Kheda, Gujarat)
-* **Repository:** [https://github.com/shauryadoshi9/CareerGrowth](https://github.com/shauryadoshi9/CareerGrowth)
+All endpoints return standard JSON payloads. Protected endpoints require `Authorization: Bearer <token>`.
+
+| Endpoint | Method | Auth Required | Allowed Roles | Description |
+|---|:---:|:---:|:---:|---|
+| `/api/health` | GET | No | Public | Server operational status & hackathon team ID |
+| `/api/auth/register` | POST | No | Public | Register student/teacher account (password min 8 chars) |
+| `/api/auth/login` | POST | No | Public | Authenticate with credentials and receive JWT |
+| `/api/auth/send-otp` | POST | No | Public | Generate 6-digit OTP code (demo preview in dev mode) |
+| `/api/auth/verify-otp` | POST | No | Public | Verify OTP and create verified account |
+| `/api/auth/google-login`| POST | No | Public | Demo Sign-In with simulated Google account identity |
+| `/api/auth/me` | GET | Yes | Any | Returns authenticated session profile and role |
+| `/api/profile` | GET, POST, PUT | Yes | Any | Retrieve and update user-scoped learner profile |
+| `/api/skills` | GET, POST | Yes | Any | Retrieve and add verified skills to user profile |
+| `/api/skills/:id` | PUT, DELETE | Yes | Any | Update or remove specific skill in user profile |
+| `/api/applications` | GET, POST | Yes | Any | View and submit job / internship applications |
+| `/api/quiz-submissions` | GET, POST | Yes | Any | Submit and review diagnostic quiz answers |
+| `/api/portfolio/projects`| GET, POST | Yes | Any | Record multi-step vocational portfolio projects |
+| `/api/progress-share` | GET, POST | Yes | Any | Update parent/faculty progress sharing consent |
+| `/api/mentors` | GET | No | Public | List available industry mentors |
+| `/api/mentors/book` | POST | Yes | Any | Schedule 1:1 mentorship slot with Google Meet link |
+| `/api/mentors/bookings` | GET | Yes | Student (own) / Faculty & Admin (all) | Retrieve booked mentorship sessions |
+| `/api/opportunities` | GET | No | Public | Query curated opportunity catalog |
+| `/api/opportunities` | POST | Yes | Any | Submit community opportunity |
+| `/api/opportunities/refresh`| POST | Yes | Any | Trigger on-demand manual ingestion from catalog |
+| `/api/live/stream` | GET | No | Public | Server-Sent Events stream for live opportunities |
+| `/api/ai-tutor` | POST | Yes | Any | Rate-limited tutor query (Gemini API with expert fallback) |
+| `/api/custom-input` | POST | Yes | Any | Generic data submission endpoint |
+| `/api/interventions` | GET | Yes | Student (assigned) / Faculty & Admin (all) | View student remedial support records |
+| `/api/interventions` | POST | Yes | **Teacher, Admin Only** | Log student remedial intervention (Student gets `403`) |
+| `/api/teacher/analytics` | GET | Yes | **Teacher, Admin Only** | Faculty cohort progress & recovery metrics (Student gets `403`) |
+| `/api/institution/analytics`| GET | Yes | **Admin Only** | University-wide placement metrics (Student/Teacher gets `403`) |
+
+---
+
+## 🔮 Scale-Up Roadmap
+
+Planned enhancements for production enterprise scale:
+- [ ] **Database Migration**: Migrate atomic JSON storage to PostgreSQL with pgvector for semantic search.
+- [ ] **Distributed Caching & Ingestion**: Redis Streams and Celery workers for automated scraping of national portals.
+- [ ] **Curriculum RAG**: Embed NPTEL, AICTE, and state university syllabi to generate hyper-specific diagnostic assessments.
+- [ ] **Cloud Storage**: AWS S3 / Cloudflare R2 bucket integration for student project video artifacts and PDF resumes.
+- [ ] **Live Video SDK**: WebRTC / Dyte integration for built-in 1:1 video mentorship calls.
 
 ---
 
 ## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+This project is open-source under the [MIT License](LICENSE).  
+Developed by **Team Tatva (HSC|GJ|00051)** for the **Innovate for Bharat — Hack for Social Cause 2026 Hackathon**.

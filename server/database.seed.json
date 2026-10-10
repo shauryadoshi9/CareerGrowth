@@ -1,0 +1,765 @@
+{
+  "users": [
+    {
+      "id": "usr-demo-student",
+      "name": "Demo Student (Aarav Patel)",
+      "email": "student.demo@careergrowth.org",
+      "role": "student",
+      "password": "$2b$10$iIYlpgDcoJo8sRSZAnAEHupIsjHGC8g1Zp1dxhybD9Vquo8WIfJF.",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "usr-demo-teacher",
+      "name": "Demo Faculty (Dr. Sharma)",
+      "email": "teacher.demo@careergrowth.org",
+      "role": "teacher",
+      "password": "$2b$10$iIYlpgDcoJo8sRSZAnAEHupIsjHGC8g1Zp1dxhybD9Vquo8WIfJF.",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "usr-demo-admin",
+      "name": "Demo Administrator (Dean Verma)",
+      "email": "admin.demo@careergrowth.org",
+      "role": "admin",
+      "password": "$2b$10$iIYlpgDcoJo8sRSZAnAEHupIsjHGC8g1Zp1dxhybD9Vquo8WIfJF.",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "userProfiles": {
+    "usr-demo-student": {
+      "id": "learner-101",
+      "name": "Aarav Patel",
+      "role": "B.Tech Student (Computer Science & Automation)",
+      "institution": "Dharmsinh Desai University (DDU)",
+      "location": "Nadiad / Kheda District, Gujarat",
+      "preferredLanguage": "en",
+      "targetCareerId": "career-ai-eng",
+      "academicGpa": 8.4,
+      "completedModules": 14,
+      "streakDays": 12,
+      "offlineSyncStatus": "synced"
+    },
+    "usr-demo-teacher": {
+      "id": "faculty-201",
+      "name": "Dr. Sharma",
+      "role": "Associate Professor & Mentorship Lead",
+      "institution": "Dharmsinh Desai University (DDU)",
+      "location": "Nadiad, Gujarat"
+    },
+    "usr-demo-admin": {
+      "id": "admin-301",
+      "name": "Dean Verma",
+      "role": "Academic Dean & Placement Coordinator",
+      "institution": "Dharmsinh Desai University (DDU)",
+      "location": "Nadiad, Gujarat"
+    }
+  },
+  "userSkills": {
+    "usr-demo-student": [
+      {
+        "id": "s1",
+        "name": "Python & Data Structures",
+        "category": "core_tech",
+        "currentProficiency": 82,
+        "requiredProficiency": 90,
+        "evidenceCount": 4,
+        "certifications": [
+          "NPTEL Data Structures"
+        ]
+      },
+      {
+        "id": "s2",
+        "name": "Machine Learning & Scikit-Learn",
+        "category": "core_tech",
+        "currentProficiency": 65,
+        "requiredProficiency": 85,
+        "evidenceCount": 2,
+        "certifications": [
+          "AICTE AI Fundamentals"
+        ]
+      },
+      {
+        "id": "s3",
+        "name": "System Architecture & REST APIs",
+        "category": "core_tech",
+        "currentProficiency": 78,
+        "requiredProficiency": 80,
+        "evidenceCount": 3
+      },
+      {
+        "id": "s4",
+        "name": "Deep Learning & Neural Networks",
+        "category": "core_tech",
+        "currentProficiency": 42,
+        "requiredProficiency": 80,
+        "evidenceCount": 1
+      },
+      {
+        "id": "s5",
+        "name": "Prompt Engineering & RAG",
+        "category": "core_tech",
+        "currentProficiency": 55,
+        "requiredProficiency": 85,
+        "evidenceCount": 2
+      },
+      {
+        "id": "s6",
+        "name": "Database & SQL / pgvector",
+        "category": "core_tech",
+        "currentProficiency": 70,
+        "requiredProficiency": 75,
+        "evidenceCount": 3
+      },
+      {
+        "id": "s7",
+        "name": "Solar PV Systems & Grid Maintenance",
+        "category": "practical_vocational",
+        "currentProficiency": 30,
+        "requiredProficiency": 85,
+        "evidenceCount": 0
+      },
+      {
+        "id": "s8",
+        "name": "EV Battery Management Systems",
+        "category": "practical_vocational",
+        "currentProficiency": 25,
+        "requiredProficiency": 80,
+        "evidenceCount": 0
+      },
+      {
+        "id": "s9",
+        "name": "Digital Agriculture IoT Sensors",
+        "category": "domain_knowledge",
+        "currentProficiency": 40,
+        "requiredProficiency": 75,
+        "evidenceCount": 1
+      },
+      {
+        "id": "s10",
+        "name": "Technical Problem Solving & Communication",
+        "category": "soft_skills",
+        "currentProficiency": 85,
+        "requiredProficiency": 85,
+        "evidenceCount": 5
+      }
+    ]
+  },
+  "userApplications": {
+    "usr-demo-student": [
+      {
+        "id": "app-seed-1",
+        "opportunityId": "opp-initial-1",
+        "jobTitle": "PM Internship Scheme (Tata Motors)",
+        "company": "Tata Motors & MCA",
+        "matchScore": 85,
+        "status": "submitted",
+        "appliedAt": "2026-03-01T10:00:00.000Z"
+      }
+    ]
+  },
+  "userQuizSubmissions": {
+    "usr-demo-student": []
+  },
+  "userPortfolioProjects": {
+    "usr-demo-student": [
+      {
+        "id": "proj-rag-bot",
+        "title": "Personal Document Q&A Bot with FastAPI & pgvector",
+        "category": "AI & Data Engineering",
+        "level": "Intermediate",
+        "description": "Build a production Retrieval-Augmented Generation (RAG) assistant that chunks technical PDFs, generates dense vector embeddings, and performs cosine similarity search before prompting the LLM.",
+        "targetSkills": [
+          "Python & Data Structures",
+          "Prompt Engineering & RAG",
+          "Database & SQL / pgvector"
+        ],
+        "isVerifiedEvidence": true,
+        "repoUrl": "https://github.com/aarav-patel/rag-doc-chat",
+        "demoUrl": "https://rag-doc-chat.careergrowth.dev",
+        "notes": "Benchmarked with 500-page AI research paper dataset. Cosine similarity threshold tuned to 0.82 for zero hallucinations.",
+        "completedAt": "2026-02-15"
+      }
+    ]
+  },
+  "userTutorHistory": {
+    "usr-demo-student": []
+  },
+  "userProgressShare": {
+    "usr-demo-student": {
+      "consentGiven": true,
+      "shareWith": "both",
+      "updatedAt": "2026-02-15T12:00:00.000Z"
+    }
+  },
+  "mentorshipBookings": [
+    {
+      "id": "seed-book-1",
+      "userId": "usr-demo-student",
+      "mentorId": "m1",
+      "mentorName": "Dr. Sarah Chen",
+      "mentorCompany": "Google DeepMind",
+      "dateSlot": "Tomorrow, 5:30 PM IST",
+      "topic": "AI Systems Architecture & RAG Pipelines",
+      "studentName": "Aarav Patel",
+      "studentEmail": "student.demo@careergrowth.org",
+      "meetLink": "https://meet.google.com/sb-demo-preview",
+      "status": "confirmed",
+      "createdAt": "2026-03-01T10:00:00.000Z"
+    }
+  ],
+  "opportunities": [
+    {
+      "title": "ETHIndia 2026 - Global Web3 & Decentralized AI Hackathon",
+      "company": "Devfolio Ecosystem & Global Protocol Foundations",
+      "location": "Bengaluru (In-person) & Virtual Track",
+      "stipendOrSalary": "$100,000+ (₹83,00,000+) Global Prize Pool",
+      "prizeOrStipend": "₹83,00,000+ ($100k) Pool",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Devfolio",
+      "sourceUrl": "https://ethindia.devfolio.co/",
+      "deadline": "Applications Closing in 4 Days",
+      "registeredCount": "16,734+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:49:20 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Devfolio Flagship",
+        "Web3 & AI",
+        "Global VCs & Grants",
+        "Travel Grants Available"
+      ],
+      "bannerGradient": "from-blue-600 via-indigo-700 to-purple-800",
+      "minGpa": 6.5,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 75
+        },
+        {
+          "skillName": "Machine Learning & Scikit-Learn",
+          "level": 70
+        },
+        {
+          "skillName": "Database & SQL / pgvector",
+          "level": 65
+        }
+      ],
+      "id": "opp-stream-1791638360399-990",
+      "streamedAt": "2026-10-10T13:19:20.399Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "PM Internship Scheme: Tata Motors Electric Mobility Division",
+      "company": "Tata Motors & Ministry of Corporate Affairs",
+      "location": "Pune / Sanand / Pan-India Hubs",
+      "stipendOrSalary": "₹5,000 / month + ₹6,000 One-Time Grant",
+      "prizeOrStipend": "₹5,000/mo + ₹6k Grant",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "PM Internship Scheme",
+      "sourceUrl": "https://pminternship.mca.gov.in/",
+      "deadline": "Phase 2 Live - 1.25 Lakh Slots",
+      "registeredCount": "32,849+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:49:20 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Govt of India Verified",
+        "12-Month Internship",
+        "Direct Benefit Transfer",
+        "Top 500 Companies"
+      ],
+      "bannerGradient": "from-amber-500 via-orange-600 to-red-600",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 65
+        },
+        {
+          "skillName": "Technical Problem Solving & Communication",
+          "level": 70
+        }
+      ],
+      "id": "opp-stream-1791638360399-988",
+      "streamedAt": "2026-10-10T13:19:20.399Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Flipkart GRiD 7.0 - Software Development & AI Track",
+      "company": "Flipkart Careers (Unstop Exclusive)",
+      "location": "Bengaluru (National Virtual Prelims)",
+      "stipendOrSalary": "₹5,50,000 Cash Pool + SDE PPIs (₹1.5L/mo)",
+      "prizeOrStipend": "₹5,50,000 + SDE PPIs",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Unstop",
+      "sourceUrl": "https://unstop.com/hackathons/flipkart-grid-70",
+      "deadline": "Live on Unstop Portal",
+      "registeredCount": "42,903+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:49:20 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Unstop Verified",
+        "Hiring Challenge",
+        "SDE Pre-Placement Interviews",
+        "Engineering & MCA"
+      ],
+      "bannerGradient": "from-indigo-600 via-blue-600 to-cyan-600",
+      "minGpa": 7,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 80
+        },
+        {
+          "skillName": "Prompt Engineering & RAG",
+          "level": 75
+        }
+      ],
+      "id": "opp-stream-1791638360397-52",
+      "streamedAt": "2026-10-10T13:19:20.385Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Flipkart GRiD 7.0 - Software Development & AI Track",
+      "company": "Flipkart Careers (Unstop Exclusive)",
+      "location": "Bengaluru (National Virtual Prelims)",
+      "stipendOrSalary": "₹5,50,000 Cash Pool + SDE PPIs (₹1.5L/mo)",
+      "prizeOrStipend": "₹5,50,000 + SDE PPIs",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Unstop",
+      "sourceUrl": "https://unstop.com/hackathons/flipkart-grid-70",
+      "deadline": "Live on Unstop Portal",
+      "registeredCount": "25,283+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:43:03 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Unstop Verified",
+        "Hiring Challenge",
+        "SDE Pre-Placement Interviews",
+        "Engineering & MCA"
+      ],
+      "bannerGradient": "from-indigo-600 via-blue-600 to-cyan-600",
+      "minGpa": 7,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 80
+        },
+        {
+          "skillName": "Prompt Engineering & RAG",
+          "level": 75
+        }
+      ],
+      "id": "opp-stream-1791637983352-665",
+      "streamedAt": "2026-10-10T13:13:03.352Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "ISRO Space Application Centre Student Research Fellowship",
+      "company": "ISRO SAC Ahmedabad & Dept of Space",
+      "location": "Ahmedabad (SAC Campus) / Hybrid",
+      "stipendOrSalary": "₹18,000 / month + ISRO Certification",
+      "prizeOrStipend": "₹18,00,000 Fellowship Pool",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "CareerGrowth Partner",
+      "sourceUrl": "https://www.isro.gov.in/",
+      "deadline": "Semester Project Applications Open",
+      "registeredCount": "46,633+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:54 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "ISRO Partner",
+        "Satellite Remote Sensing",
+        "Computer Vision",
+        "Deep Tech"
+      ],
+      "bannerGradient": "from-blue-700 via-indigo-800 to-slate-900",
+      "minGpa": 7.5,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 80
+        },
+        {
+          "skillName": "Machine Learning & Scikit-Learn",
+          "level": 75
+        }
+      ],
+      "id": "opp-stream-1791637974348-103",
+      "streamedAt": "2026-10-10T13:12:54.348Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Tata Crucible Campus Business & Technology Quiz 2026",
+      "company": "Tata Sons & Tata Group (Unstop Partnered)",
+      "location": "Online Zonal Prelims & National Finals",
+      "stipendOrSalary": "₹2,50,000 Grand Cash Prize + National Trophy",
+      "prizeOrStipend": "₹2,50,000 Cash Prize",
+      "type": "quiz",
+      "category": "quiz",
+      "sourcePlatform": "Unstop",
+      "sourceUrl": "https://unstop.com/competitions/tata-crucible-campus-quiz-2026",
+      "deadline": "Registrations Open",
+      "registeredCount": "25,323+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:45 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Unstop Quiz",
+        "Tata Sons",
+        "General Tech & Business",
+        "No Eligibility Barriers"
+      ],
+      "bannerGradient": "from-purple-600 via-pink-600 to-rose-600",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Technical Problem Solving & Communication",
+          "level": 80
+        }
+      ],
+      "id": "opp-stream-1791637965347-558",
+      "streamedAt": "2026-10-10T13:12:45.347Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "India AI & Generative Intelligence Innovation Sprint",
+      "company": "Hack2Skill & MeitY Partner Ecosystem",
+      "location": "Virtual / Online Pan-India",
+      "stipendOrSalary": "₹8,00,000 Cash Prizes + NVIDIA Cloud GPU Credits",
+      "prizeOrStipend": "₹8,00,000 + GPU Vouchers",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Hack2Skill",
+      "sourceUrl": "https://hack2skill.com/",
+      "deadline": "Submissions Open Now",
+      "registeredCount": "10,527+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:36 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Hack2Skill Verified",
+        "Generative AI",
+        "Cloud Credits",
+        "Open to All Indian Colleges"
+      ],
+      "bannerGradient": "from-emerald-600 via-teal-600 to-cyan-600",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 70
+        },
+        {
+          "skillName": "Deep Learning & Neural Networks",
+          "level": 65
+        }
+      ],
+      "id": "opp-stream-1791637956333-597",
+      "streamedAt": "2026-10-10T13:12:36.333Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "TULIP: Urban Learning Internship on AI & Smart Governance",
+      "company": "Ministry of Housing and Urban Affairs & AICTE",
+      "location": "Ahmedabad / Surat / Pune Municipal Corporation",
+      "stipendOrSalary": "₹15,000 - ₹22,000 / month",
+      "prizeOrStipend": "₹15,000 - ₹22,000/mo",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "AICTE Portal",
+      "sourceUrl": "https://internship.aicte-india.org/",
+      "deadline": "Rolling Municipal Applications",
+      "registeredCount": "35,571+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:27 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "AICTE Verified",
+        "Smart Cities Mission",
+        "Geographic Information Systems",
+        "Public Sector AI"
+      ],
+      "bannerGradient": "from-teal-600 via-emerald-600 to-green-700",
+      "minGpa": 6.5,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 70
+        },
+        {
+          "skillName": "Database & SQL / pgvector",
+          "level": 70
+        }
+      ],
+      "id": "opp-stream-1791637947327-592",
+      "streamedAt": "2026-10-10T13:12:27.327Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "HackNITR 6.0 - Flagship National Student Hackathon",
+      "company": "NIT Rourkela on Devfolio",
+      "location": "Hybrid / Virtual & Campus Finals",
+      "stipendOrSalary": "₹5,50,000 Prize Pool + Swag & Sponsor Bounties",
+      "prizeOrStipend": "₹5,50,000 Cash Pool",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Devfolio",
+      "sourceUrl": "https://devfolio.co/hackathons",
+      "deadline": "Registrations Live",
+      "registeredCount": "13,072+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:18 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Devfolio Community",
+        "Beginner Friendly",
+        "Hardware & AI Tracks",
+        "Top Mentor Support"
+      ],
+      "bannerGradient": "from-violet-600 via-fuchsia-600 to-pink-600",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 70
+        },
+        {
+          "skillName": "System Architecture & REST APIs",
+          "level": 65
+        }
+      ],
+      "id": "opp-stream-1791637938320-862",
+      "streamedAt": "2026-10-10T13:12:18.320Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Amazon ML Challenge 2026 - Multimodal Intelligence",
+      "company": "Amazon India (Unstop Exclusive)",
+      "location": "Virtual / Online Pan-India",
+      "stipendOrSalary": "₹10,00,000 Cash Prizes + Applied Scientist / SDE Roles",
+      "prizeOrStipend": "₹10,00,000 + Amazon Roles",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Unstop",
+      "sourceUrl": "https://unstop.com/hackathons/amazon-ml-challenge-2026",
+      "deadline": "Closing in 6 Days",
+      "registeredCount": "20,822+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:09 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Unstop Flagship",
+        "Amazon SDE & ML Roles",
+        "Computer Vision & NLP",
+        "High Impact"
+      ],
+      "bannerGradient": "from-amber-600 via-orange-600 to-yellow-600",
+      "minGpa": 7,
+      "requiredSkills": [
+        {
+          "skillName": "Machine Learning & Scikit-Learn",
+          "level": 80
+        },
+        {
+          "skillName": "Deep Learning & Neural Networks",
+          "level": 75
+        }
+      ],
+      "id": "opp-stream-1791637929308-371",
+      "streamedAt": "2026-10-10T13:12:09.308Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "PM Internship Scheme: Reliance Jio 5G & Generative AI Labs",
+      "company": "Reliance Industries & MCA Portal",
+      "location": "Navi Mumbai & Virtual Apprenticeship",
+      "stipendOrSalary": "₹5,000 / month + ₹6,000 Direct Support",
+      "prizeOrStipend": "₹5,000/mo + ₹6k Grant",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "PM Internship Scheme",
+      "sourceUrl": "https://pminternship.mca.gov.in/",
+      "deadline": "Registrations Open on Portal",
+      "registeredCount": "14,396+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:42:00 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "PM Scheme Verified",
+        "5G Telecom",
+        "Cloud Microservices",
+        "Direct Industry Mentor"
+      ],
+      "bannerGradient": "from-cyan-600 via-blue-600 to-indigo-700",
+      "minGpa": 6.5,
+      "requiredSkills": [
+        {
+          "skillName": "System Architecture & REST APIs",
+          "level": 75
+        },
+        {
+          "skillName": "Python & Data Structures",
+          "level": 70
+        }
+      ],
+      "id": "opp-stream-1791637920306-372",
+      "streamedAt": "2026-10-10T13:12:00.306Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Google Summer of Code (GSoC 2026) - Open Source Fellowships",
+      "company": "Google Open Source Programs Office",
+      "location": "Remote / Global Contributor Track",
+      "stipendOrSalary": "$3,000 - $6,000 USD Stipend (₹2.5L - ₹5L)",
+      "prizeOrStipend": "₹2.5L - ₹5L Stipend",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "Google Open Source",
+      "sourceUrl": "https://summerofcode.withgoogle.com/",
+      "deadline": "Mentorship Proposal Submissions Open",
+      "registeredCount": "6,585+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:41:51 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Google Verified",
+        "Linux Kernel",
+        "TensorFlow",
+        "PostgreSQL",
+        "Stipend in USD"
+      ],
+      "bannerGradient": "from-rose-600 via-red-600 to-amber-600",
+      "minGpa": 7,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 85
+        },
+        {
+          "skillName": "System Architecture & REST APIs",
+          "level": 80
+        }
+      ],
+      "id": "opp-stream-1791637911297-84",
+      "streamedAt": "2026-10-10T13:11:51.296Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "Smart India Hackathon (SIH 2026) - AICTE & MeitY Edition",
+      "company": "Ministry of Education & AICTE Innovation Cell",
+      "location": "Pan-India Nodal Centers & Virtual",
+      "stipendOrSalary": "₹1,00,000 per Problem Statement (₹2.5 Crore Total)",
+      "prizeOrStipend": "₹1,00,000 per Winner",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "AICTE Portal",
+      "sourceUrl": "https://sih.gov.in/",
+      "deadline": "College Internal Hackathon Registrations Live",
+      "registeredCount": "35,577+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:41:42 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "AICTE Verified",
+        "Smart Cities",
+        "Digital Health",
+        "Agritech",
+        "Hardware & Software"
+      ],
+      "bannerGradient": "from-emerald-600 via-teal-600 to-cyan-700",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 75
+        },
+        {
+          "skillName": "Technical Problem Solving & Communication",
+          "level": 80
+        }
+      ],
+      "id": "opp-stream-1791637902290-46",
+      "streamedAt": "2026-10-10T13:11:42.290Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "ETHIndia 2026 - Global Web3 & Decentralized AI Hackathon",
+      "company": "Devfolio Ecosystem & Global Protocol Foundations",
+      "location": "Bengaluru (In-person) & Virtual Track",
+      "stipendOrSalary": "$100,000+ (₹83,00,000+) Global Prize Pool",
+      "prizeOrStipend": "₹83,00,000+ ($100k) Pool",
+      "type": "hackathon",
+      "category": "hackathon",
+      "sourcePlatform": "Devfolio",
+      "sourceUrl": "https://ethindia.devfolio.co/",
+      "deadline": "Applications Closing in 4 Days",
+      "registeredCount": "41,364+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:41:33 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Devfolio Flagship",
+        "Web3 & AI",
+        "Global VCs & Grants",
+        "Travel Grants Available"
+      ],
+      "bannerGradient": "from-blue-600 via-indigo-700 to-purple-800",
+      "minGpa": 6.5,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 75
+        },
+        {
+          "skillName": "Machine Learning & Scikit-Learn",
+          "level": 70
+        },
+        {
+          "skillName": "Database & SQL / pgvector",
+          "level": 65
+        }
+      ],
+      "id": "opp-stream-1791637893289-343",
+      "streamedAt": "2026-10-10T13:11:33.289Z",
+      "isLiveStreamed": true
+    },
+    {
+      "title": "PM Internship Scheme: Tata Motors Electric Mobility Division",
+      "company": "Tata Motors & Ministry of Corporate Affairs",
+      "location": "Pune / Sanand / Pan-India Hubs",
+      "stipendOrSalary": "₹5,000 / month + ₹6,000 One-Time Grant",
+      "prizeOrStipend": "₹5,000/mo + ₹6k Grant",
+      "type": "internship",
+      "category": "internship",
+      "sourcePlatform": "PM Internship Scheme",
+      "sourceUrl": "https://pminternship.mca.gov.in/",
+      "deadline": "Phase 2 Live - 1.25 Lakh Slots",
+      "registeredCount": "21,874+ Applicants",
+      "urgencyBadge": "⚡ Live Streamed (06:41:24 PM)",
+      "verifiedHost": true,
+      "tags": [
+        "Govt of India Verified",
+        "12-Month Internship",
+        "Direct Benefit Transfer",
+        "Top 500 Companies"
+      ],
+      "bannerGradient": "from-amber-500 via-orange-600 to-red-600",
+      "minGpa": 6,
+      "requiredSkills": [
+        {
+          "skillName": "Python & Data Structures",
+          "level": 65
+        },
+        {
+          "skillName": "Technical Problem Solving & Communication",
+          "level": 70
+        }
+      ],
+      "id": "opp-stream-1791637884276-692",
+      "streamedAt": "2026-10-10T13:11:24.276Z",
+      "isLiveStreamed": true
+    }
+  ],
+  "activityLog": [
+    {
+      "timestamp": "2026-10-10T15:03:38.401Z",
+      "action": "System Seed Initialized",
+      "details": "CareerGrowth seed database created for Team Tatva demo environment"
+    }
+  ]
+}

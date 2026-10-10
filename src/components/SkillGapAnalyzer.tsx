@@ -16,18 +16,20 @@ import {
   ExternalLink,
   Plus
 } from 'lucide-react';
-import { Skill, Language } from '../types';
+import { Skill, Language, ThemeMode } from '../types';
 
 interface SkillGapAnalyzerProps {
   language: Language;
   onNavigateTab: (tab: string) => void;
+  theme?: ThemeMode;
 }
 
-export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, onNavigateTab }) => {
+export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, onNavigateTab, theme = 'dark' }) => {
   const [selectedCareerId, setSelectedCareerId] = useState<string>(careerPathways[0].id);
   const [skills, setSkills] = useState<Skill[]>(initialSkills);
   const [activeEvidenceModalSkill, setActiveEvidenceModalSkill] = useState<Skill | null>(null);
 
+  const isDark = theme === 'dark';
   const selectedCareer = careerPathways.find(c => c.id === selectedCareerId) || careerPathways[0];
   const gapAnalysis = calculateSkillGap(skills, selectedCareer);
 
@@ -61,7 +63,9 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
     <div className="space-y-6">
       
       {/* Header Banner */}
-      <div className="glass-panel p-6 rounded-2xl border border-indigo-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className={`p-6 rounded-2xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-colors ${
+        isDark ? 'bg-slate-900/40 border-indigo-500/30' : 'bg-white border-slate-200 shadow-sm'
+      }`}>
         <div>
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-semibold">
@@ -71,20 +75,20 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
               Multi-Factor Evidence Synthesizer
             </span>
           </div>
-          <h2 className="text-2xl font-bold text-white font-outfit mt-1">Skill Gap Analyzer</h2>
-          <p className="text-sm text-slate-300">
+          <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Skill Gap Analyzer</h2>
+          <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Compare current evidence-backed profile against industry job taxonomies and calculate exact readiness using quiz scores, verified certificates, and completed projects.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 bg-slate-900/90 p-3 rounded-xl border border-slate-800">
+        <div className={`flex items-center gap-3 p-3 rounded-xl border ${isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
           <div className="text-right">
-            <p className="text-xs text-slate-400">Target Role Readiness</p>
-            <p className="text-2xl font-black text-indigo-400 font-outfit">{gapAnalysis.readinessScore}%</p>
+            <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Target Role Readiness</p>
+            <p className="text-2xl font-black text-indigo-500 font-outfit">{gapAnalysis.readinessScore}%</p>
           </div>
           <button
             onClick={handleResetSkills}
-            className="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition-all"
+            className={`p-2 rounded-lg transition-all ${isDark ? 'bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700' : 'bg-white border border-slate-200 text-slate-600 hover:text-slate-900 shadow-sm'}`}
             title="Reset Sliders to Default"
           >
             <RefreshCcw className="w-4 h-4" />
@@ -92,12 +96,14 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
         </div>
       </div>
 
-      {/* Holistic Multi-Factor Evidence Notice (Report Highlight #1) */}
-      <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/30 flex items-start gap-3 text-xs leading-relaxed text-indigo-200">
-        <Sparkles className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
+      {/* Holistic Multi-Factor Evidence Notice */}
+      <div className={`p-4 rounded-2xl border flex items-start gap-3 text-xs leading-relaxed ${
+        isDark ? 'bg-indigo-950/40 border-indigo-500/30 text-indigo-200' : 'bg-indigo-50/80 border-indigo-200 text-indigo-900'
+      }`}>
+        <Sparkles className="w-5 h-5 text-indigo-500 shrink-0 mt-0.5" />
         <div>
-          <span className="font-bold text-white block mb-0.5">Holistic Multi-Factor Skill Verification</span>
-          Instead of relying solely on exam scores, SkillBridge synthesizes <strong>Diagnostic Quiz Results</strong>, <strong>Accredited Certifications</strong> (NPTEL/AICTE), and <strong>Real-World Portfolio Projects</strong> with public GitHub code artifacts.
+          <span className={`font-bold block mb-0.5 ${isDark ? 'text-white' : 'text-indigo-950'}`}>Holistic Multi-Factor Skill Verification</span>
+          Instead of relying solely on exam scores, CareerGrowth synthesizes <strong>Diagnostic Quiz Results</strong>, <strong>Accredited Certifications</strong> (NPTEL/AICTE), and <strong>Real-World Portfolio Projects</strong> with public GitHub code artifacts.
         </div>
       </div>
 
@@ -105,8 +111,10 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         
         {/* Career Selection */}
-        <div className="md:col-span-7 glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
-          <label className="text-xs font-semibold text-slate-400 uppercase tracking-wider block">
+        <div className={`md:col-span-7 p-5 rounded-2xl border space-y-3 ${
+          isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+        }`}>
+          <label className={`text-xs font-semibold uppercase tracking-wider block ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Select Target Career Pathway:
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -116,60 +124,70 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                 onClick={() => setSelectedCareerId(career.id)}
                 className={`p-3.5 rounded-xl text-left border transition-all ${
                   selectedCareerId === career.id
-                    ? 'bg-indigo-600/20 border-indigo-500/60 shadow-lg shadow-indigo-600/20'
-                    : 'bg-slate-900/70 border-slate-800 hover:border-slate-700'
+                    ? isDark 
+                      ? 'bg-indigo-600/20 border-indigo-500/60 shadow-lg shadow-indigo-600/20' 
+                      : 'bg-indigo-50 border-indigo-500 shadow-sm ring-1 ring-indigo-500/30'
+                    : isDark 
+                      ? 'bg-slate-900/70 border-slate-800 hover:border-slate-700' 
+                      : 'bg-slate-50/70 border-slate-200 hover:border-slate-300'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-bold text-white truncate">{career.title}</span>
+                  <span className={`text-xs font-bold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>{career.title}</span>
                   <span className={`text-[10px] px-1.5 py-0.5 rounded font-semibold ${
-                    career.demandIndex === 'Critical' ? 'bg-red-500/20 text-red-400' : 'bg-amber-500/20 text-amber-400'
+                    career.demandIndex === 'Critical' ? 'bg-red-500/20 text-red-500' : 'bg-amber-500/20 text-amber-600'
                   }`}>
                     {career.demandIndex} Demand
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 line-clamp-2">{career.description}</p>
-                <p className="text-[10px] text-indigo-400 font-medium mt-2">{career.avgSalary}</p>
+                <p className={`text-[11px] line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{career.description}</p>
+                <p className="text-[10px] text-indigo-500 font-medium mt-2">{career.avgSalary}</p>
               </button>
             ))}
           </div>
         </div>
 
         {/* Explainable Gap Formula Card */}
-        <div className="md:col-span-5 glass-card p-5 rounded-2xl border border-slate-800 space-y-3 flex flex-col justify-between">
+        <div className={`md:col-span-5 p-5 rounded-2xl border space-y-3 flex flex-col justify-between ${
+          isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+        }`}>
           <div className="space-y-2">
-            <h3 className="text-sm font-bold text-white font-outfit flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-indigo-400" />
+            <h3 className={`text-sm font-bold font-outfit flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <HelpCircle className="w-4 h-4 text-indigo-500" />
               <span>Transparent Scoring Logic</span>
             </h3>
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Unlike opaque recommendation black boxes, SkillBridge uses transparent, weighted skill scoring:
+            <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+              Unlike opaque recommendation black boxes, CareerGrowth uses transparent, weighted skill scoring:
             </p>
-            <div className="bg-slate-900/90 p-3 rounded-xl border border-slate-800 font-mono text-[11px] text-indigo-300 space-y-1">
+            <div className={`p-3 rounded-xl border font-mono text-[11px] space-y-1 ${
+              isDark ? 'bg-slate-900/90 border-slate-800 text-indigo-300' : 'bg-slate-50 border-slate-200 text-indigo-800'
+            }`}>
               <p>• Gap Score = Required - Current</p>
               <p>• Multi-Factor = (Quiz × 35%) + (Certs × 25%) + (Projects × 40%)</p>
               <p>• Readiness % = ∑(min(Current, Req) / Req × Weight) × 100</p>
             </div>
           </div>
 
-          <div className="pt-3 border-t border-slate-800 text-xs text-slate-400">
-            Aligned Skills: <span className="text-emerald-400 font-bold">{gapAnalysis.matchedSkillsCount}</span> | Critical Missing: <span className="text-amber-400 font-bold">{gapAnalysis.criticalMissingSkills.length}</span>
+          <div className={`pt-3 border-t text-xs ${isDark ? 'border-slate-800 text-slate-400' : 'border-slate-200 text-slate-600'}`}>
+            Aligned Skills: <span className="text-emerald-500 font-bold">{gapAnalysis.matchedSkillsCount}</span> | Critical Missing: <span className="text-amber-500 font-bold">{gapAnalysis.criticalMissingSkills.length}</span>
           </div>
         </div>
 
       </div>
 
       {/* Interactive Skill Sliders & Multi-Factor Taxonomy Breakdown */}
-      <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-6">
+      <div className={`p-6 rounded-2xl border space-y-6 ${
+        isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+      }`}>
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-lg font-bold text-white font-outfit flex items-center gap-2">
-              <Sliders className="w-5 h-5 text-indigo-400" />
+            <h3 className={`text-lg font-bold font-outfit flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <Sliders className="w-5 h-5 text-indigo-500" />
               <span>Interactive Skill Taxonomy & Multi-Factor Evidence</span>
             </h3>
-            <p className="text-xs text-slate-400">Review verifiable evidence artifacts (quizzes, certificates, projects) for each benchmark</p>
+            <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Review verifiable evidence artifacts (quizzes, certificates, projects) for each benchmark</p>
           </div>
-          <span className="text-xs text-slate-400">Target Role: {selectedCareer.title}</span>
+          <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Target Role: {selectedCareer.title}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -187,18 +205,20 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
             const isAligned = gap <= 0;
 
             return (
-              <div key={req.skillId} className="bg-slate-900/90 p-5 rounded-2xl border border-slate-800/80 space-y-3.5">
+              <div key={req.skillId} className={`p-5 rounded-2xl border space-y-3.5 ${
+                isDark ? 'bg-slate-900/90 border-slate-800/80' : 'bg-slate-50 border-slate-200 shadow-sm'
+              }`}>
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="text-sm font-semibold text-white">{skill.name}</h4>
-                    <p className="text-[11px] text-slate-400">
-                      Required Benchmark: <span className="text-indigo-400 font-medium">{req.minScore}%</span> | Weight: {req.weight * 100}%
+                    <h4 className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-slate-900'}`}>{skill.name}</h4>
+                    <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                      Required Benchmark: <span className="text-indigo-500 font-medium">{req.minScore}%</span> | Weight: {req.weight * 100}%
                     </p>
                   </div>
                   <span className={`text-xs px-2.5 py-1 rounded-full font-semibold border ${
                     isAligned
-                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
-                      : 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                      ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30'
+                      : 'bg-amber-500/10 text-amber-600 border-amber-500/30'
                   }`}>
                     {isAligned ? 'Aligned' : `Gap: -${gap}%`}
                   </span>
@@ -207,8 +227,8 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                 {/* Slider */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs font-mono">
-                    <span className="text-slate-400">Current Verified Proficiency:</span>
-                    <span className="text-indigo-300 font-bold">{skill.currentProficiency}%</span>
+                    <span className={isDark ? 'text-slate-400' : 'text-slate-600'}>Current Verified Proficiency:</span>
+                    <span className="text-indigo-500 font-bold">{skill.currentProficiency}%</span>
                   </div>
                   <input
                     type="range"
@@ -216,17 +236,21 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                     max="100"
                     value={skill.currentProficiency}
                     onChange={(e) => handleSkillChange(skill.id, parseInt(e.target.value))}
-                    className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500"
+                    className={`w-full h-2 rounded-lg appearance-none cursor-pointer accent-indigo-600 ${
+                      isDark ? 'bg-slate-800' : 'bg-slate-200'
+                    }`}
                   />
                 </div>
 
-                {/* Multi-Factor Evidence Tags (Report Highlight #1) */}
-                <div className="p-3 rounded-xl bg-slate-950/70 border border-slate-800 text-[11px] space-y-2">
-                  <div className="flex items-center justify-between font-semibold text-slate-400">
+                {/* Multi-Factor Evidence Tags */}
+                <div className={`p-3 rounded-xl border text-[11px] space-y-2 ${
+                  isDark ? 'bg-slate-950/70 border-slate-800' : 'bg-white border-slate-200'
+                }`}>
+                  <div className={`flex items-center justify-between font-semibold ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                     <span>Evidence Breakdown:</span>
                     <button
                       onClick={() => setActiveEvidenceModalSkill(skill)}
-                      className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1 font-bold"
+                      className="text-indigo-500 hover:text-indigo-600 flex items-center gap-1 font-bold"
                     >
                       <Plus className="w-3 h-3" />
                       <span>Link Project Evidence</span>
@@ -236,12 +260,12 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                   <div className="flex flex-wrap gap-1.5">
                     {/* Quiz score badge */}
                     {skill.quizScore !== undefined ? (
-                      <span className="px-2 py-0.5 rounded bg-blue-500/15 text-blue-300 border border-blue-500/30 flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded bg-blue-500/15 text-blue-500 border border-blue-500/30 flex items-center gap-1">
                         <BookOpen className="w-3 h-3" />
                         <span>Quiz: {skill.quizScore}%</span>
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                      <span className={`px-2 py-0.5 rounded border ${isDark ? 'bg-slate-800 text-slate-400 border-slate-700' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                         Quiz: Untested
                       </span>
                     )}
@@ -249,13 +273,13 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                     {/* Certifications badge */}
                     {skill.certifications && skill.certifications.length > 0 ? (
                       skill.certifications.map((c, i) => (
-                        <span key={i} className="px-2 py-0.5 rounded bg-purple-500/15 text-purple-300 border border-purple-500/30 flex items-center gap-1">
+                        <span key={i} className="px-2 py-0.5 rounded bg-purple-500/15 text-purple-600 border border-purple-500/30 flex items-center gap-1">
                           <Award className="w-3 h-3" />
                           <span>{c}</span>
                         </span>
                       ))
                     ) : (
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                      <span className={`px-2 py-0.5 rounded border ${isDark ? 'bg-slate-800 text-slate-400 border-slate-700' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                         No Cert Attached
                       </span>
                     )}
@@ -263,25 +287,25 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                     {/* Completed Projects badge */}
                     {skill.completedProjects && skill.completedProjects.length > 0 ? (
                       skill.completedProjects.map((p, i) => (
-                        <span key={i} className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
+                        <span key={i} className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-600 border border-emerald-500/30 flex items-center gap-1">
                           <FolderGit2 className="w-3 h-3" />
                           <span>{p}</span>
                         </span>
                       ))
                     ) : (
-                      <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 border border-slate-700">
+                      <span className={`px-2 py-0.5 rounded border ${isDark ? 'bg-slate-800 text-slate-400 border-slate-700' : 'bg-slate-100 text-slate-600 border-slate-200'}`}>
                         No Project Linked
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+                <div className={`flex items-center justify-between text-[11px] pt-1 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
                   <span>Total Verified Evidence Count: {skill.evidenceCount || 1}</span>
                   {!isAligned && (
                     <button
                       onClick={() => onNavigateTab('learning')}
-                      className="text-indigo-400 hover:text-indigo-300 font-semibold underline"
+                      className="text-indigo-500 hover:text-indigo-600 font-semibold underline"
                     >
                       Start Remediation
                     </button>
@@ -293,14 +317,16 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
         </div>
       </div>
 
-      {/* Modal to Link Project Evidence (Report Highlight #1) */}
+      {/* Modal to Link Project Evidence */}
       {activeEvidenceModalSkill && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="max-w-md w-full rounded-3xl bg-slate-900 border border-indigo-500/40 p-6 shadow-2xl text-white space-y-4">
+          <div className={`max-w-md w-full rounded-3xl p-6 shadow-2xl space-y-4 border ${
+            isDark ? 'bg-slate-900 border-indigo-500/40 text-white' : 'bg-white border-slate-200 text-slate-900'
+          }`}>
             <h3 className="text-lg font-bold font-outfit">
               Link Project Evidence to "{activeEvidenceModalSkill.name}"
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Select one of your completed portfolio projects to attach as verified proof. Linking adds +10% verified proficiency!
             </p>
 
@@ -314,10 +340,14 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                 <button
                   key={idx}
                   onClick={() => handleAttachProjectToSkill(activeEvidenceModalSkill.id, projTitle)}
-                  className="w-full text-left p-3 rounded-xl bg-slate-950 hover:bg-indigo-950/50 border border-slate-800 hover:border-indigo-500 transition flex items-center justify-between"
+                  className={`w-full text-left p-3 rounded-xl border transition flex items-center justify-between ${
+                    isDark 
+                      ? 'bg-slate-950 hover:bg-indigo-950/50 border-slate-800 hover:border-indigo-500 text-white' 
+                      : 'bg-slate-50 hover:bg-indigo-50 border-slate-200 hover:border-indigo-400 text-slate-900'
+                  }`}
                 >
                   <span className="font-semibold">{projTitle}</span>
-                  <Plus className="w-4 h-4 text-indigo-400" />
+                  <Plus className="w-4 h-4 text-indigo-500" />
                 </button>
               ))}
             </div>
@@ -325,7 +355,9 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setActiveEvidenceModalSkill(null)}
-                className="px-4 py-2 rounded-xl border border-slate-700 text-slate-400 hover:text-white text-xs font-semibold"
+                className={`px-4 py-2 rounded-xl border text-xs font-semibold ${
+                  isDark ? 'border-slate-700 text-slate-400 hover:text-white' : 'border-slate-300 text-slate-600 hover:text-slate-900'
+                }`}
               >
                 Cancel
               </button>
@@ -337,3 +369,4 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
     </div>
   );
 };
+

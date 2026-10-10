@@ -931,7 +931,7 @@ export const mockRecommendedProjects: ProjectPortfolioItem[] = [
     targetSkills: ['Python & Data Structures', 'Prompt Engineering & RAG', 'Database & SQL / pgvector'],
     isVerifiedEvidence: true,
     repoUrl: 'https://github.com/aarav-patel/rag-doc-chat',
-    demoUrl: 'https://rag-doc-chat.skillbridge.dev',
+    demoUrl: 'https://rag-doc-chat.careergrowth.dev',
     notes: 'Benchmarked with 500-page AI research paper dataset. Cosine similarity threshold tuned to 0.82 for zero hallucinations.',
     completedAt: '2026-09-28',
     matchedOpportunityIds: ['opp-unstop-amazon-ml', 'opp-devfolio-ethindia', 'opp-pminternship-ai', 'opp-h2s-india-ai'],

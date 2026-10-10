@@ -109,7 +109,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
       dateSlot: selectedSlot,
       topic: selectedTopic || selectedMentor.topTopic,
       studentName: user?.name || 'Aarav Patel',
-      studentEmail: user?.email || 'student@skillbridge.edu'
+      studentEmail: user?.email || 'student@careergrowth.edu'
     };
 
     const res = await bookMentorshipSession(bookingPayload);
@@ -128,7 +128,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
         dateSlot: selectedSlot,
         topic: selectedTopic || selectedMentor.topTopic,
         studentName: user?.name || 'Aarav Patel',
-        studentEmail: user?.email || 'student@skillbridge.edu',
+        studentEmail: user?.email || 'student@careergrowth.edu',
         meetLink: `https://meet.google.com/sb-${Math.random().toString(36).substring(2, 6)}-${Math.random().toString(36).substring(2, 5)}`,
         status: 'confirmed',
         createdAt: new Date().toISOString()
@@ -542,7 +542,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
                 }`}>
                   <div>
                     <span className="font-bold text-emerald-400">{selectedMentor.sessionPrice}</span>
-                    <p className="text-[10px] text-slate-400">100% Verified SkillBridge Guarantee</p>
+                    <p className="text-[10px] text-slate-400">100% Verified CareerGrowth Guarantee</p>
                   </div>
                   <span className="text-[11px] text-slate-400">45 Minutes Session</span>
                 </div>

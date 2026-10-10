@@ -3,16 +3,16 @@ import { Language } from '../types';
 export const i18nDictionary: Record<string, Record<Language, string>> = {
   // Navigation & General Header
   'app_title': {
-    en: 'SkillBridge OS',
-    hi: 'स्किलब्रिज ओएस',
-    gu: 'સ્કિલબ્રિજ OS',
-    mr: 'स्किलब्रिज ओएस',
-    ta: 'ஸ்கில்பிரிட்ஜ் OS',
-    te: 'స్కిల్బ్రిడ్జ్ OS',
-    kn: 'ಸ್ಕಿಲ್ಬ್ರಿಡ್ಜ್ OS',
-    bn: 'স্কিলব্রিজ ওএস',
-    pa: 'ਸਕਿੱਲਬ੍ਰਿਜ OS',
-    ml: 'സ്കിൽബ്രിഡ്ജ് OS'
+    en: 'CareerGrowth',
+    hi: 'करियर ग्रोथ (CareerGrowth)',
+    gu: 'કરિયર ગ્રોથ (CareerGrowth)',
+    mr: 'करिअर ग्रोथ (CareerGrowth)',
+    ta: 'கரியர்குரோத் (CareerGrowth)',
+    te: 'కెరీర్‌గ్రోత్ (CareerGrowth)',
+    kn: 'ಕೆರಿಯರ್‌ಗ್ರೋತ್ (CareerGrowth)',
+    bn: 'ক্যারিয়ারগ্রোথ (CareerGrowth)',
+    pa: 'ਕਰੀਅਰਗ੍ਰੋਥ (CareerGrowth)',
+    ml: 'കരിയർഗ്രോത്ത് (CareerGrowth)'
   },
   'subtitle': {
     en: 'From Learning to Livelihood • Career Acceleration',

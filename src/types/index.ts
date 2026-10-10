@@ -133,7 +133,7 @@ export interface Opportunity {
   stipendOrSalary: string;
   type: 'internship' | 'fulltime' | 'vocational_apprenticeship' | 'hackathon' | 'quiz' | 'scholarship' | 'free_course' | 'entry_level_job';
   category?: 'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'job' | 'free_course' | 'mentorship';
-  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'SkillBridge Partner' | 'AICTE Portal' | 'Google Open Source' | 'NSP & Govt Portal' | 'Industry Partner';
+  sourcePlatform: 'PM Internship Scheme' | 'Devfolio' | 'Unstop' | 'Hack2Skill' | 'CareerGrowth Partner' | 'SkillBridge Partner' | 'AICTE Portal' | 'Google Open Source' | 'NSP & Govt Portal' | 'Industry Partner';
   sourceUrl: string;
   deadline?: string;
   prizeOrStipend?: string;
@@ -238,3 +238,45 @@ export interface ServerHealth {
     activityCount: number;
   };
 }
+
+export interface OpportunityTickPayload {
+  opportunityId: string;
+  registeredCount: string;
+  delta: number;
+  applicant?: {
+    city: string;
+    college: string;
+    delta: number;
+  };
+  timestamp: string;
+}
+
+export interface LiveActivityItem {
+  id: string;
+  text: string;
+  time: string;
+  timestamp: string;
+}
+
+export interface ExternalSourceStatus {
+  name: string;
+  status: 'streaming' | 'connected' | 'syncing';
+  latency: string;
+}
+
+export interface SystemStatsPayload {
+  activeStreamClients: number;
+  totalEventsStreamed: number;
+  externalSourcesConnected: number;
+  sources: ExternalSourceStatus[];
+  uptimeSeconds: number;
+  timestamp: string;
+}
+
+export type LiveStreamEvent =
+  | { type: 'initial_state'; opportunities: Opportunity[]; activeStreamClients: number; totalEventsStreamed: number; externalSourcesConnected: number; timestamp: string }
+  | { type: 'new_opportunity'; opportunity: Opportunity; totalCount: number; streamedAt: string; forced?: boolean; userGenerated?: boolean }
+  | { type: 'opportunity_tick'; opportunityId: string; registeredCount: string; delta: number; applicant?: { city: string; college: string; delta: number }; timestamp: string }
+  | { type: 'live_activity'; id: string; text: string; time: string; timestamp: string }
+  | { type: 'system_stats'; activeStreamClients: number; totalEventsStreamed: number; externalSourcesConnected: number; sources: ExternalSourceStatus[]; uptimeSeconds: number; timestamp: string };
+

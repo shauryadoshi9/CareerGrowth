@@ -18,6 +18,8 @@ import { DailyRevisionPlanner } from './components/DailyRevisionPlanner';
 import { MockInterviewEngine } from './components/MockInterviewEngine';
 import { MentorHub } from './components/MentorHub';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
+import { TeacherDashboard } from './components/TeacherDashboard';
+import { AdminDashboard } from './components/AdminDashboard';
 import { checkServerHealth } from './services/api';
 import { applyUniversalTranslation, triggerGoogleTranslate } from './services/i18n';
 
@@ -26,14 +28,35 @@ export function App() {
   const [activeTab, setActiveTab] = useState<string>('home');
   const [language, setLanguage] = useState<Language>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('skillbridge_language');
+      const saved = localStorage.getItem('careergrowth_language') || localStorage.getItem('skillbridge_language');
       if (saved) return saved as Language;
     }
     return 'en';
   });
-  const [theme, setTheme] = useState<ThemeMode>('dark');
+  const [theme, setTheme] = useState<ThemeMode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('careergrowth_theme') || localStorage.getItem('skillbridge_theme');
+      if (saved === 'light' || saved === 'dark') return saved;
+    }
+    return 'dark';
+  });
   const [isLowBandwidth, setIsLowBandwidth] = useState<boolean>(false);
   const [isServerConnected, setIsServerConnected] = useState<boolean>(true);
+
+  // Synchronize document theme class for Tailwind CSS
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    }
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('careergrowth_theme', theme);
+    }
+  }, [theme]);
 
   // Synchronize universal translation across the entire application on tab and language updates
   useEffect(() => {
@@ -60,7 +83,7 @@ export function App() {
   const handleLanguageChange = (newLang: Language) => {
     setLanguage(newLang);
     if (typeof window !== 'undefined') {
-      localStorage.setItem('skillbridge_language', newLang);
+      localStorage.setItem('careergrowth_language', newLang);
     }
     triggerGoogleTranslate(newLang);
   };
@@ -84,6 +107,14 @@ export function App() {
     if (newRole === 'student' && activeTab !== 'home') setActiveTab('dashboard');
     else if (newRole === 'teacher' && activeTab !== 'home') setActiveTab('teacher-copilot');
     else if (newRole === 'admin' && activeTab !== 'home') setActiveTab('institution-analytics');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleTabChange = (tab: string) => {
+    if (tab !== activeTab) {
+      setActiveTab(tab);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const handleNavigateTab = (tab: string, role?: UserRole) => {
@@ -91,6 +122,7 @@ export function App() {
       setCurrentRole(role);
     }
     setActiveTab(tab);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const toggleTheme = () => {
@@ -100,8 +132,9 @@ export function App() {
   const isDark = theme === 'dark';
 
   return (
-    <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300`}>
+    <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300 relative`}>
       
+
       {/* Top Header Navbar */}
       <Navbar
         currentRole={currentRole}
@@ -113,7 +146,7 @@ export function App() {
         isLowBandwidth={isLowBandwidth}
         onToggleLowBandwidth={() => setIsLowBandwidth(!isLowBandwidth)}
         activeTab={activeTab}
-        onTabChange={setActiveTab}
+        onTabChange={handleTabChange}
         isServerConnected={isServerConnected}
       />
 
@@ -125,6 +158,7 @@ export function App() {
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToRegister={() => setActiveTab('register')}
             language={language}
+            theme={theme}
           />
         )}
         {activeTab === 'register' && (
@@ -132,6 +166,7 @@ export function App() {
             onSuccess={() => setActiveTab('dashboard')}
             onSwitchToLogin={() => setActiveTab('login')}
             language={language}
+            theme={theme}
           />
         )}
         {/* Home Landing View */}
@@ -150,20 +185,21 @@ export function App() {
         {currentRole === 'student' && activeTab !== 'home' && (
           <>
             {activeTab === 'dashboard' && <StudentDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
-            {activeTab === 'skill-gap' && <SkillGapAnalyzer onNavigateTab={handleNavigateTab} language={language} />}
-            {activeTab === 'career-navigator' && <CareerNavigator onNavigateTab={handleNavigateTab} language={language} />}
-            {activeTab === 'learning' && <AdaptiveLearningEngine onNavigateTab={handleNavigateTab} language={language} />}
+            {activeTab === 'skill-gap' && <SkillGapAnalyzer onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'career-navigator' && <CareerNavigator onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
+            {activeTab === 'learning' && <AdaptiveLearningEngine onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'study-buddy' && <AIStudyBuddy onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'revision-planner' && <DailyRevisionPlanner onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'mock-interview' && <MockInterviewEngine onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'opportunities' && <OpportunityMatcher onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'mentors' && <MentorHub language={language} theme={theme} onNavigateTab={handleNavigateTab} />}
-            {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} />}
+            {activeTab === 'vocational' && <VocationalHub onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'offline-packs' && (
               <OfflinePackManager
                 isLowBandwidth={isLowBandwidth}
                 onToggleLowBandwidth={() => setIsLowBandwidth(!isLowBandwidth)}
                 language={language}
+                theme={theme}
               />
             )}
           </>
@@ -172,18 +208,25 @@ export function App() {
         {/* Educator / Teacher Views */}
         {currentRole === 'teacher' && activeTab !== 'home' && (
           <>
-            {activeTab === 'teacher-copilot' && <TeacherCopilot language={language} />}
-            {activeTab === 'learning-risk' && <RiskInterventionEngine language={language} />}
+            {(activeTab === 'dashboard' || activeTab === 'teacher-dashboard') && (
+              <TeacherDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />
+            )}
+            {activeTab === 'teacher-copilot' && <TeacherCopilot language={language} theme={theme} />}
+            {activeTab === 'learning-risk' && <RiskInterventionEngine language={language} theme={theme} />}
           </>
         )}
 
         {/* Institution Admin Views */}
         {currentRole === 'admin' && activeTab !== 'home' && (
           <>
-            {activeTab === 'institution-analytics' && <InstitutionAnalytics language={language} />}
+            {(activeTab === 'dashboard' || activeTab === 'admin-dashboard') && (
+              <AdminDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />
+            )}
+            {activeTab === 'institution-analytics' && <InstitutionAnalytics language={language} theme={theme} />}
           </>
         )}
       </main>
+
 
 
       {/* Footer Bar */}
@@ -192,13 +235,13 @@ export function App() {
       }`}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>SkillBridge OS</span>
+            <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>CareerGrowth</span>
             <span>•</span>
             <span>Integrated Career & Employability Engine</span>
             <span>•</span>
             <span className="text-emerald-500 font-semibold">Cloud Sync Active</span>
           </div>
-          <p>© 2026 SkillBridge Platform. From Learning to Livelihood.</p>
+          <p>© 2026 CareerGrowth Platform. From Learning to Livelihood.</p>
         </div>
       </footer>
 

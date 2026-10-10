@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -56,17 +58,38 @@
 .light .glass-panel {
   background: #ffffff;
   border-color: #e2e8f0;
+  color: #0f172a;
 }
 
 .light .glass-card {
   background: #ffffff;
   border-color: #e2e8f0;
-  color: #1e293b;
+  color: #0f172a;
 }
 
 .light .glass-card:hover {
   background: #f8fafc;
   border-color: #cbd5e1;
+}
+
+.light .glass-panel h1,
+.light .glass-panel h2,
+.light .glass-panel h3,
+.light .glass-panel h4,
+.light .glass-panel h5,
+.light .glass-panel h6,
+.light .glass-card h1,
+.light .glass-card h2,
+.light .glass-card h3,
+.light .glass-card h4,
+.light .glass-card h5,
+.light .glass-card h6 {
+  color: #0f172a;
+}
+
+.light .glass-panel p,
+.light .glass-card p {
+  color: #334155;
 }
 
 /* Clean, Minimalist Text Emphasis */

@@ -1,4 +1,4 @@
-import { Skill, JobApplication, ServerHealth, Mentor, MentorshipBooking, Opportunity, ProjectPortfolioItem, ProgressShareConsent } from '../types';
+import { Skill, JobApplication, ServerHealth, Mentor, MentorshipBooking, Opportunity, ProjectPortfolioItem, ProgressShareConsent, LiveStreamEvent } from '../types';
 
 const API_BASE = 'http://localhost:5000/api';
 
@@ -255,6 +255,19 @@ export async function fetchOpportunitiesApi(): Promise<Opportunity[]> {
   }
 }
 
+export async function refreshOpportunitiesApi(): Promise<{ success: boolean; message?: string; freshCount?: number; opportunities?: Opportunity[]; freshIngested?: Opportunity[] }> {
+  try {
+    const res = await fetch(`${API_BASE}/opportunities/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    if (!res.ok) return { success: false };
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
 export async function postCustomOpportunityApi(opp: Partial<Opportunity>): Promise<{ success: boolean; opportunity?: Opportunity; opportunities?: Opportunity[] }> {
   try {
     const res = await fetch(`${API_BASE}/opportunities`, {
@@ -311,6 +324,92 @@ export async function saveProgressShareApi(payload: Partial<ProgressShareConsent
     return await res.json();
   } catch (err) {
     return { success: false };
+  }
+}
+
+/**
+ * Subscribe to the Real-Time Server-Sent Events (SSE) Stream
+ * Pushes live opportunities, ticking applicant counts, learner activity, and system telemetry every second.
+ */
+export function subscribeToLiveStream(
+  onEvent: (event: LiveStreamEvent) => void,
+  onError?: (err: any) => void
+): () => void {
+  if (typeof window === 'undefined' || !window.EventSource) {
+    return () => {};
+  }
+
+  const streamUrl = `${API_BASE}/live/stream`;
+  let eventSource: EventSource | null = null;
+  let isClosed = false;
+
+  const eventTypes = ['initial_state', 'new_opportunity', 'opportunity_tick', 'live_activity', 'system_stats'];
+
+  const connect = () => {
+    if (isClosed) return;
+    try {
+      eventSource = new EventSource(streamUrl);
+
+      eventTypes.forEach(evtType => {
+        eventSource?.addEventListener(evtType, (e: MessageEvent) => {
+          try {
+            const data = JSON.parse(e.data);
+            onEvent({ type: evtType, ...data } as LiveStreamEvent);
+          } catch (err) {
+            console.warn(`Error parsing live event ${evtType}:`, err);
+          }
+        });
+      });
+
+      eventSource.onerror = (err) => {
+        if (onError) onError(err);
+      };
+    } catch (e) {
+      if (onError) onError(e);
+    }
+  };
+
+  connect();
+
+  return () => {
+    isClosed = true;
+    if (eventSource) {
+      eventSource.close();
+      eventSource = null;
+    }
+  };
+}
+
+/**
+ * Trigger immediate harvesting of a fresh external opportunity from live sources
+ */
+export async function triggerManualExternalFetch(): Promise<{
+  success: boolean;
+  opportunity?: Opportunity;
+  opportunities?: Opportunity[];
+  message?: string;
+}> {
+  try {
+    const res = await fetch(`${API_BASE}/opportunities/fetch-external`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+    return await res.json();
+  } catch (err) {
+    return { success: false };
+  }
+}
+
+/**
+ * Polling fallback for live updates
+ */
+export async function fetchLiveUpdatesApi(): Promise<any> {
+  try {
+    const res = await fetch(`${API_BASE}/live/updates`);
+    if (!res.ok) return null;
+    return await res.json();
+  } catch (err) {
+    return null;
   }
 }
 

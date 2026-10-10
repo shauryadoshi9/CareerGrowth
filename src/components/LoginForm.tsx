@@ -3,16 +3,17 @@ import { AuthContext } from '../context/AuthContext';
 import { LogIn, Mail, Lock, AlertCircle, ArrowRight } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
-import { Language } from '../types';
+import { Language, ThemeMode } from '../types';
 import { t } from '../services/i18n';
 
 interface LoginFormProps {
   onSuccess?: () => void;
   onSwitchToRegister?: () => void;
   language?: Language;
+  theme?: ThemeMode;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister, language = 'en' }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegister, language = 'en', theme }) => {
   const { login, googleLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,13 +49,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
 
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl transition-all">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-500">
-          <LogIn className="w-6 h-6" />
+      <div className="flex items-center gap-3.5 mb-6">
+        <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+          <img src="/logo.png" alt="CareerGrowth" className="w-full h-full object-contain" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Welcome Back</h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Sign in to your SkillBridge account</p>
+          <h2 className="text-2xl font-bold font-outfit text-slate-900 dark:text-white">Welcome Back</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Sign in to your CareerGrowth account</p>
         </div>
       </div>
 

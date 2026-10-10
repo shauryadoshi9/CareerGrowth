@@ -36,7 +36,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
 }) => {
   const [savedAccounts, setSavedAccounts] = useState<GoogleAccount[]>(() => {
     try {
-      const stored = localStorage.getItem('skillbridge_saved_google_accounts');
+      const stored = localStorage.getItem('careergrowth_saved_google_accounts') || localStorage.getItem('skillbridge_saved_google_accounts');
       return stored ? JSON.parse(stored) : DEFAULT_ACCOUNTS;
     } catch {
       return DEFAULT_ACCOUNTS;
@@ -97,7 +97,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
       const updated = [newAcc, ...savedAccounts.filter(a => a.email !== newAcc.email)];
       setSavedAccounts(updated);
       try {
-        localStorage.setItem('skillbridge_saved_google_accounts', JSON.stringify(updated));
+        localStorage.setItem('careergrowth_saved_google_accounts', JSON.stringify(updated));
       } catch (e) {
         // storage ignored
       }
@@ -129,7 +129,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
             </svg>
             <div>
               <h3 className="text-base font-bold text-slate-900 dark:text-white">Sign in with Google</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Choose an account to continue to SkillBridge</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Choose an account to continue to CareerGrowth</p>
             </div>
           </div>
           <button
@@ -244,7 +244,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
           <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-start gap-2 text-[11px] text-slate-500 dark:text-slate-400">
             <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
             <span>
-              To continue, Google will verify your identity and share your verified email address and basic profile with SkillBridge OS.
+              To continue, Google will verify your identity and share your verified email address and basic profile with CareerGrowth.
             </span>
           </div>
         </div>

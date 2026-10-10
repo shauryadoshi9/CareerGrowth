@@ -3,16 +3,17 @@ import { AuthContext } from '../context/AuthContext';
 import { UserPlus, User, Mail, Lock, AlertCircle, ArrowRight, CheckCircle, RefreshCw, KeyRound, ArrowLeft } from 'lucide-react';
 import { GoogleAccountChooserModal } from './GoogleAccountChooserModal';
 
-import { Language } from '../types';
+import { Language, ThemeMode } from '../types';
 import { t } from '../services/i18n';
 
 interface RegisterFormProps {
   onSuccess?: () => void;
   onSwitchToLogin?: () => void;
   language?: Language;
+  theme?: ThemeMode;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin, language = 'en' }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchToLogin, language = 'en', theme }) => {
   const { sendOtp, verifyOtp, googleLogin } = useContext(AuthContext);
   
   // Step 1: Info, Step 2: OTP
@@ -119,14 +120,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
   return (
     <div className="max-w-md mx-auto my-8 p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl transition-all">
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-purple-500/20">
-          <UserPlus className="w-6 h-6" />
+      <div className="flex items-center gap-3.5 mb-6">
+        <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+          <img src="/logo.png" alt="CareerGrowth" className="w-full h-full object-contain" />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">Create Account</h2>
+          <h2 className="text-2xl font-bold font-outfit text-slate-900 dark:text-white">Create Account</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            {step === 'info' ? 'Join SkillBridge OS to accelerate your career' : 'Verify your email address to continue'}
+            {step === 'info' ? 'Join CareerGrowth to accelerate your journey' : 'Verify your email address to continue'}
           </p>
         </div>
       </div>

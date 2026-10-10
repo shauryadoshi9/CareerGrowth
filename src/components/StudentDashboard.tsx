@@ -145,7 +145,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
   };
 
   const handleCopyShareLink = () => {
-    navigator.clipboard.writeText('https://skillbridge.edu/share/growth-aarav-patel-2026');
+    navigator.clipboard.writeText('https://careergrowth.edu/share/growth-aarav-patel-2026');
     setCopiedLink(true);
     setTimeout(() => setCopiedLink(false), 2500);
   };
@@ -243,6 +243,32 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           </div>
           
           <div className="flex items-center gap-2.5 flex-wrap">
+            <div className="relative">
+              <select
+                defaultValue=""
+                onChange={(e) => {
+                  if (e.target.value) {
+                    onNavigateTab(e.target.value);
+                  }
+                }}
+                className={`px-3 py-2 text-xs font-bold rounded-xl border outline-none cursor-pointer transition shadow-sm ${
+                  isDark ? 'bg-slate-900 border-indigo-500/40 text-indigo-300 hover:border-indigo-400' : 'bg-white border-indigo-300 text-indigo-700 hover:border-indigo-500'
+                }`}
+              >
+                <option value="" disabled>⚡ Jump to Module...</option>
+                <option value="skill-gap">📊 Skill Gap Analyzer</option>
+                <option value="career-navigator">🧭 Career Navigator</option>
+                <option value="learning">⚡ Adaptive Learning Engine</option>
+                <option value="study-buddy">🤖 AI Study Buddy</option>
+                <option value="revision-planner">📅 Daily Revision Planner</option>
+                <option value="mock-interview">🎙️ AI Mock Interview</option>
+                <option value="opportunities">💼 Live Opportunities & Schemes</option>
+                <option value="mentors">👥 1:1 Industry Mentors</option>
+                <option value="vocational">🛠️ Vocational Hub</option>
+                <option value="offline-packs">📶 Offline Low-Bandwidth Packs</option>
+              </select>
+            </div>
+
             <button
               onClick={() => setIsShareModalOpen(true)}
               className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-indigo-500/30 font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
@@ -719,40 +745,48 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
       {/* Family / Teacher Progress Summary Modal with Consent Controls (Report Highlight #8) */}
       {isShareModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
-          <div className="max-w-lg w-full rounded-3xl bg-slate-900 border border-indigo-500/40 p-6 shadow-2xl text-white space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div className={`max-w-lg w-full rounded-3xl p-6 shadow-2xl space-y-4 border transition-colors ${
+            isDark ? 'bg-slate-900 border-indigo-500/40 text-white' : 'bg-white border-slate-200 text-slate-900'
+          }`}>
+            <div className={`flex items-center justify-between border-b pb-3 ${
+              isDark ? 'border-slate-800' : 'border-slate-100'
+            }`}>
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                <h3 className="text-base font-bold font-outfit">
+                <ShieldCheck className="w-5 h-5 text-emerald-500" />
+                <h3 className={`text-base font-bold font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
                   Family & Mentor Progress Summary (Privacy Controls)
                 </h3>
               </div>
-              <button onClick={() => setIsShareModalOpen(false)} className="text-slate-400 hover:text-white">
+              <button onClick={() => setIsShareModalOpen(false)} className={`transition-colors ${
+                isDark ? 'text-slate-400 hover:text-white' : 'text-slate-400 hover:text-slate-900'
+              }`}>
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <p className="text-xs text-slate-300 leading-relaxed">
+            <p className={`text-xs leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               Provide simple, encouraging progress summaries focusing on achievements and actionable next steps for authorized parents or educators.
             </p>
 
             {/* Consent Toggle */}
-            <div className="p-3.5 rounded-2xl bg-slate-950 border border-slate-800 flex items-center justify-between">
+            <div className={`p-3.5 rounded-2xl border flex items-center justify-between ${
+              isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
+            }`}>
               <div>
-                <p className="text-xs font-bold text-white">Learner Privacy Consent</p>
-                <p className="text-[11px] text-slate-400">Only share positive milestones & next steps. Raw risk tags are hidden.</p>
+                <p className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Learner Privacy Consent</p>
+                <p className={`text-[11px] ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Only share positive milestones & next steps. Raw risk tags are hidden.</p>
               </div>
               <input
                 type="checkbox"
                 checked={consentGiven}
                 onChange={e => setConsentGiven(e.target.checked)}
-                className="w-4 h-4 accent-indigo-500"
+                className="w-4 h-4 accent-indigo-600"
               />
             </div>
 
             {/* Audience Selector */}
             <div className="space-y-1 text-xs">
-              <label className="text-slate-400 font-semibold block">Authorized Audience:</label>
+              <label className={`font-semibold block ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>Authorized Audience:</label>
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: 'parent', label: 'Parent / Guardian' },
@@ -765,8 +799,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
                     onClick={() => setShareAudience(aud.id as any)}
                     className={`p-2.5 rounded-xl border text-center font-semibold transition ${
                       shareAudience === aud.id 
-                        ? 'bg-indigo-600 border-indigo-500 text-white' 
-                        : 'bg-slate-950 border-slate-800 text-slate-400'
+                        ? 'bg-indigo-600 border-indigo-500 text-white shadow' 
+                        : isDark
+                          ? 'bg-slate-950 border-slate-800 text-slate-400'
+                          : 'bg-slate-50 border-slate-200 text-slate-600'
                     }`}
                   >
                     {aud.label}
@@ -776,17 +812,19 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
             </div>
 
             {/* Encouraging Summary Preview */}
-            <div className="p-4 rounded-2xl bg-indigo-950/40 border border-indigo-500/20 space-y-3 text-xs">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-400">
+            <div className={`p-4 rounded-2xl border space-y-3 text-xs ${
+              isDark ? 'bg-indigo-950/40 border-indigo-500/20 text-slate-300' : 'bg-indigo-50/70 border-indigo-200 text-slate-700'
+            }`}>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
                 Summary Preview for {initialLearnerProfile.name}:
               </span>
 
               <div>
-                <p className="font-bold text-emerald-400 flex items-center gap-1 mb-1">
+                <p className="font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mb-1">
                   <CheckCircle className="w-3.5 h-3.5" />
                   <span>Key Achievements to Date:</span>
                 </p>
-                <ul className="text-slate-300 list-disc list-inside space-y-0.5 text-[11px]">
+                <ul className={`list-disc list-inside space-y-0.5 text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   <li>Completed 14 learning modules with 88% diagnostic mastery</li>
                   <li>12-day active study streak maintained</li>
                   <li>Completed 2 portfolio projects with public GitHub artifacts</li>
@@ -794,11 +832,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               </div>
 
               <div>
-                <p className="font-bold text-amber-400 flex items-center gap-1 mb-1">
+                <p className="font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1 mb-1">
                   <Sparkles className="w-3.5 h-3.5" />
                   <span>Positive Next Steps:</span>
                 </p>
-                <ul className="text-slate-300 list-disc list-inside space-y-0.5 text-[11px]">
+                <ul className={`list-disc list-inside space-y-0.5 text-[11px] ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                   <li>Building Step 3 of EV Battery Management project</li>
                   <li>Applying for PM Internship Scheme (MCA) or Flipkart GRiD</li>
                   <li>1:1 Career guidance scheduled with industry mentor</li>
@@ -811,9 +849,11 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
               <button
                 type="button"
                 onClick={handleCopyShareLink}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold flex items-center gap-1.5 transition"
+                className={`px-4 py-2 rounded-xl font-semibold flex items-center gap-1.5 transition ${
+                  isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-300' : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+                }`}
               >
-                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copiedLink ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
                 <span>{copiedLink ? 'Link Copied!' : 'Copy Share Link'}</span>
               </button>
 
@@ -828,7 +868,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
             </div>
 
             {shareStatus && (
-              <p className="text-center text-xs text-emerald-400 font-semibold">{shareStatus}</p>
+              <p className="text-center text-xs text-emerald-600 dark:text-emerald-400 font-semibold">{shareStatus}</p>
             )}
           </div>
         </div>

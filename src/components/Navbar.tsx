@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { UserRole, Language, ThemeMode, SUPPORTED_LANGUAGES } from '../types';
 import { t } from '../services/i18n';
@@ -18,7 +18,10 @@ import {
   Calendar,
   MessageSquareCode,
   Zap,
-  Users
+  Users,
+  Award,
+  ChevronDown,
+  LayoutGrid
 } from 'lucide-react';
 
 interface NavbarProps {
@@ -50,6 +53,22 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const { user, logout } = useContext(AuthContext);
   const isDark = theme === 'dark';
+  const [isStudentDropdownOpen, setIsStudentDropdownOpen] = useState(false);
+
+  const studentFeaturesList = [
+    { id: 'skill-gap', label: t('skill_gap', language), icon: BrainCircuit, badge: 'Diagnostic' },
+    { id: 'career-navigator', label: t('career_nav', language), icon: Sparkles, badge: 'Roadmap' },
+    { id: 'learning', label: t('learning_engine', language), icon: Zap, badge: 'Adaptive' },
+    { id: 'study-buddy', label: t('study_buddy', language), icon: Bot, badge: 'AI Doubts' },
+    { id: 'revision-planner', label: t('revision_planner', language), icon: Calendar, badge: 'Daily Plan' },
+    { id: 'mock-interview', label: t('mock_interview', language), icon: MessageSquareCode, badge: 'Live AI' },
+    { id: 'opportunities', label: t('opportunity', language), icon: Zap, badge: 'LIVE Ingest' },
+    { id: 'mentors', label: t('mentors', language), icon: Users, badge: '1:1 Experts' },
+    { id: 'vocational', label: t('vocational', language), icon: Award, badge: 'Practical' },
+    { id: 'offline-packs', label: t('offline_packs', language), icon: Signal, badge: 'Offline' }
+  ];
+
+  const currentActiveFeature = studentFeaturesList.find(f => f.id === activeTab);
 
   return (
     <header className={`sticky top-0 z-50 transition-colors duration-200 ${
@@ -60,17 +79,21 @@ export const Navbar: React.FC<NavbarProps> = ({
         
         {/* Left: Brand Identity */}
         <div className="flex items-center justify-between w-full lg:w-auto">
-          <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => onTabChange('home')}>
-            <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-indigo-400 shadow-sm">
-              <BrainCircuit className="w-4 h-4" />
+          <div className="flex items-center gap-3 cursor-pointer group" onClick={() => onTabChange('home')}>
+            <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
+              <img 
+                src="/logo.png" 
+                alt="CareerGrowth" 
+                className="h-full w-full object-contain"
+              />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <span className={`font-bold text-base tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                  SkillBridge
+              <div className="flex items-center gap-1.5">
+                <span className={`font-black text-base tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  Career<span className="text-emerald-500">Growth</span>
                 </span>
-                <span className="px-1.5 py-0.5 text-[10px] font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60 rounded">
-                  Verified
+                <span className="px-1.5 py-0.5 text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded uppercase tracking-wider">
+                  Official
                 </span>
               </div>
               <p className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -106,126 +129,119 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {currentRole === 'student' && (
             <>
+              {/* Student Dashboard Tab */}
               <button
-                onClick={() => onTabChange('dashboard')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
+                onClick={() => {
+                  onTabChange('dashboard');
+                  setIsStudentDropdownOpen(false);
+                }}
+                className={`px-3 py-1.5 rounded-md transition-all font-medium ${
                   activeTab === 'dashboard' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
+                    ? 'bg-indigo-600 text-white shadow-sm' 
                     : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
                 }`}
               >
                 {t('dashboard', language)}
               </button>
-              <button
-                onClick={() => onTabChange('skill-gap')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
-                  activeTab === 'skill-gap' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('skill_gap', language)}
-              </button>
-              <button
-                onClick={() => onTabChange('career-navigator')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
-                  activeTab === 'career-navigator' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('career_nav', language)}
-              </button>
-              <button
-                onClick={() => onTabChange('learning')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
-                  activeTab === 'learning' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('learning_engine', language)}
-              </button>
-              <button
-                onClick={() => onTabChange('study-buddy')}
-                className={`px-2.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                  activeTab === 'study-buddy' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                <Bot className="w-3.5 h-3.5" />
-                <span>{t('study_buddy', language)}</span>
-              </button>
-              <button
-                onClick={() => onTabChange('revision-planner')}
-                className={`px-2.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                  activeTab === 'revision-planner' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{t('revision_planner', language)}</span>
-              </button>
-              <button
-                onClick={() => onTabChange('mock-interview')}
-                className={`px-2.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                  activeTab === 'mock-interview' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                <MessageSquareCode className="w-3.5 h-3.5" />
-                <span>{t('mock_interview', language)}</span>
-              </button>
-              <button
-                onClick={() => onTabChange('opportunities')}
-                className={`px-2.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                  activeTab === 'opportunities' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                <Zap className="w-3.5 h-3.5" />
-                <span>{t('opportunity', language)}</span>
-              </button>
-              <button
-                onClick={() => onTabChange('mentors')}
-                className={`px-2.5 py-1.5 rounded-md transition-all flex items-center gap-1.5 ${
-                  activeTab === 'mentors' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                <Users className="w-3.5 h-3.5" />
-                <span>{t('mentors', language)}</span>
-              </button>
-              <button
-                onClick={() => onTabChange('vocational')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
-                  activeTab === 'vocational' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('vocational', language)}
-              </button>
-              <button
-                onClick={() => onTabChange('offline-packs')}
-                className={`px-2.5 py-1.5 rounded-md transition-all ${
-                  activeTab === 'offline-packs' 
-                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-                }`}
-              >
-                {t('offline_packs', language)}
-              </button>
+
+              {/* Student Features & Modules Dropdown Menu */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsStudentDropdownOpen(!isStudentDropdownOpen)}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md transition-all font-medium ${
+                    currentActiveFeature
+                      ? 'bg-indigo-600 text-white shadow-sm' 
+                      : isDark ? 'text-slate-300 hover:text-white hover:bg-slate-800/60' : 'text-slate-700 hover:text-slate-900 hover:bg-white'
+                  }`}
+                >
+                  {currentActiveFeature ? (
+                    <>
+                      <currentActiveFeature.icon className="w-3.5 h-3.5 text-white" />
+                      <span>{currentActiveFeature.label}</span>
+                    </>
+                  ) : (
+                    <>
+                      <LayoutGrid className="w-3.5 h-3.5 text-indigo-400" />
+                      <span>Modules & Tools</span>
+                    </>
+                  )}
+                  <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isStudentDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isStudentDropdownOpen && (
+                  <>
+                    <div 
+                      className="fixed inset-0 z-40" 
+                      onClick={() => setIsStudentDropdownOpen(false)} 
+                    />
+                    <div className={`absolute left-0 mt-2 w-72 rounded-2xl border shadow-2xl p-2 z-50 animate-fade-in ${
+                      isDark ? 'bg-slate-900/98 border-slate-700 backdrop-blur-xl' : 'bg-white border-slate-200 backdrop-blur-xl'
+                    }`}>
+                      <div className="px-3 py-2 border-b border-slate-800/50 mb-1 flex items-center justify-between text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+                        <span>CareerGrowth Modules</span>
+                        <span className="text-indigo-400 font-semibold">10 Features</span>
+                      </div>
+                      <div className="max-h-80 overflow-y-auto space-y-1 custom-scrollbar">
+                        {studentFeaturesList.map(item => {
+                          const Icon = item.icon;
+                          const isCurrent = activeTab === item.id;
+                          return (
+                            <button
+                              key={item.id}
+                              type="button"
+                              onClick={() => {
+                                onTabChange(item.id);
+                                setIsStudentDropdownOpen(false);
+                              }}
+                              className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-left text-xs transition-all ${
+                                isCurrent 
+                                  ? 'bg-indigo-600 text-white font-bold shadow' 
+                                  : isDark 
+                                    ? 'text-slate-300 hover:bg-slate-800/80 hover:text-white' 
+                                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5">
+                                <div className={`p-1.5 rounded-lg ${
+                                  isCurrent 
+                                    ? 'bg-white/20 text-white' 
+                                    : isDark ? 'bg-slate-800 text-indigo-400' : 'bg-indigo-50 text-indigo-600'
+                                }`}>
+                                  <Icon className="w-3.5 h-3.5" />
+                                </div>
+                                <span className="font-medium">{item.label}</span>
+                              </div>
+                              <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
+                                isCurrent 
+                                  ? 'bg-white/20 text-white' 
+                                  : 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                              }`}>
+                                {item.badge}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
             </>
           )}
 
           {currentRole === 'teacher' && (
             <>
+              <button
+                onClick={() => onTabChange('dashboard')}
+                className={`px-3 py-1.5 rounded-md transition-all ${
+                  activeTab === 'dashboard' 
+                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                Dashboard
+              </button>
               <button
                 onClick={() => onTabChange('teacher-copilot')}
                 className={`px-3 py-1.5 rounded-md transition-all ${
@@ -250,16 +266,28 @@ export const Navbar: React.FC<NavbarProps> = ({
           )}
 
           {currentRole === 'admin' && (
-            <button
-              onClick={() => onTabChange('institution-analytics')}
-              className={`px-3 py-1.5 rounded-md transition-all ${
-                activeTab === 'institution-analytics' 
-                  ? 'bg-indigo-600 text-white font-medium shadow-sm' 
-                  : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
-              }`}
-            >
-              {t('inst_analytics', language)}
-            </button>
+            <>
+              <button
+                onClick={() => onTabChange('dashboard')}
+                className={`px-3 py-1.5 rounded-md transition-all ${
+                  activeTab === 'dashboard' 
+                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                Dashboard
+              </button>
+              <button
+                onClick={() => onTabChange('institution-analytics')}
+                className={`px-3 py-1.5 rounded-md transition-all ${
+                  activeTab === 'institution-analytics' 
+                    ? 'bg-indigo-600 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white hover:bg-slate-800/60' : 'text-slate-600 hover:text-slate-900 hover:bg-white'
+                }`}
+              >
+                {t('inst_analytics', language)}
+              </button>
+            </>
           )}
 
         </nav>
@@ -304,44 +332,76 @@ export const Navbar: React.FC<NavbarProps> = ({
             </select>
           </div>
 
-          {/* Role Segmented Switcher (Minimalist) */}
-          <div className={`flex items-center border rounded-md p-0.5 text-xs ${
-            isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-slate-100 border-slate-200'
-          }`}>
-            <button
-              onClick={() => { onRoleChange('student'); onTabChange('dashboard'); }}
-              className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                currentRole === 'student' 
-                  ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <GraduationCap className="w-3.5 h-3.5" />
-              <span>{t('role_student', language)}</span>
-            </button>
-            <button
-              onClick={() => { onRoleChange('teacher'); onTabChange('teacher-copilot'); }}
-              className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                currentRole === 'teacher' 
-                  ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <UserCheck className="w-3.5 h-3.5" />
-              <span>{t('role_teacher', language)}</span>
-            </button>
-            <button
-              onClick={() => { onRoleChange('admin'); onTabChange('institution-analytics'); }}
-              className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
-                currentRole === 'admin' 
-                  ? 'bg-slate-800 text-white font-medium shadow-sm' 
-                  : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>{t('role_admin', language)}</span>
-            </button>
-          </div>
+          {/* Role Segmented Switcher on Home Page, Clean Mode Pill on Dashboard */}
+          {activeTab === 'home' ? (
+            <div className={`flex items-center border rounded-md p-0.5 text-xs ${
+              isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-slate-100 border-slate-200'
+            }`}>
+              <button
+                onClick={() => onRoleChange('student')}
+                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
+                  currentRole === 'student' 
+                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span>{t('role_student', language)}</span>
+              </button>
+              <button
+                onClick={() => onRoleChange('teacher')}
+                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
+                  currentRole === 'teacher' 
+                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <UserCheck className="w-3.5 h-3.5" />
+                <span>{t('role_teacher', language)}</span>
+              </button>
+              <button
+                onClick={() => onRoleChange('admin')}
+                className={`flex items-center gap-1 px-2 py-1 rounded transition-all ${
+                  currentRole === 'admin' 
+                    ? 'bg-slate-800 text-white font-medium shadow-sm' 
+                    : isDark ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>{t('role_admin', language)}</span>
+              </button>
+            </div>
+          ) : (
+            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold border ${
+              isDark ? 'bg-slate-900/80 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
+            }`}>
+              {currentRole === 'student' && (
+                <>
+                  <GraduationCap className="w-3.5 h-3.5 text-indigo-500" />
+                  <span>Student View</span>
+                </>
+              )}
+              {currentRole === 'teacher' && (
+                <>
+                  <UserCheck className="w-3.5 h-3.5 text-purple-500" />
+                  <span>Teacher View</span>
+                </>
+              )}
+              {currentRole === 'admin' && (
+                <>
+                  <ShieldCheck className="w-3.5 h-3.5 text-pink-500" />
+                  <span>Admin View</span>
+                </>
+              )}
+              <button
+                onClick={() => onTabChange('home')}
+                className="ml-1 text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+                title="Go to Home to switch role"
+              >
+                (Switch)
+              </button>
+            </div>
+          )}
 
           {/* Auth Navigation Buttons / User Badge */}
           <div className="flex items-center gap-1.5 ml-0.5">

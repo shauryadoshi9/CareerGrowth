@@ -23,10 +23,21 @@ import {
   Plus,
   BookOpen,
   DollarSign,
-  X
+  X,
+  Radio,
+  Activity,
+  RefreshCw
 } from 'lucide-react';
-import { Language, ThemeMode, JobApplication, Opportunity } from '../types';
-import { submitJobApplication, fetchApplications, fetchOpportunitiesApi, postCustomOpportunityApi } from '../services/api';
+import { Language, ThemeMode, JobApplication, Opportunity, LiveStreamEvent, OpportunityTickPayload } from '../types';
+import { 
+  submitJobApplication, 
+  fetchApplications, 
+  fetchOpportunitiesApi, 
+  postCustomOpportunityApi,
+  subscribeToLiveStream,
+  triggerManualExternalFetch,
+  refreshOpportunitiesApi
+} from '../services/api';
 
 interface OpportunityMatcherProps {
   language: Language;
@@ -52,11 +63,20 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
   const [isPostModalOpen, setIsPostModalOpen] = useState<boolean>(false);
   const [postStatusMsg, setPostStatusMsg] = useState<string | null>(null);
 
+  // Real-Time Runtime Stream State
+  const [isLiveConnected, setIsLiveConnected] = useState<boolean>(true);
+  const [recentIncomingOpp, setRecentIncomingOpp] = useState<Opportunity | null>(null);
+  const [recentApplicantTicks, setRecentApplicantTicks] = useState<Record<string, { delta: number; time: number }>>({});
+  const [liveActivities, setLiveActivities] = useState<Array<{ id: string; text: string; time: string }>>([]);
+  const [streamEventsCount, setStreamEventsCount] = useState<number>(0);
+  const [isFetchingManual, setIsFetchingManual] = useState<boolean>(false);
+  const [streamToast, setStreamToast] = useState<string | null>(null);
+
   // New Opportunity Form State
   const [newTitle, setNewTitle] = useState('');
   const [newCompany, setNewCompany] = useState('');
   const [newType, setNewType] = useState<'hackathon' | 'internship' | 'quiz' | 'scholarship' | 'free_course' | 'entry_level_job'>('hackathon');
-  const [newPlatform, setNewPlatform] = useState<any>('SkillBridge Partner');
+  const [newPlatform, setNewPlatform] = useState<any>('CareerGrowth Partner');
   const [newUrl, setNewUrl] = useState('');
   const [newStipend, setNewStipend] = useState('');
   const [newDeadline, setNewDeadline] = useState('');
@@ -66,7 +86,9 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
 
   useEffect(() => {
     let mounted = true;
-    const loadData = async () => {
+
+    // Initial fetch of applications and server opportunities
+    const loadInitialData = async () => {
       const [apps, serverOpps] = await Promise.all([
         fetchApplications(),
         fetchOpportunitiesApi()
@@ -81,17 +103,68 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         }
 
         if (serverOpps && serverOpps.length > 0) {
-          // Merge custom server opportunities with mock dataset
           setOpportunities(prev => {
-            const existingIds = new Set(prev.map(o => o.id));
-            const newItems = serverOpps.filter(o => !existingIds.has(o.id));
-            return [...newItems, ...prev];
+            const map = new Map<string, Opportunity>();
+            serverOpps.forEach(o => map.set(o.id, o));
+            prev.forEach(o => { if (!map.has(o.id)) map.set(o.id, o); });
+            return Array.from(map.values());
           });
         }
       }
     };
-    loadData();
-    return () => { mounted = false; };
+    loadInitialData();
+
+    // Subscribe to Real-Time Server-Sent Events (SSE) Stream
+    const unsubscribe = subscribeToLiveStream((event: LiveStreamEvent) => {
+      if (!mounted) return;
+      setIsLiveConnected(true);
+      setStreamEventsCount(c => c + 1);
+
+      if (event.type === 'initial_state') {
+        if (event.opportunities && event.opportunities.length > 0) {
+          setOpportunities(prev => {
+            const map = new Map<string, Opportunity>();
+            event.opportunities.forEach(o => map.set(o.id, o));
+            prev.forEach(o => { if (!map.has(o.id)) map.set(o.id, o); });
+            return Array.from(map.values());
+          });
+        }
+      }
+
+      if (event.type === 'new_opportunity') {
+        const newOpp = event.opportunity;
+        setOpportunities(prev => {
+          const filtered = prev.filter(o => o.id !== newOpp.id);
+          return [newOpp, ...filtered];
+        });
+        setRecentIncomingOpp(newOpp);
+        setStreamToast(`⚡ New listing streamed from ${newOpp.sourcePlatform}: ${newOpp.title}`);
+        setTimeout(() => {
+          if (mounted) setStreamToast(null);
+        }, 5000);
+      }
+
+      if (event.type === 'opportunity_tick') {
+        setOpportunities(prev =>
+          prev.map(o => o.id === event.opportunityId ? { ...o, registeredCount: event.registeredCount } : o)
+        );
+        setRecentApplicantTicks(prev => ({
+          ...prev,
+          [event.opportunityId]: { delta: event.delta, time: Date.now() }
+        }));
+      }
+
+      if (event.type === 'live_activity') {
+        setLiveActivities(prev => [{ id: event.id, text: event.text, time: event.time }, ...prev.slice(0, 5)]);
+      }
+    }, () => {
+      if (mounted) setIsLiveConnected(false);
+    });
+
+    return () => {
+      mounted = false;
+      unsubscribe();
+    };
   }, []);
 
   const opportunitiesWithMatch = useMemo(() => {
@@ -104,6 +177,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
     return opportunitiesWithMatch.filter(opp => {
       const matchesCategory = 
         selectedCategory === 'all' || 
+        (selectedCategory === 'live_stream' && Boolean((opp as any).isLiveStreamed)) ||
         opp.category === selectedCategory ||
         opp.type === selectedCategory;
 
@@ -125,6 +199,25 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
       return matchesCategory && matchesPlatform && matchesGpa && matchesSearch;
     });
   }, [opportunitiesWithMatch, selectedCategory, selectedPlatform, minGpaFilter, searchQuery]);
+
+  const handleManualFetch = async () => {
+    setIsFetchingManual(true);
+    try {
+      const res = await refreshOpportunitiesApi();
+      if (res?.success && res.opportunities) {
+        setOpportunities(res.opportunities);
+        if (res.freshIngested && res.freshIngested.length > 0) {
+          setRecentIncomingOpp(res.freshIngested[0]);
+        }
+        setStreamToast(`✅ Refreshed! Harvested ${res.freshCount || 3} new ongoing opportunities, hackathons & PM Internship schemes from external portals.`);
+        setTimeout(() => setStreamToast(null), 5000);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsFetchingManual(false);
+    }
+  };
 
   const handleApply = async (opp: Opportunity) => {
     setApplyingId(opp.id);
@@ -163,7 +256,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
       verifiedHost: true,
       minGpa: 6.0,
       requiredSkills: newSkills.split(',').map(s => ({ skillName: s.trim(), level: 70 })),
-      tags: ['Community Hosted', newType, 'SkillBridge Verified']
+      tags: ['Community Hosted', newType, 'CareerGrowth Verified']
     };
 
     const res = await postCustomOpportunityApi(oppPayload);
@@ -262,6 +355,90 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         </div>
       </div>
 
+      {/* Real-time Runtime Pipeline & External Source Control Panel */}
+      <div className={`p-4 lg:p-5 rounded-2xl border transition-all ${
+        isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
+      }`}>
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          
+          {/* Left: Stream Status & Channels */}
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </span>
+              <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                Runtime External Stream Active
+              </span>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700/60 font-mono">
+                {streamEventsCount} live events processed
+              </span>
+            </div>
+
+            {/* External source tags */}
+            <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
+              <span className="text-slate-500 font-medium">Synced Sources:</span>
+              {['Devfolio', 'Unstop', 'PM Internship Scheme MCA', 'AICTE Portal', 'Hack2Skill', 'Google Open Source'].map(src => (
+                <span key={src} className="px-2 py-0.5 rounded-md bg-slate-800/60 text-slate-300 border border-slate-700/40 text-[10px] font-medium flex items-center gap-1">
+                  <span className="w-1 h-1 rounded-full bg-emerald-400" />
+                  {src}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right: Instant Fetch Action */}
+          <div className="flex items-center gap-2 self-stretch md:self-auto justify-end">
+            <button
+              onClick={handleManualFetch}
+              disabled={isFetchingManual}
+              className="px-4 py-2 bg-gradient-to-r from-emerald-600 to-indigo-600 hover:from-emerald-500 hover:to-indigo-500 disabled:opacity-50 text-white font-bold text-xs rounded-xl shadow-md flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${isFetchingManual ? 'animate-spin' : ''}`} />
+              <span>{isFetchingManual ? 'Harvesting External Portals...' : '🔄 Refresh Live Contests & Schemes'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Live Breaking Ticker Notification Ribbon */}
+        {recentIncomingOpp && (
+          <div className="mt-3 pt-3 border-t border-slate-800/60 flex items-center justify-between gap-3 text-xs bg-indigo-500/5 px-3 py-2 rounded-xl border border-indigo-500/20">
+            <div className="flex items-center gap-2 min-w-0">
+              <span className="px-1.5 py-0.5 rounded bg-indigo-500 text-white text-[9px] font-black uppercase tracking-wider shrink-0">
+                ⚡ Just Streamed
+              </span>
+              <span className={`font-bold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                {recentIncomingOpp.title}
+              </span>
+              <span className="text-slate-400 shrink-0 hidden sm:inline">
+                ({recentIncomingOpp.sourcePlatform}) • {recentIncomingOpp.prizeOrStipend || recentIncomingOpp.stipendOrSalary}
+              </span>
+            </div>
+            <a
+              href={recentIncomingOpp.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs font-bold text-indigo-400 hover:text-indigo-300 shrink-0 flex items-center gap-1"
+            >
+              <span>Explore</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
+          </div>
+        )}
+
+        {/* Live Community Activity Ribbon */}
+        {liveActivities.length > 0 && (
+          <div className="mt-2.5 flex items-center gap-2 text-[11px] text-slate-400 overflow-hidden">
+            <Activity className="w-3 h-3 text-emerald-400 shrink-0" />
+            <span className="text-slate-500 font-semibold shrink-0">Live Learner Pulse:</span>
+            <span className="truncate text-slate-300 font-medium">
+              {liveActivities[0].text}
+            </span>
+          </div>
+        )}
+      </div>
+
       {postStatusMsg && (
         <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4" />
@@ -275,6 +452,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {[
             { id: 'all', label: 'All Opportunities', icon: Sparkles },
+            { id: 'live_stream', label: '🔴 Live Streamed Only', icon: Zap },
             { id: 'hackathon', label: '⚡ Hackathons & Challenges', icon: Flame },
             { id: 'internship', label: '💼 Internships (PM Scheme & Tech)', icon: Briefcase },
             { id: 'quiz', label: '🏆 Quizzes & Contests', icon: Trophy },
@@ -382,7 +560,13 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                     <span className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${getPlatformBadge(opp.sourcePlatform)}`}>
                       {opp.sourcePlatform}
                     </span>
-                    {opp.urgencyBadge && (
+                    {(opp as any).isLiveStreamed && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        Live Streamed
+                      </span>
+                    )}
+                    {opp.urgencyBadge && !(opp as any).isLiveStreamed && (
                       <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-400 border border-amber-500/30">
                         {opp.urgencyBadge}
                       </span>
@@ -407,9 +591,16 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                       <span className="truncate">{opp.company}</span>
                     </div>
                     {opp.registeredCount && (
-                      <span className="text-[11px] text-indigo-400 font-semibold shrink-0">
-                        {opp.registeredCount}
-                      </span>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <span className="text-[11px] text-indigo-400 font-semibold">
+                          {opp.registeredCount}
+                        </span>
+                        {recentApplicantTicks[opp.id] && (Date.now() - recentApplicantTicks[opp.id].time < 6000) && (
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse">
+                            +{recentApplicantTicks[opp.id].delta} new!
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                 </div>
@@ -493,7 +684,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                   ) : (
                     <>
                       <Send className="w-3.5 h-3.5" />
-                      <span>{isApplying ? 'Submitting Evidence...' : 'Apply with SkillBridge Evidence'}</span>
+                      <span>{isApplying ? 'Submitting Evidence...' : 'Apply with CareerGrowth Evidence'}</span>
                     </>
                   )}
                 </button>
@@ -634,7 +825,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                       isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-slate-50 border-slate-300 text-slate-900'
                     }`}
                   >
-                    <option value="SkillBridge Partner">SkillBridge Partner</option>
+                    <option value="CareerGrowth Partner">CareerGrowth Partner</option>
                     <option value="Unstop">Unstop</option>
                     <option value="Devfolio">Devfolio</option>
                     <option value="Hack2Skill">Hack2Skill</option>
@@ -714,6 +905,27 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
               </div>
             </form>
           </div>
+        </div>
+      )}
+
+      {/* Floating Live Stream Notification Toast */}
+      {streamToast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce-in max-w-md p-4 rounded-2xl bg-slate-900/95 border border-emerald-500/50 shadow-2xl backdrop-blur-md flex items-center justify-between gap-3 text-white">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+              <Zap className="w-4 h-4 text-emerald-400 animate-pulse" />
+            </div>
+            <div>
+              <p className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Live Pipeline Broadcast</p>
+              <p className="text-xs font-semibold text-slate-200 line-clamp-2">{streamToast}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => setStreamToast(null)}
+            className="text-slate-400 hover:text-white p-1"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       )}
 

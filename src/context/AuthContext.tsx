@@ -42,27 +42,27 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedName = localStorage.getItem('skillbridge_user_name');
-    const stored = localStorage.getItem('skillbridge_token');
+    const savedName = localStorage.getItem('careergrowth_user_name') || localStorage.getItem('skillbridge_user_name');
+    const stored = localStorage.getItem('careergrowth_token') || localStorage.getItem('skillbridge_token');
     if (stored) {
       setToken(stored);
       fetchCurrentUser(stored).then((res) => {
         if (res?.user) {
           setUser(res.user);
           if (res.user.name) {
-            localStorage.setItem('skillbridge_user_name', res.user.name);
+            localStorage.setItem('careergrowth_user_name', res.user.name);
           }
         } else if (savedName) {
-          setUser({ id: 'usr-local', name: savedName, email: 'student@skillbridge.edu' });
+          setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
         }
       }).catch(() => {
         if (savedName) {
-          setUser({ id: 'usr-local', name: savedName, email: 'student@skillbridge.edu' });
+          setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
         }
       }).finally(() => setLoading(false));
     } else {
       if (savedName) {
-        setUser({ id: 'usr-local', name: savedName, email: 'student@skillbridge.edu' });
+        setUser({ id: 'usr-local', name: savedName, email: 'student@careergrowth.edu' });
       }
       setLoading(false);
     }
@@ -71,19 +71,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const updateUserName = (name: string) => {
     const trimmed = name.trim();
     if (!trimmed) return;
-    localStorage.setItem('skillbridge_user_name', trimmed);
+    localStorage.setItem('careergrowth_user_name', trimmed);
     setUser(prev => {
       if (prev) return { ...prev, name: trimmed };
-      return { id: 'usr-local', name: trimmed, email: 'student@skillbridge.edu' };
+      return { id: 'usr-local', name: trimmed, email: 'student@careergrowth.edu' };
     });
   };
 
   const login = async (email: string, password: string) => {
     const res = await loginUser(email, password);
     if (res?.token) {
-      localStorage.setItem('skillbridge_token', res.token);
+      localStorage.setItem('careergrowth_token', res.token);
       if (res.user?.name) {
-        localStorage.setItem('skillbridge_user_name', res.user.name);
+        localStorage.setItem('careergrowth_user_name', res.user.name);
       }
       setToken(res.token);
       setUser(res.user);
@@ -93,8 +93,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const register = async (name: string, email: string, password: string) => {
     const res = await registerUser(name, email, password);
     if (res?.token) {
-      localStorage.setItem('skillbridge_token', res.token);
-      localStorage.setItem('skillbridge_user_name', name);
+      localStorage.setItem('careergrowth_token', res.token);
+      localStorage.setItem('careergrowth_user_name', name);
       setToken(res.token);
       setUser(res.user);
     }
@@ -107,9 +107,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const verifyOtp = async (payload: { name?: string; email: string; password?: string; otp: string }) => {
     const res = await verifyOtpApi(payload);
     if (res?.token) {
-      localStorage.setItem('skillbridge_token', res.token);
+      localStorage.setItem('careergrowth_token', res.token);
       if (payload.name) {
-        localStorage.setItem('skillbridge_user_name', payload.name);
+        localStorage.setItem('careergrowth_user_name', payload.name);
       }
       setToken(res.token);
       setUser(res.user);
@@ -119,9 +119,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const googleLogin = async (account: { email: string; name: string; avatarUrl?: string }) => {
     const res = await googleLoginApi(account);
     if (res?.token) {
-      localStorage.setItem('skillbridge_token', res.token);
+      localStorage.setItem('careergrowth_token', res.token);
       if (account.name) {
-        localStorage.setItem('skillbridge_user_name', account.name);
+        localStorage.setItem('careergrowth_user_name', account.name);
       }
       setToken(res.token);
       setUser(res.user);
@@ -129,6 +129,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem('careergrowth_token');
+    localStorage.removeItem('careergrowth_user_name');
     localStorage.removeItem('skillbridge_token');
     localStorage.removeItem('skillbridge_user_name');
     setToken(null);

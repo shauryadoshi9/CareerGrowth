@@ -13,182 +13,193 @@
 
 ---
 
-## 📌 Project Overview
+## 📌 One-Paragraph Summary
 
-**CareerGrowth** is a unified digital platform built for **Hack for Social Cause (Team Tatva, ID: HSC|GJ|00051)** that addresses youth unemployability and skill gaps in Indian higher education. 
-
-Rather than isolated point solutions, CareerGrowth provides an end-to-end continuum:
-1. **Explainable Skill-Gap Diagnostics**: Mathematical gap calculation against industry taxonomies.
-2. **Adaptive Learning & AI Study Buddy**: Low-latency multilingual learning with audio speech support.
-3. **Vocational & Practical Portfolio Hub**: Evidence-backed project records aligned with NCrF guidelines.
-4. **Opportunity Matcher & Runtime Live Ingestion**: GPA and skill-weighted matching with Devfolio, Unstop, and PM Internship Scheme listings.
-5. **1:1 Industry Mentorship Booking**: Verified scheduling with calendar and Google Meet preview links.
-6. **Teacher Copilot & Remedial Intervention Spotlight**: Faculty lesson generator in 10 Indian languages with proactive learning hurdle tracking.
-7. **Institutional Analytics Console**: Departmental placement readiness and empirical pilot testing benchmarks.
-
-> **Origin Note**: Conceptualized to address systemic skill-mapping barriers across universities, polytechnics, and rural colleges.
+**CareerGrowth** is a full-stack educational and career-acceleration platform built for Hack for Social Cause 2026 by Team Tatva (HSC|GJ|00051) to bridge the youth employability gap in Indian higher education. Developed with a React 19 + TypeScript + Vite frontend and a pure Node.js HTTP backend with JSON persistence, CareerGrowth guides learners through explainable skill-gap diagnostics (Required minus Current formula), adaptive multimodal learning in 10 Indian languages, evidence-backed practical project portfolios, curated opportunity matching with live runtime SSE ingestion, simulated 1:1 mentorship scheduling, and dedicated role-based dashboards with early remedial intervention tracking for faculty and administrators.
 
 ---
 
-## 📸 Screenshots & Demo Video
+## 🌐 Live URL & Media Demonstration
 
-| Student Dashboard & Skill Gap | Opportunity Matcher & Live Stream |
+* **Live Web App URL:** `https://careergrowth-demo.onrender.com` *(Deployment link placeholder)*
+* **Demo Video Link:** [Watch 3-Minute Platform Demo](https://youtube.com) *(Demo video link placeholder)*
+* **Public GitHub Repository:** [https://github.com/shauryadoshi9/CareerGrowth](https://github.com/shauryadoshi9/CareerGrowth)
+
+### Platform Screenshots
+
+| Student Dashboard & Skill-Gap Radar | Opportunity Matcher & Ingestion Stream |
 |:---:|:---:|
 | *(Screenshot Slot: Student Analytics & Gap Radar)* | *(Screenshot Slot: Hackathons & PM Scheme Matcher)* |
 
-| Multilingual AI Tutor (10 Indian Languages) | Faculty Copilot & Remedial Interventions |
+| Multilingual AI Study Buddy (10 Indian Languages) | Faculty Copilot & Remedial Interventions |
 |:---:|:---:|
 | *(Screenshot Slot: AI Study Buddy & Quiz)* | *(Screenshot Slot: Teacher Copilot Lesson Generator)* |
 
-> 📹 **Live Demonstration Video:** [Watch Demo Video](https://youtube.com) *(Insert your recorded hackathon video link here)*
+---
+
+## 🧭 Implemented Features & Verification Audit
+
+The following table reflects the exact status and verification path of every core platform feature:
+
+| Feature | Implementation Status | Component / File Path |
+|---|:---:|---|
+| **Skill-Gap Analyzer** | Works (Deterministic `Required - Current` formula) | `src/components/SkillGapAnalyzer.tsx`, `src/services/aiEngine.ts` |
+| **Adaptive Learning Engine** | Works (Interactive quiz, audio TTS, sample data badge) | `src/components/AdaptiveLearningEngine.tsx` |
+| **Career Navigator** | Works (Structured 3-month milestone sequence) | `src/components/CareerNavigator.tsx` |
+| **Vocational Hub** | Works (NCrF aligned projects, evidence submission) | `src/components/VocationalHub.tsx` |
+| **10-Language Translation** | Works (Live switching: en, hi, gu, mr, ta, te, kn, bn, pa, ml) | `src/services/i18n.ts` |
+| **Rural Offline Packs** | Demo-Simulated (Simulated download & sync telemetry) | `src/components/OfflinePackManager.tsx` |
+| **Teacher Copilot** | Works (Curriculum generator across 10 languages with publish flow) | `src/components/TeacherCopilot.tsx` |
+| **Risk Intervention Engine** | Demo-Simulated (Sample cohort data with remedial task assignment) | `src/components/RiskInterventionEngine.tsx` |
+| **Opportunity Matcher & Refresh** | Demo-Simulated (Curated sample listings; manual on-demand ingest) | `src/components/OpportunityMatcher.tsx`, `server/index.js` |
+| **1:1 Mentor Booking** | Works (Slot selection, server DB save, Google Meet link preview) | `src/components/MentorHub.tsx`, `server/index.js` |
+| **Mock Interview Engine** | Demo-Simulated (Track selector, instant keyword rubric evaluation) | `src/components/MockInterviewEngine.tsx` |
+| **Vocational Project Portfolio** | Works (Multi-step tracking, verified project evidence saved to DB) | `src/components/VocationalHub.tsx`, `server/index.js` |
+| **Progress Sharing with Consent** | Works (Explicit consent toggle, unique share code, server scoped) | `src/components/StudentDashboard.tsx`, `server/index.js` |
+| **AI Study Buddy & Tutor** | Works (Gemini 2.0 Flash API with expert pedagogical fallback) | `src/components/AIStudyBuddy.tsx`, `server/index.js` |
+| **Per-User Data Isolation** | Works (All profile, skill, application, and booking data strictly user-scoped) | `server/index.js` |
+| **Role-Based Dashboards** | Works (Dedicated views for Student, Teacher, and Administrator) | `StudentDashboard.tsx`, `TeacherDashboard.tsx`, `AdminDashboard.tsx` |
 
 ---
 
-## 🔐 Seeded Demo Accounts (Role-Based Access)
+## 🔐 Demo Accounts & Role Permissions
 
-To test role-based access control (RBAC), the login page features 1-click quick-fill buttons for all three seeded roles:
+The login modal contains 1-click test credentials for the seeded hackathon roles:
 
-| Role | Email | Password | Name | Default Landing View |
+| Role | Email | Password | Seeded Identity | What This Role Sees |
 |---|---|---|---|---|
-| **Student** | `student.demo@careergrowth.org` | `Demo@2026!` | Aarav Patel | Student Dashboard (`/dashboard`) |
-| **Faculty / Teacher** | `teacher.demo@careergrowth.org` | `Demo@2026!` | Dr. Sharma | Teacher Dashboard (`/teacher-dashboard`) |
-| **Administrator** | `admin.demo@careergrowth.org` | `Demo@2026!` | Dean Verma | Institutional Analytics (`/admin-dashboard`) |
+| **Student** | `student.demo@careergrowth.org` | `Demo@2026!` | Aarav Patel | Personal Dashboard, Skill-Gap Analyzer, Roadmap, Quizzes, Opportunity Matcher, Portfolio, Mentor Booking |
+| **Teacher** | `teacher.demo@careergrowth.org` | `Demo@2026!` | Dr. Sharma | Faculty Dashboard, Active Learner Metrics, Remedial Recovery Rate, AI Teacher Copilot, Intervention Logs |
+| **Administrator** | `admin.demo@careergrowth.org` | `Demo@2026!` | Dean Verma | Institutional Analytics, Placement Readiness Index, University Enrollment Statistics, Risk Auditing |
+
+> 🔒 **Security Notice:** New self-registered accounts (via registration, OTP verification, or demo Google login) are strictly provisioned as `student`. Teacher and Admin privileges exist only via the immutable seed file (`server/database.seed.json`).
 
 ---
 
-## 🛠️ Tech Stack Architecture
+## 📡 API Routes & Authorization Matrix
 
-* **Frontend**: React 19, TypeScript, Vite, Tailwind CSS v4, Lucide Icons, Recharts, Canvas Confetti.
-* **Backend**: Node.js raw `http` engine, JSON Web Tokens (`jsonwebtoken`), `bcrypt` password hashing.
-* **Storage**: Local atomic file storage (`server/database.json`), seeded automatically from `server/database.seed.json`.
-* **Real-Time Layer**: Server-Sent Events (SSE) streaming live opportunity tickers and applicant counters.
-* **AI Engine**: Google Gemini 2.0 Flash API with zero-downtime built-in expert pedagogical engine fallback.
+Protected endpoints require `Authorization: Bearer <JWT_TOKEN>`. Rate limiting enforces a strict cap of 10 requests/minute on authentication routes.
+
+| Endpoint | Method | Auth Required | Allowed Roles | Description |
+|---|:---:|:---:|:---:|---|
+| `/api/health` | GET | No | Public | Health status, uptime, and Team Tatva metadata |
+| `/api/auth/register` | POST | No | Public | Register new user (always assigned role `'student'`) |
+| `/api/auth/login` | POST | No | Public | Authenticate with email and password |
+| `/api/auth/send-otp` | POST | No | Public | Generate 6-digit OTP (preview in `DEMO_MODE=true` only) |
+| `/api/auth/verify-otp` | POST | No | Public | Verify OTP and register (always role `'student'`) |
+| `/api/auth/google-login` | POST | No | Public (`DEMO_MODE=true`) | Demo Google sign-in (student only; admin/teacher returns `403`) |
+| `/api/auth/me` | GET | Yes | Any | Returns authenticated user session payload |
+| `/api/profile` | GET, POST, PUT | Yes | Any | Read or modify user-scoped profile details |
+| `/api/skills` | GET, POST | Yes | Any | User-isolated skills inventory |
+| `/api/skills/:id` | PUT, DELETE | Yes | Any | Update or remove user-scoped skill |
+| `/api/applications` | GET, POST | Yes | Any | User-isolated internship/hackathon applications |
+| `/api/quiz` | POST | Yes | Any | Record diagnostic quiz submissions |
+| `/api/portfolio/projects` | GET, POST | Yes | Any | User-scoped verified project artifacts |
+| `/api/progress/share` | GET, POST | Yes | Any | Manage progress sharing consent and share code |
+| `/api/opportunities` | GET | No | Public | View curated opportunities catalog |
+| `/api/opportunities` | POST | Yes | Any | Post community-hosted opportunity listing |
+| `/api/opportunities/refresh` | POST | Yes | Any | Trigger on-demand manual catalog ingestion |
+| `/api/live/stream` | GET | No | Public | Server-Sent Events (SSE) real-time stream |
+| `/api/mentors` | GET | No | Public | List available industry mentors |
+| `/api/mentorship/bookings` | GET, POST | Yes | Student (own) / Faculty & Admin (all) | Book and view 1:1 mentorship sessions |
+| `/api/ai-tutor` | POST | Yes | Any | Query AI Tutor (Gemini API with expert fallback) |
+| `/api/interventions` | GET, POST | Yes | **Teacher, Admin Only** | Manage remedial interventions (Student gets `403`) |
+| `/api/teacher/analytics` | GET | Yes | **Teacher, Admin Only** | Faculty cohort progress analytics (Student gets `403`) |
+| `/api/institution/analytics`| GET | Yes | **Admin Only** | Departmental placement metrics (Student/Teacher gets `403`) |
 
 ---
 
-## ⚙️ Local Development Setup
+## ⚙️ Local Setup Instructions
 
-### Prerequisites
-* Node.js v20.x or v24.x LTS
+### 1. Prerequisites
+* Node.js v20.x or v22.x LTS
 * npm v10+
 
-### 1. Clone the Repository
+### 2. Clone and Install
 ```bash
 git clone https://github.com/shauryadoshi9/CareerGrowth.git
 cd CareerGrowth
-```
-
-### 2. Install Dependencies
-```bash
 npm install
 ```
 
-### 3. Configure Environment Variables
-Create a `.env` file in the project root (see `.env.example`):
+### 3. Environment Configuration
+Create a `.env` file in the project root based on `.env.example`:
 ```env
 PORT=5000
 JWT_SECRET=your_secure_random_jwt_secret_at_least_32_characters_long
 GEMINI_API_KEY=your_optional_google_gemini_api_key
 ALLOWED_ORIGIN=http://localhost:3000,http://localhost:3001
 DEMO_MODE=true
+TRUST_PROXY=false
+NODE_ENV=development
 ```
 
-> ⚠️ **Security Rule**: `JWT_SECRET` must be at least 32 characters long. The server will refuse to start if it is missing or insecure.
+> ⚠️ **Important:** `JWT_SECRET` must be at least 32 characters long. The server will reject startup if the secret is missing or insecure.
 
-### 4. Run in Development Mode
-In two terminal tabs (or run dev script):
-
-**Terminal 1 (Backend Server):**
+### 4. Run Automated Security Check Suite
 ```bash
+npm run security-check
+```
+*Validates self-register role isolation, Google demo sign-in guards, 403 authorization barriers, 401 unauthenticated access blocks, and 429 rate limiting.*
+
+### 5. Start Development Environment
+```bash
+# Terminal 1: Backend Server (Port 5000)
 npm run start
-```
-*Backend active on `http://localhost:5000`*
 
-**Terminal 2 (Frontend Dev Server):**
-```bash
+# Terminal 2: Vite Frontend Dev Server (Port 3000)
 npm run dev
 ```
-*Frontend dev server opens on `http://localhost:3000` (proxies `/api` to port 5000)*
 
-### 5. Production Build & Single-Port Serving
+### 6. Single-Service Production Build
 ```bash
 npm run build
 npm run start
 ```
-The Node.js server automatically serves the compiled `/dist` single-page application and all `/api` endpoints simultaneously on `PORT` (default 5000).
+The compiled single-page application from `/dist` and all `/api` endpoints are served on the single `PORT` (default `5000`).
 
 ---
 
-## 🚀 Free Deployment Guide (Render Web Service)
+## 🚀 Free Deployment Guide (Render)
 
-You can host both the frontend and backend together as a single Render Web Service for free:
+Deploy CareerGrowth for free as a single unified Web Service:
 
-1. Push your repository to GitHub.
-2. Sign in to [Render](https://dashboard.render.com/) and click **New + > Web Service**.
-3. Connect your GitHub repository `CareerGrowth`.
-4. Configure the service settings:
-   - **Environment:** `Node`
-   - **Build Command:** `npm run build`
-   - **Start Command:** `npm run start`
-   - **Instance Type:** `Free`
-5. In the **Environment Variables** tab, configure:
-   - `JWT_SECRET`: *(A random string of 32+ characters)*
-   - `ALLOWED_ORIGIN`: `*` (or your assigned `https://careergrowth.onrender.com` domain)
-   - `DEMO_MODE`: `true`
-   - `GEMINI_API_KEY`: *(Optional: your Google Gemini API key)*
+1. Push your repository to your GitHub account.
+2. Sign in to [Render Dashboard](https://dashboard.render.com/) and click **New + > Web Service**.
+3. Select and connect your repository: `CareerGrowth`.
+4. Fill in the build settings:
+   * **Name:** `careergrowth-demo`
+   * **Environment:** `Node`
+   * **Region:** Any (e.g., Singapore or Frankfurt)
+   * **Branch:** `main`
+   * **Build Command:** `npm install && npm run build`
+   * **Start Command:** `npm run start`
+   * **Instance Type:** `Free`
+5. Under **Environment Variables**, add:
+   * `JWT_SECRET` = `render_demo_jwt_secret_must_be_over_32_characters_long!`
+   * `DEMO_MODE` = `true`
+   * `ALLOWED_ORIGIN` = `https://careergrowth-demo.onrender.com` *(or `*`)*
+   * `TRUST_PROXY` = `true`
+   * `NODE_ENV` = `production`
+   * `GEMINI_API_KEY` = *(Optional: your Gemini API key)*
 6. Click **Deploy Web Service**.
+7. Once deployed, open `https://<your-render-service>.onrender.com/api/health` in your browser to verify server status.
 
-> ℹ️ **Storage Note on Free Tiers**: Render free tier instances use ephemeral disks. The database resets to `server/database.seed.json` on cold restarts, which preserves demo integrity for hackathon judges.
-
----
-
-## 📡 API Endpoints & Role Permissions
-
-All endpoints return standard JSON payloads. Protected endpoints require `Authorization: Bearer <token>`.
-
-| Endpoint | Method | Auth Required | Allowed Roles | Description |
-|---|:---:|:---:|:---:|---|
-| `/api/health` | GET | No | Public | Server operational status & hackathon team ID |
-| `/api/auth/register` | POST | No | Public | Register student/teacher account (password min 8 chars) |
-| `/api/auth/login` | POST | No | Public | Authenticate with credentials and receive JWT |
-| `/api/auth/send-otp` | POST | No | Public | Generate 6-digit OTP code (demo preview in dev mode) |
-| `/api/auth/verify-otp` | POST | No | Public | Verify OTP and create verified account |
-| `/api/auth/google-login`| POST | No | Public | Demo Sign-In with simulated Google account identity |
-| `/api/auth/me` | GET | Yes | Any | Returns authenticated session profile and role |
-| `/api/profile` | GET, POST, PUT | Yes | Any | Retrieve and update user-scoped learner profile |
-| `/api/skills` | GET, POST | Yes | Any | Retrieve and add verified skills to user profile |
-| `/api/skills/:id` | PUT, DELETE | Yes | Any | Update or remove specific skill in user profile |
-| `/api/applications` | GET, POST | Yes | Any | View and submit job / internship applications |
-| `/api/quiz-submissions` | GET, POST | Yes | Any | Submit and review diagnostic quiz answers |
-| `/api/portfolio/projects`| GET, POST | Yes | Any | Record multi-step vocational portfolio projects |
-| `/api/progress-share` | GET, POST | Yes | Any | Update parent/faculty progress sharing consent |
-| `/api/mentors` | GET | No | Public | List available industry mentors |
-| `/api/mentors/book` | POST | Yes | Any | Schedule 1:1 mentorship slot with Google Meet link |
-| `/api/mentors/bookings` | GET | Yes | Student (own) / Faculty & Admin (all) | Retrieve booked mentorship sessions |
-| `/api/opportunities` | GET | No | Public | Query curated opportunity catalog |
-| `/api/opportunities` | POST | Yes | Any | Submit community opportunity |
-| `/api/opportunities/refresh`| POST | Yes | Any | Trigger on-demand manual ingestion from catalog |
-| `/api/live/stream` | GET | No | Public | Server-Sent Events stream for live opportunities |
-| `/api/ai-tutor` | POST | Yes | Any | Rate-limited tutor query (Gemini API with expert fallback) |
-| `/api/custom-input` | POST | Yes | Any | Generic data submission endpoint |
-| `/api/interventions` | GET | Yes | Student (assigned) / Faculty & Admin (all) | View student remedial support records |
-| `/api/interventions` | POST | Yes | **Teacher, Admin Only** | Log student remedial intervention (Student gets `403`) |
-| `/api/teacher/analytics` | GET | Yes | **Teacher, Admin Only** | Faculty cohort progress & recovery metrics (Student gets `403`) |
-| `/api/institution/analytics`| GET | Yes | **Admin Only** | University-wide placement metrics (Student/Teacher gets `403`) |
+> ℹ️ **Hosting Note on Free Tiers:** Free hosting instances spin down after periods of inactivity. On restart, the local JSON data automatically re-seeds from `server/database.seed.json`, ensuring the demo evaluation accounts always remain in a clean, predictable state for hackathon judges.
 
 ---
 
 ## 🔮 Scale-Up Roadmap
 
-Planned enhancements for production enterprise scale:
-- [ ] **Database Migration**: Migrate atomic JSON storage to PostgreSQL with pgvector for semantic search.
-- [ ] **Distributed Caching & Ingestion**: Redis Streams and Celery workers for automated scraping of national portals.
-- [ ] **Curriculum RAG**: Embed NPTEL, AICTE, and state university syllabi to generate hyper-specific diagnostic assessments.
-- [ ] **Cloud Storage**: AWS S3 / Cloudflare R2 bucket integration for student project video artifacts and PDF resumes.
-- [ ] **Live Video SDK**: WebRTC / Dyte integration for built-in 1:1 video mentorship calls.
+While this hackathon implementation uses a lightweight, self-contained architecture for zero-setup evaluation, the production roadmap envisions:
+* **PostgreSQL + pgvector:** Transition from atomic JSON storage to a distributed relational schema with vector embeddings for high-dimensional skill taxonomy matching.
+* **Redis Queue & Caching:** Offload external catalog indexing to background worker queues with distributed rate limiting.
+* **Curriculum RAG Engine:** Index national NPTEL and state university syllabi into dense vector indices for automated lesson-plan alignment.
+* **Cloud Object Storage:** Integrate AWS S3 or Cloudflare R2 for student capstone video demonstrations, GitHub repository mirrors, and PDF certificates.
+* **WebRTC Live Telephony:** Direct peer-to-peer audio/video rooms for mentor calls within the platform.
 
 ---
 
 ## 📄 License
 This project is open-source under the [MIT License](LICENSE).  
-Developed by **Team Tatva (HSC|GJ|00051)** for the **Innovate for Bharat — Hack for Social Cause 2026 Hackathon**.
+Developed by **Team Tatva (HSC|GJ|00051)** for **Hack for Social Cause 2026**.

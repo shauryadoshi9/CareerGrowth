@@ -50,9 +50,14 @@ export const TeacherCopilot: React.FC<TeacherCopilotProps> = ({ language, theme 
         isDark ? 'bg-slate-900/40 border-purple-500/30' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div>
-          <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/30 text-xs font-semibold">
-            Faculty Empowerment Engine ({selectedLang.toUpperCase()})
-          </span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/30 text-xs font-semibold">
+              Faculty Empowerment Engine ({selectedLang.toUpperCase()})
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              📊 Sample template engine
+            </span>
+          </div>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>AI Teacher Copilot</h2>
           <p className={`text-sm ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
             Generate lesson plans, diagnostic quizzes, answer keys, and remedial guides in any of the 10 Indian languages.

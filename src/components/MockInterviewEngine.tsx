@@ -139,6 +139,9 @@ export const MockInterviewEngine: React.FC<MockInterviewEngineProps> = ({
             <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
               Instant Rubric Feedback
             </span>
+            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30">
+              📊 Sample practice tracks
+            </span>
           </div>
 
           <h2 className={`text-2xl md:text-3xl font-extrabold tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>

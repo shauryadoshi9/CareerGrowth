@@ -8,7 +8,7 @@ import bcrypt from 'bcrypt';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DB_PATH = path.join(__dirname, 'database.json');
+const DB_PATH = process.env.DB_PATH || path.join(__dirname, 'database.json');
 const SEED_PATH = path.join(__dirname, 'database.seed.json');
 const DIST_PATH = path.join(__dirname, '..', 'dist');
 
@@ -649,8 +649,10 @@ const server = http.createServer(async (req, res) => {
       return;
     }
 
-    // IP Extraction for Rate Limiting
-    const clientIP = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.socket.remoteAddress || '127.0.0.1';
+    // IP Extraction for Rate Limiting (only trust X-Forwarded-For if TRUST_PROXY=true)
+    const clientIP = (process.env.TRUST_PROXY === 'true' && req.headers['x-forwarded-for'])
+      ? req.headers['x-forwarded-for'].split(',')[0].trim()
+      : (req.socket.remoteAddress || '127.0.0.1');
 
     // Rate Limiter for Authentication Routes (10 requests / minute / IP)
     if (pathname.startsWith('/api/auth/')) {
@@ -782,7 +784,7 @@ const server = http.createServer(async (req, res) => {
     // POST /api/auth/verify-otp
     if (pathname === '/api/auth/verify-otp' && method === 'POST') {
       const body = await parseJSONBody(req);
-      const { name, email, password, otp, role } = body;
+      const { name, email, password, otp } = body; // Intentionally ignore any role sent by client
 
       if (!isValidEmail(email)) {
         sendError(res, 400, 'Bad Request', 'A valid email address is required.');
@@ -822,7 +824,6 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      const targetRole = ['student', 'teacher', 'admin'].includes(role) ? role : 'student';
       const hashedPassword = password ? await bcrypt.hash(password, 10) : '';
 
       if (!user) {
@@ -831,7 +832,7 @@ const server = http.createServer(async (req, res) => {
           name: (name || cleanEmail.split('@')[0]).trim().slice(0, 100),
           email: cleanEmail,
           password: hashedPassword,
-          role: targetRole,
+          role: 'student', // Client input is ignored; new accounts are strictly role 'student'
           isVerified: true,
           authProvider: 'email',
           createdAt: new Date().toISOString()
@@ -841,7 +842,7 @@ const server = http.createServer(async (req, res) => {
         user.isVerified = true;
         if (hashedPassword) user.password = hashedPassword;
         if (name) user.name = name.trim().slice(0, 100);
-        if (role) user.role = targetRole;
+        // Do NOT allow client to elevate or modify role
       }
 
       ensureUserData(db, user);
@@ -857,6 +858,7 @@ const server = http.createServer(async (req, res) => {
       res.end(JSON.stringify({
         success: true,
         token,
+        demoNotice: IS_DEMO_OR_DEV ? 'Demo Mode verification: Evaluator notice' : undefined,
         user: { id: user.id, name: user.name, email: user.email, role: user.role, isVerified: true, authProvider: 'email' }
       }));
       return;
@@ -865,7 +867,7 @@ const server = http.createServer(async (req, res) => {
     // POST /api/auth/register
     if (pathname === '/api/auth/register' && method === 'POST') {
       const body = await parseJSONBody(req);
-      const { name, email, password, role } = body;
+      const { name, email, password } = body; // Intentionally ignore any role sent by client
 
       if (!name || typeof name !== 'string' || name.trim().length < 2) {
         sendError(res, 400, 'Bad Request', 'Name must be at least 2 characters long.');
@@ -880,7 +882,6 @@ const server = http.createServer(async (req, res) => {
         return;
       }
 
-      const targetRole = ['student', 'teacher', 'admin'].includes(role) ? role : 'student';
       const cleanEmail = email.toLowerCase().trim();
       const db = readDB();
 
@@ -896,7 +897,7 @@ const server = http.createServer(async (req, res) => {
         name: name.trim().slice(0, 100),
         email: cleanEmail,
         password: hashedPassword,
-        role: targetRole,
+        role: 'student', // Client input is ignored; new accounts are strictly role 'student'
         isVerified: true,
         authProvider: 'email',
         createdAt: new Date().toISOString()
@@ -976,8 +977,13 @@ const server = http.createServer(async (req, res) => {
 
     // POST /api/auth/google-login (Demo Sign-In)
     if (pathname === '/api/auth/google-login' && method === 'POST') {
+      if (process.env.DEMO_MODE !== 'true') {
+        sendError(res, 403, 'Forbidden', 'Google demo sign-in is disabled when DEMO_MODE is not true.');
+        return;
+      }
+
       const body = await parseJSONBody(req);
-      const { email, name, avatarUrl, role } = body;
+      const { email, name, avatarUrl } = body;
 
       if (!isValidEmail(email)) {
         sendError(res, 400, 'Bad Request', 'Valid email is required for demo sign-in.');
@@ -987,7 +993,12 @@ const server = http.createServer(async (req, res) => {
       const cleanEmail = email.toLowerCase().trim();
       const db = readDB();
       let user = db.users.find(u => u.email.toLowerCase() === cleanEmail);
-      const targetRole = ['student', 'teacher', 'admin'].includes(role) ? role : (user?.role || 'student');
+
+      // If email belongs to teacher/admin or has a password, reject with 403
+      if (user && (user.role === 'teacher' || user.role === 'admin' || user.password)) {
+        sendError(res, 403, 'Forbidden', 'Use password login for this account.');
+        return;
+      }
 
       if (!user) {
         user = {
@@ -995,7 +1006,7 @@ const server = http.createServer(async (req, res) => {
           name: (name || cleanEmail.split('@')[0]).trim().slice(0, 100),
           email: cleanEmail,
           password: '',
-          role: targetRole,
+          role: 'student',
           avatarUrl: avatarUrl || '',
           isVerified: true,
           authProvider: 'google',
@@ -1004,6 +1015,7 @@ const server = http.createServer(async (req, res) => {
         db.users.push(user);
       } else {
         user.authProvider = 'google';
+        user.role = 'student';
         user.isVerified = true;
         if (name) user.name = name.trim().slice(0, 100);
         if (avatarUrl) user.avatarUrl = avatarUrl;
@@ -1473,20 +1485,16 @@ const server = http.createServer(async (req, res) => {
 
     // GET & POST /api/interventions (Requires teacher or admin)
     if (pathname === '/api/interventions') {
-      if (method === 'GET') {
-        // Teacher/admin sees all interventions; student sees only interventions assigned to them
-        const allInterventions = db.interventions || [];
-        const visible = (currentUser.role === 'teacher' || currentUser.role === 'admin')
-          ? allInterventions
-          : allInterventions.filter(i => i.studentId === currentUser.id);
+      if (!requireRole(currentUser, ['teacher', 'admin'], res)) return;
 
+      if (method === 'GET') {
+        const allInterventions = db.interventions || [];
         res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(visible));
+        res.end(JSON.stringify(allInterventions));
         return;
       }
 
       if (method === 'POST') {
-        if (!requireRole(currentUser, ['teacher', 'admin'], res)) return;
 
         const body = await parseJSONBody(req);
         const intervention = {

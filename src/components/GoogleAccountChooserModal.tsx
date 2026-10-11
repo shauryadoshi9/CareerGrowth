@@ -17,14 +17,14 @@ interface GoogleAccountChooserModalProps {
 const DEFAULT_ACCOUNTS: GoogleAccount[] = [
   {
     id: 'g-demo-1',
-    name: 'Aarav Patel (Demo Learner)',
+    name: 'Aarav Patel (Demo Student)',
     email: 'student.google@careergrowth.org',
     avatarColor: 'bg-indigo-600',
   },
   {
     id: 'g-demo-2',
-    name: 'Dr. Sharma (Demo Faculty)',
-    email: 'faculty.google@careergrowth.org',
+    name: 'Priya Sharma (Demo Student)',
+    email: 'priya.google@careergrowth.org',
     avatarColor: 'bg-purple-600',
   }
 ];

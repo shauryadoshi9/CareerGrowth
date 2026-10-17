@@ -193,14 +193,14 @@ export const HomePage: React.FC<HomePageProps> = ({
           
           {/* Metadata & Status Badges */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
               <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
-              {t('home_badge_unstop', language)}
+              Team Tatva (HSC|GJ|00051) • Gujarat
             </span>
 
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Live Pipelines: Devfolio • Unstop • PM Scheme
+              SWAYAM • NPTEL • DIKSHA • NCERT
             </span>
 
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-slate-800/80 text-slate-300 border border-slate-700/60">

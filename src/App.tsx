@@ -240,13 +240,13 @@ export function App() {
       }`}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs gap-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>CareerGrowth</span>
+            <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>Tatva (CareerGrowth)</span>
             <span>•</span>
-            <span>Integrated Career & Employability Engine</span>
+            <span>Team Tatva (HSC|GJ|00051) • Dharmsinh Desai University, Gujarat</span>
             <span>•</span>
-            <span className="text-emerald-500 font-semibold">Cloud Sync Active</span>
+            <span className="text-emerald-500 font-semibold">From Learning to Livelihood</span>
           </div>
-          <p>© 2026 CareerGrowth Platform. From Learning to Livelihood.</p>
+          <p>© 2026 Team Tatva • Hack for Social Cause 2026</p>
         </div>
       </footer>
 

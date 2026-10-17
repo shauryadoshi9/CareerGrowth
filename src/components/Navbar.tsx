@@ -90,10 +90,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div>
               <div className="flex items-center gap-1.5">
                 <span className={`font-black text-base tracking-tight font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                  Career<span className="text-emerald-500">Growth</span>
+                  Tatva <span className="text-emerald-500 font-semibold text-xs tracking-normal">| CareerGrowth</span>
                 </span>
                 <span className="px-1.5 py-0.5 text-[9px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded uppercase tracking-wider">
-                  Official
+                  HSC·GJ·00051
                 </span>
               </div>
               <p className={`text-[10px] font-normal ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>

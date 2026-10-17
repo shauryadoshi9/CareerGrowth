@@ -8,6 +8,8 @@
     "build": "tsc && vite build",
     "start": "node server/index.js",
     "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/security-check.mjs",
     "security-check": "node scripts/security-check.mjs",
     "preview": "vite preview"
   },

@@ -1,9 +1,10 @@
-# CareerGrowth — AI-Powered Skill Mapping & Employability Platform
+# CareerGrowth: AI-Powered Skill Mapping & Employability Platform
 
 > **Hack for Social Cause 2026 (Innovate for Bharat)**  
 > **Team Name:** Tatva | **Team ID:** `HSC|GJ|00051`  
 > **Team Lead:** Shaurya Doshi | **Institute:** Dharmsinh Desai University (DDU), Nadiad, Gujarat  
 
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/shauryadoshi9/CareerGrowth)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![React](https://img.shields.io/badge/React-19.0-61dafb.svg)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6.svg)](https://www.typescriptlang.org/)
@@ -13,14 +14,15 @@
 
 ---
 
-## 📌 One-Paragraph Summary
+## One-Paragraph Summary
 
 **CareerGrowth** is a full-stack educational and career-acceleration platform built for Hack for Social Cause 2026 by Team Tatva (HSC|GJ|00051) to bridge the youth employability gap in Indian higher education. Developed with a React 19 + TypeScript + Vite frontend and a pure Node.js HTTP backend with JSON persistence, CareerGrowth guides learners through explainable skill-gap diagnostics (Required minus Current formula), adaptive multimodal learning in 10 Indian languages, evidence-backed practical project portfolios, curated opportunity matching with live runtime SSE ingestion, simulated 1:1 mentorship scheduling, and dedicated role-based dashboards with early remedial intervention tracking for faculty and administrators.
 
 ---
 
-## 🌐 Live URL & Media Demonstration
+## Live URL & Media Demonstration
 
+* **Deploy in 1 Click:** [Deploy to Render](https://render.com/deploy?repo=https://github.com/shauryadoshi9/CareerGrowth)
 * **Live Web App URL:** `https://careergrowth-demo.onrender.com` *(Deployment link placeholder)*
 * **Demo Video Link:** [Watch 3-Minute Platform Demo](https://youtube.com) *(Demo video link placeholder)*
 * **Public GitHub Repository:** [https://github.com/shauryadoshi9/CareerGrowth](https://github.com/shauryadoshi9/CareerGrowth)

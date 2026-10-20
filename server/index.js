@@ -1562,7 +1562,7 @@ const server = http.createServer(async (req, res) => {
   }
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, '0.0.0.0', () => {
   console.log(`\n============================================================`);
   console.log(`🚀 CareerGrowth Secure Backend Server active on port ${PORT}`);
   console.log(`🔒 Role-Based Access Control: Active (student, teacher, admin)`);

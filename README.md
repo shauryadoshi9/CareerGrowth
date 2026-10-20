@@ -23,7 +23,7 @@
 ## Live URL & Media Demonstration
 
 * **Deploy in 1 Click:** [Deploy to Render](https://render.com/deploy?repo=https://github.com/shauryadoshi9/CareerGrowth)
-* **Live Web App URL:** `https://careergrowth-demo.onrender.com` *(Deployment link placeholder)*
+* **Live Web App URL:** [https://tatva-careergrowth.onrender.com](https://tatva-careergrowth.onrender.com)
 * **Demo Video Link:** [Watch 3-Minute Platform Demo](https://youtube.com) *(Demo video link placeholder)*
 * **Public GitHub Repository:** [https://github.com/shauryadoshi9/CareerGrowth](https://github.com/shauryadoshi9/CareerGrowth)
 

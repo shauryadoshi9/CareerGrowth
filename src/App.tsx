@@ -21,6 +21,11 @@ import { MentorHub } from './components/MentorHub';
 import { InstitutionAnalytics } from './components/InstitutionAnalytics';
 import { TeacherDashboard } from './components/TeacherDashboard';
 import { AdminDashboard } from './components/AdminDashboard';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { TermsAndConditions } from './components/TermsAndConditions';
+import { NotFoundPage } from './components/NotFoundPage';
+import { CookieConsent } from './components/CookieConsent';
+import { analytics } from './services/analytics';
 import { checkServerHealth } from './services/api';
 import { applyUniversalTranslation, triggerGoogleTranslate } from './services/i18n';
 
@@ -82,6 +87,10 @@ export function App() {
     };
   }, [language, activeTab]);
 
+  useEffect(() => {
+    analytics.trackPageView(activeTab);
+  }, [activeTab]);
+
   const handleLanguageChange = (newLang: Language) => {
     setLanguage(newLang);
     if (typeof window !== 'undefined') {
@@ -136,6 +145,27 @@ export function App() {
 
   const isDark = theme === 'dark';
 
+  const isKnownStudentTab = [
+    'dashboard', 'skill-gap', 'career-navigator', 'learning', 'study-buddy',
+    'revision-planner', 'mock-interview', 'opportunities', 'mentors', 'vocational', 'offline-packs'
+  ].includes(activeTab);
+
+  const isKnownTeacherTab = [
+    'dashboard', 'teacher-dashboard', 'teacher-copilot', 'learning-risk'
+  ].includes(activeTab);
+
+  const isKnownAdminTab = [
+    'dashboard', 'admin-dashboard', 'institution-analytics'
+  ].includes(activeTab);
+
+  const isKnownUniversalTab = ['home', 'login', 'register', 'privacy', 'terms'].includes(activeTab);
+
+  const isNotFound = !isKnownUniversalTab && (
+    (currentRole === 'student' && !isKnownStudentTab) ||
+    (currentRole === 'teacher' && !isKnownTeacherTab) ||
+    (currentRole === 'admin' && !isKnownAdminTab)
+  );
+
   return (
     <div className={`${isDark ? 'dark bg-slate-950 text-slate-100' : 'light bg-slate-50 text-slate-900'} min-h-screen flex flex-col font-sans transition-colors duration-300 relative`}>
       
@@ -174,6 +204,28 @@ export function App() {
             theme={theme}
           />
         )}
+        {/* Legal & Static Views */}
+        {activeTab === 'privacy' && (
+          <PrivacyPolicy
+            theme={theme}
+            language={language}
+            onNavigateTab={handleNavigateTab}
+          />
+        )}
+        {activeTab === 'terms' && (
+          <TermsAndConditions
+            theme={theme}
+            language={language}
+            onNavigateTab={handleNavigateTab}
+          />
+        )}
+        {/* Custom 404 View */}
+        {isNotFound && (
+          <NotFoundPage
+            theme={theme}
+            onNavigateTab={handleNavigateTab}
+          />
+        )}
         {/* Home Landing View */}
         {activeTab === 'home' && (
           <HomePage
@@ -185,9 +237,8 @@ export function App() {
           />
         )}
 
-
         {/* Student Views */}
-        {currentRole === 'student' && activeTab !== 'home' && (
+        {currentRole === 'student' && !isKnownUniversalTab && !isNotFound && (
           <>
             {activeTab === 'dashboard' && <StudentDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
             {activeTab === 'skill-gap' && <SkillGapAnalyzer onNavigateTab={handleNavigateTab} language={language} theme={theme} />}
@@ -211,7 +262,7 @@ export function App() {
         )}
 
         {/* Educator / Teacher Views */}
-        {currentRole === 'teacher' && activeTab !== 'home' && (
+        {currentRole === 'teacher' && !isKnownUniversalTab && !isNotFound && (
           <>
             {(activeTab === 'dashboard' || activeTab === 'teacher-dashboard') && (
               <TeacherDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />
@@ -222,7 +273,7 @@ export function App() {
         )}
 
         {/* Institution Admin Views */}
-        {currentRole === 'admin' && activeTab !== 'home' && (
+        {currentRole === 'admin' && !isKnownUniversalTab && !isNotFound && (
           <>
             {(activeTab === 'dashboard' || activeTab === 'admin-dashboard') && (
               <AdminDashboard onNavigateTab={handleNavigateTab} language={language} theme={theme} />
@@ -231,8 +282,6 @@ export function App() {
           </>
         )}
       </main>
-
-
 
       {/* Footer Bar */}
       <footer className={`border-t px-4 py-5 mt-auto transition-colors ${
@@ -246,9 +295,28 @@ export function App() {
             <span>•</span>
             <span className="text-emerald-500 font-semibold">From Learning to Livelihood</span>
           </div>
-          <p>© 2026 Team Tatva • Hack for Social Cause 2026</p>
+
+          <div className="flex flex-wrap items-center gap-4">
+            <button
+              onClick={() => handleNavigateTab('privacy')}
+              className={`hover:underline underline-offset-2 transition ${isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'}`}
+            >
+              Privacy Policy
+            </button>
+            <button
+              onClick={() => handleNavigateTab('terms')}
+              className={`hover:underline underline-offset-2 transition ${isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'}`}
+            >
+              Terms & Conditions
+            </button>
+            <span className="text-slate-600 dark:text-slate-600">|</span>
+            <p>© 2026 Team Tatva • Hack for Social Cause 2026</p>
+          </div>
         </div>
       </footer>
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent theme={theme} onNavigateTab={handleNavigateTab} />
 
     </div>
   );

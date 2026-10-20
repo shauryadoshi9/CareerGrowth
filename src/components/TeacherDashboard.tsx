@@ -41,16 +41,16 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
       {/* Header Welcome Banner */}
       <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-colors ${
         isDark 
-          ? 'bg-gradient-to-r from-slate-900 via-purple-950/40 to-slate-900 border-purple-500/30' 
-          : 'bg-gradient-to-r from-purple-50 via-white to-indigo-50 border-purple-200 shadow-md'
+          ? 'bg-gradient-to-r from-slate-900 via-teal-950/40 to-slate-900 border-teal-500/30' 
+          : 'bg-gradient-to-r from-teal-50 via-white to-slate-50 border-teal-200 shadow-md'
       }`}>
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-600 dark:text-purple-300 border border-purple-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-teal-500/10 text-teal-600 dark:text-teal-300 border border-teal-500/30 text-xs font-semibold">
               ● Faculty & Educator Operating Console ({language.toUpperCase()})
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
-              📊 Sample cohort data
+            <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              Sample cohort data
             </span>
             <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               Dharmsinh Desai University (DDU) • Engineering & Polytechnic
@@ -67,10 +67,10 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
 
         {/* Quick Summary Pill */}
         <div className={`p-4 rounded-2xl border text-right shrink-0 ${
-          isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-purple-100 shadow-sm'
+          isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-teal-100 shadow-sm'
         }`}>
           <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Weekly Prep Time Saved</p>
-          <p className="text-xl font-bold text-purple-600 dark:text-purple-400 font-outfit">~4.5 Hours / Wk</p>
+          <p className="text-xl font-bold text-teal-600 dark:text-teal-400 font-outfit">~4.5 Hours / Wk</p>
           <span className="text-[11px] text-emerald-600 dark:text-emerald-400">Automated by AI Copilot</span>
         </div>
       </div>
@@ -129,12 +129,12 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
         }`}>
           <div className="flex items-center justify-between">
             <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Packs Published</span>
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-500 flex items-center justify-center">
               <BookOpen className="w-4 h-4" />
             </div>
           </div>
           <p className={`text-2xl font-black font-outfit ${isDark ? 'text-white' : 'text-slate-900'}`}>38 Packs</p>
-          <p className="text-[11px] text-purple-600 dark:text-purple-400">Available in 10 languages</p>
+          <p className="text-[11px] text-teal-600 dark:text-teal-400">Available in 10 languages</p>
         </div>
 
       </div>
@@ -143,17 +143,17 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         {/* Feature 1: AI Teacher Copilot */}
-        <div className={`p-6 rounded-3xl border flex flex-col justify-between space-y-4 transition-all hover:border-purple-500/50 ${
+        <div className={`p-6 rounded-3xl border flex flex-col justify-between space-y-4 transition-all hover:border-teal-500/50 ${
           isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
           <div className="space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center">
               <Bot className="w-6 h-6" />
             </div>
 
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20">
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-teal-500/10 text-teal-600 dark:text-teal-400 border border-teal-500/20">
                   Multilingual AI Generator
                 </span>
                 <span className="text-[10px] text-slate-400">10 Indian Languages</span>
@@ -168,15 +168,15 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
 
             <ul className={`text-xs space-y-1.5 pt-2 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-500 shrink-0" />
                 <span>Instant 60-Minute Lesson Plans with Pedagogical Structure</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-500 shrink-0" />
                 <span>Diagnostic Quiz Generation with Answer Rationales</span>
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-purple-500 shrink-0" />
+                <CheckCircle2 className="w-3.5 h-3.5 text-teal-500 shrink-0" />
                 <span>1-Click Publishing directly to Student Workspaces</span>
               </li>
             </ul>
@@ -184,7 +184,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
 
           <button
             onClick={() => onNavigateTab('teacher-copilot')}
-            className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 transition"
+            className="w-full py-3 px-4 bg-teal-600 hover:bg-teal-500 text-white font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-2 transition"
           >
             <span>Launch AI Teacher Copilot</span>
             <ArrowRight className="w-4 h-4" />
@@ -265,7 +265,7 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
             { topic: 'Deep Neural Networks & ReLU', mastery: 64, status: 'Needs Remedial', color: 'text-amber-500', bar: 'bg-amber-500' },
             { topic: 'EV Battery Management (BMS)', mastery: 82, status: 'On Track', color: 'text-emerald-500', bar: 'bg-emerald-500' },
             { topic: 'Solar Inverters & MPPT Grid', mastery: 78, status: 'Good Progress', color: 'text-indigo-500', bar: 'bg-indigo-500' },
-            { topic: 'Binary Trees & DSA Python', mastery: 89, status: 'Mastered', color: 'text-purple-500', bar: 'bg-purple-500' }
+            { topic: 'Binary Trees & DSA Python', mastery: 89, status: 'Mastered', color: 'text-teal-500', bar: 'bg-teal-500' }
           ].map((item, idx) => (
             <div 
               key={idx}

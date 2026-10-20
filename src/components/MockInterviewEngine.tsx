@@ -128,19 +128,19 @@ export const MockInterviewEngine: React.FC<MockInterviewEngineProps> = ({
       
       {/* Banner */}
       <div className={`p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${
-        isDark ? 'bg-gradient-to-br from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500/30' : 'bg-gradient-to-br from-indigo-50 via-white to-purple-50 border-indigo-200 shadow-lg'
+        isDark ? 'bg-gradient-to-br from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500/30' : 'bg-gradient-to-br from-indigo-50 via-white to-slate-50 border-indigo-200 shadow-lg'
       }`}>
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
               <MessageSquareCode className="w-3.5 h-3.5" />
               AI Mock Interview Practice
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span className="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
               Instant Rubric Feedback
             </span>
-            <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30">
-              📊 Sample practice tracks
+            <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30">
+              Sample practice tracks
             </span>
           </div>
 

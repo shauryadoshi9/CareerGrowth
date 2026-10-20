@@ -347,7 +347,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
               max="60"
               value={examDaysRemaining}
               onChange={e => setExamDaysRemaining(Number(e.target.value))}
-              className="w-full accent-purple-500 mt-2"
+              className="w-full accent-indigo-500 mt-2"
             />
           </div>
         </div>
@@ -490,7 +490,7 @@ export const DailyRevisionPlanner: React.FC<DailyRevisionPlannerProps> = ({
             <div className="pt-2 text-center">
               <button
                 onClick={() => onNavigateTab('opportunities')}
-                className="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl text-xs font-bold shadow-md transition"
+                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold shadow-md transition"
               >
                 Launch Connected Opportunities
               </button>

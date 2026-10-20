@@ -47,11 +47,11 @@ export const OfflinePackManager: React.FC<OfflinePackManagerProps> = ({
       }`}>
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
               NEP 2020 Inclusive Rural Access Protocol
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
-              📊 Sample curriculum packs
+            <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              Sample curriculum packs
             </span>
           </div>
           <h2 className={`text-2xl font-bold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>Rural Low-Bandwidth & Offline Packs</h2>

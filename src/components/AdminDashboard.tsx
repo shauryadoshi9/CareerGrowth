@@ -64,7 +64,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     try {
       const res = await triggerManualExternalFetch();
       if (res.success) {
-        setSyncMsg(`⚡ New opportunity harvested: "${res.opportunity?.title}"`);
+        setSyncMsg(`New opportunity harvested: "${res.opportunity?.title}"`);
         setTimeout(() => setSyncMsg(null), 4000);
       }
     } finally {
@@ -79,15 +79,15 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
       <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-colors ${
         isDark 
           ? 'bg-gradient-to-r from-slate-900 via-pink-950/40 to-slate-900 border-pink-500/30' 
-          : 'bg-gradient-to-r from-pink-50 via-white to-purple-50 border-pink-200 shadow-md'
+          : 'bg-gradient-to-r from-pink-50 via-white to-slate-50 border-pink-200 shadow-md'
       }`}>
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-pink-500/10 text-pink-600 dark:text-pink-300 border border-pink-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-pink-500/10 text-pink-600 dark:text-pink-300 border border-pink-500/30 text-xs font-semibold">
               ● Institutional Governance & Macro Intelligence ({language.toUpperCase()})
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
-              📊 Sample cohort data
+            <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              Sample cohort data
             </span>
             <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
               State Technical University & Polytechnic Board • NEP 2020 & NCrF Audit
@@ -135,8 +135,8 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           isDark ? 'bg-slate-900/40 border-slate-800' : 'bg-white border-slate-200 shadow-sm'
         }`}>
           <span className={`text-xs font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>NCrF Credit Fulfillment</span>
-          <p className="text-2xl font-extrabold font-outfit text-purple-600 dark:text-purple-400">18,200 Credits</p>
-          <span className="text-[11px] text-purple-600 dark:text-purple-400">Vocational + Academic Level 4.5</span>
+          <p className="text-2xl font-extrabold font-outfit text-sky-600 dark:text-sky-400">18,200 Credits</p>
+          <span className="text-[11px] text-sky-600 dark:text-sky-400">Vocational + Academic Level 4.5</span>
         </div>
 
         <div className={`p-5 rounded-2xl border space-y-1 transition-colors ${
@@ -265,7 +265,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
               Continuous automated alignment with NEP 2020, NCrF Credit Levels, and AICTE vocational guidelines.
             </p>
           </div>
-          <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-500 border border-purple-500/30 self-start sm:self-auto">
+          <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-sky-500/10 text-sky-500 border border-sky-500/30 self-start sm:self-auto">
             ● 100% Audit Compliant
           </span>
         </div>
@@ -301,13 +301,13 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
             isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
           }`}>
             <div className="flex items-center gap-2">
-              <Briefcase className="w-4 h-4 text-purple-500" />
+              <Briefcase className="w-4 h-4 text-sky-500" />
               <h4 className={`text-xs font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Industry Partnership Tie-ups</h4>
             </div>
             <p className={`text-xs ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
               Direct recruitment pipelines with 42 verified employers offering internships and entry-level positions.
             </p>
-            <span className="text-[10px] text-purple-500 font-semibold block">42 Active MOUs</span>
+            <span className="text-[10px] text-sky-500 font-semibold block">42 Active MOUs</span>
           </div>
         </div>
       </div>

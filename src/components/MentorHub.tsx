@@ -158,7 +158,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
               Free 1:1 Sessions Available
             </span>
             <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1.5">
-              📊 Sample data
+              Sample data
             </span>
           </div>
 
@@ -337,7 +337,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
 
                   <button
                     onClick={() => handleOpenBooking(mentor)}
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-md shadow-indigo-500/20 flex items-center gap-1.5 transition-all"
+                    className="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md shadow-indigo-500/20 flex items-center gap-1.5 transition-all"
                   >
                     <Calendar className="w-3.5 h-3.5" />
                     <span>Book 1:1</span>
@@ -561,7 +561,7 @@ export const MentorHub: React.FC<MentorHubProps> = ({
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-5 py-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs shadow-md flex items-center gap-1.5"
+                    className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs shadow-md flex items-center gap-1.5 transition-all"
                   >
                     {isSubmitting ? 'Confirming...' : 'Confirm 1:1 Booking'}
                   </button>

@@ -165,7 +165,7 @@ Q2. How do we verify correct setup for ${topic}?
     C) Both A and B
     [Correct Answer: C]`;
   } else {
-    return `💡 AI GENERATED REMEDIAL WORKSHEET (${langTitle})
+    return `AI GENERATED REMEDIAL WORKSHEET (${langTitle})
 Target: At-Risk Students Struggling with ${topic}
 
 1. SIMPLIFIED EXPLANATION:

@@ -194,7 +194,7 @@ Instead of expecting the AI model to remember everything from memory (which caus
     setSelectedAnswer(null);
     setIsAnswerSubmitted(false);
     setExplanation(
-      `🎯 **Weak Diagnostic Topic Explained Simply**:
+      `**Weak Diagnostic Topic Explained Simply**:
       
 **Vector Embeddings & Cosine Similarity** (Current Diagnostic Level: 54%):
 Think of every sentence as an arrow pointing in a 3D room. 
@@ -218,15 +218,15 @@ When two sentences mean similar things (e.g., "The weather is chilly" and "It fe
       
       {/* Header Banner */}
       <div className={`p-6 md:p-8 rounded-3xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-6 ${
-        isDark ? 'bg-gradient-to-br from-indigo-950/70 via-slate-900 to-purple-950/60 border-indigo-500/30' : 'bg-gradient-to-br from-indigo-50 via-white to-purple-50 border-indigo-200 shadow-lg'
+        isDark ? 'bg-gradient-to-br from-indigo-950/70 via-slate-900 to-slate-900 border-indigo-500/30' : 'bg-gradient-to-br from-indigo-50 via-white to-slate-50 border-indigo-200 shadow-lg'
       }`}>
         <div className="space-y-2 max-w-2xl">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-md text-xs font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 flex items-center gap-1.5">
               <Bot className="w-3.5 h-3.5 text-indigo-400" />
               AI Study Buddy
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <span className="px-3 py-1 rounded-md text-xs font-semibold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
               Voice-Enabled Bilingual Learning (Hindi / Gujarati / English)
             </span>
           </div>
@@ -244,7 +244,7 @@ When two sentences mean similar things (e.g., "The weather is chilly" and "It fe
         <div className="flex flex-wrap items-center gap-2.5 shrink-0">
           <button
             onClick={handleRunWeakTopicDemo}
-            className="px-4 py-3 rounded-2xl font-bold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-600/30 flex items-center gap-2 transition"
+            className="px-4 py-3 rounded-2xl font-bold text-xs bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-600/30 flex items-center gap-2 transition"
           >
             <Play className="w-4 h-4 fill-white" />
             <span>Weak Topic Demo Flow</span>
@@ -391,7 +391,7 @@ When two sentences mean similar things (e.g., "The weather is chilly" and "It fe
             isDark ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200 shadow-lg'
           }`}>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-purple-400 text-xs font-bold uppercase tracking-wider">
+              <div className="flex items-center gap-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
                 <HelpCircle className="w-4 h-4" />
                 <span>Diagnostic Quick Check</span>
               </div>
@@ -456,7 +456,7 @@ When two sentences mean similar things (e.g., "The weather is chilly" and "It fe
                   <span>
                     {selectedAnswer === practiceQuestion.correctIndex 
                       ? 'Spot on! Great understanding.' 
-                      : 'Not quite right — understanding the misconception:'}
+                      : 'Not quite right: understanding the misconception:'}
                   </span>
                 </div>
                 <p className="leading-relaxed text-slate-300">

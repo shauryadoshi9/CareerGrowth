@@ -93,10 +93,10 @@ export const VocationalHub: React.FC<VocationalHubProps> = ({ language, onNaviga
     const res = await savePortfolioProjectApi(updatedProject);
     if (res.success && res.projects) {
       setProjects(res.projects);
-      setStatusMsg(`✅ "${target.title}" successfully added to verified recruiter portfolio!`);
+      setStatusMsg(`"${target.title}" successfully added to verified recruiter portfolio!`);
     } else {
       setProjects(prev => prev.map(p => p.id === recordingProjectId ? updatedProject : p));
-      setStatusMsg(`✅ Project updated locally in portfolio.`);
+      setStatusMsg(`Project updated locally in portfolio.`);
     }
 
     setRecordingProjectId(null);
@@ -123,11 +123,11 @@ export const VocationalHub: React.FC<VocationalHubProps> = ({ language, onNaviga
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
               Practical Projects & Evidence Portfolio Hub
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-500 border border-indigo-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-500 border border-indigo-500/30 text-xs font-semibold">
               NCrF Level 4.5 Aligned
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
-              📊 Sample project templates
+            <span className="px-2.5 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-xs font-semibold">
+              Sample project templates
             </span>
           </div>
           <h2 className={`text-2xl md:text-3xl font-extrabold font-outfit mt-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -202,20 +202,20 @@ export const VocationalHub: React.FC<VocationalHubProps> = ({ language, onNaviga
                 {/* Header Pills */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                    <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
                       {proj.category}
                     </span>
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                    <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold ${
                       proj.level === 'Beginner' ? 'bg-emerald-500/15 text-emerald-500' :
                       proj.level === 'Intermediate' ? 'bg-amber-500/15 text-amber-500' :
-                      'bg-purple-500/15 text-purple-500'
+                      'bg-blue-500/15 text-blue-500'
                     }`}>
                       {proj.level}
                     </span>
                   </div>
 
                   {proj.isVerifiedEvidence ? (
-                    <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-emerald-500 bg-emerald-500/10 px-2.5 py-0.5 rounded-md border border-emerald-500/30">
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Verified in Portfolio</span>
                     </span>

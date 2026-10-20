@@ -97,7 +97,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
       if (event.type === 'new_opportunity') {
         setLiveOpps(prev => [event.opportunity, ...prev.filter(o => o.id !== event.opportunity.id)]);
-        setLatestLiveEvent(`⚡ New listing streamed from ${event.opportunity.sourcePlatform}: ${event.opportunity.title}`);
+        setLatestLiveEvent(`New listing streamed from ${event.opportunity.sourcePlatform}: ${event.opportunity.title}`);
       }
 
       if (event.type === 'opportunity_tick') {
@@ -107,7 +107,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       }
 
       if (event.type === 'live_activity') {
-        setLatestLiveEvent(`💬 ${event.text}`);
+        setLatestLiveEvent(event.text);
       }
     });
 
@@ -134,13 +134,13 @@ export const HomePage: React.FC<HomePageProps> = ({
     setIsSubmitting(false);
 
     if (result.success) {
-      setServerMessage('✨ Career goal saved to your personalized roadmap!');
+      setServerMessage('Career goal saved to your personalized roadmap!');
       setCustomTitle('');
       setCustomPayload('');
       const health = await checkServerHealth();
       if (health) setServerHealth(health);
     } else {
-      setServerMessage('✨ Career goal saved to your local roadmap.');
+      setServerMessage('Career goal saved to your local roadmap.');
     }
   };
 
@@ -422,8 +422,8 @@ export const HomePage: React.FC<HomePageProps> = ({
             className={`text-left p-5 rounded-2xl border transition-all flex flex-col justify-between ${
               currentRole === 'teacher'
                 ? isDark 
-                  ? 'bg-purple-950/40 border-purple-500 ring-2 ring-purple-500/30 shadow-lg' 
-                  : 'bg-purple-50/80 border-purple-500 ring-2 ring-purple-500/30 shadow-md'
+                  ? 'bg-teal-950/40 border-teal-500 ring-2 ring-teal-500/30 shadow-lg' 
+                  : 'bg-teal-50/80 border-teal-500 ring-2 ring-teal-500/30 shadow-md'
                 : isDark
                   ? 'bg-slate-900/40 border-slate-800 hover:border-slate-700'
                   : 'bg-white border-slate-200 hover:border-slate-300 shadow-sm'
@@ -432,12 +432,12 @@ export const HomePage: React.FC<HomePageProps> = ({
             <div>
               <div className="flex items-center justify-between mb-3">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
-                  currentRole === 'teacher' ? 'bg-purple-600 text-white shadow' : 'bg-slate-800 text-purple-400'
+                  currentRole === 'teacher' ? 'bg-teal-600 text-white shadow' : 'bg-slate-800 text-teal-400'
                 }`}>
                   <UserCheck className="w-5 h-5" />
                 </div>
                 {currentRole === 'teacher' ? (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-purple-600 text-white">Active Mode</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-600 text-white">Active Mode</span>
                 ) : (
                   <span className={`text-[10px] font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Click to Select</span>
                 )}
@@ -449,7 +449,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 Generate 60-min lesson plans and diagnostic quizzes in 10 Indian languages. Receive early remedial hurdle alerts.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/20 flex items-center justify-between text-xs font-bold text-purple-500">
+            <div className="mt-4 pt-3 border-t border-slate-800/20 flex items-center justify-between text-xs font-bold text-teal-500">
               <span>Copilot & Remedial Suite</span>
               <ChevronRight className="w-4 h-4" />
             </div>
@@ -570,7 +570,7 @@ export const HomePage: React.FC<HomePageProps> = ({
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-3 border-slate-800/60">
                 <div>
                   <h4 className={`text-sm font-bold font-outfit flex items-center gap-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                    <UserCheck className="w-4 h-4 text-purple-500" />
+                    <UserCheck className="w-4 h-4 text-teal-500" />
                     <span>All Features Available for Teachers & Educators</span>
                   </h4>
                   <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
@@ -579,7 +579,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
                 <button
                   onClick={() => onNavigateTab('dashboard', 'teacher')}
-                  className="text-xs font-bold text-purple-500 hover:text-purple-400 flex items-center gap-1 self-start sm:self-auto"
+                  className="text-xs font-bold text-teal-500 hover:text-teal-400 flex items-center gap-1 self-start sm:self-auto"
                 >
                   <span>Open Full Teacher Dashboard</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -588,7 +588,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { id: 'dashboard', name: 'Teacher Operating Console', desc: '142 students, 78.4% average concept mastery, class heatmap', icon: Users },
+                  { id: 'dashboard', name: 'Teacher Operating Console', desc: 'Cohort tracking, concept mastery distribution, and class diagnostic heatmaps', icon: Users },
                   { id: 'teacher-copilot', name: 'AI Teacher Copilot', desc: 'Instant 60m lesson plans, quizzes & answer keys in 10 Indian languages', icon: Bot },
                   { id: 'learning-risk', name: 'Remedial Support Engine', desc: 'Identify early student hurdles before exams & pair with 1:1 mentors', icon: HeartHandshake }
                 ].map(tool => {
@@ -599,12 +599,12 @@ export const HomePage: React.FC<HomePageProps> = ({
                       onClick={() => onNavigateTab(tool.id, 'teacher')}
                       className={`text-left p-4 rounded-xl border transition flex flex-col justify-between ${
                         isDark 
-                          ? 'bg-slate-900/80 border-slate-800 hover:border-purple-500/50 hover:bg-slate-850' 
-                          : 'bg-slate-50 hover:bg-purple-50/50 border-slate-200 hover:border-purple-300'
+                          ? 'bg-slate-900/80 border-slate-800 hover:border-teal-500/50 hover:bg-slate-850' 
+                          : 'bg-slate-50 hover:bg-teal-50/50 border-slate-200 hover:border-teal-300'
                       }`}
                     >
                       <div className="flex items-center gap-2.5 mb-2">
-                        <div className="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-500 flex items-center justify-center shrink-0">
                           <Icon className="w-4 h-4" />
                         </div>
                         <span className={`text-xs font-bold leading-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
@@ -644,7 +644,7 @@ export const HomePage: React.FC<HomePageProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 {[
-                  { id: 'dashboard', name: 'Institution Executive Console', desc: '12,450 learners, 18,200 NCrF credits, 42 corporate hiring partners', icon: Building },
+                  { id: 'dashboard', name: 'Institution Executive Console', desc: 'Learner cohorts, NCrF credit compliance tracking, and corporate placement pipelines', icon: Building },
                   { id: 'institution-analytics', name: 'Skill Demand & Placement Analytics', desc: 'Department capability vs market demand mismatch index & 5-month trajectory', icon: TrendingUp },
                   { id: 'institution-analytics', name: 'Empirical Pilot Evaluation', desc: 'Anand & Mehsana pilot indicators: completion rates, repo artifacts & quiz deltas', icon: Award }
                 ].map((tool, idx) => {
@@ -1083,10 +1083,10 @@ export const HomePage: React.FC<HomePageProps> = ({
                     isDark ? 'bg-slate-950 border-slate-800 text-white' : 'bg-white border-slate-300 text-slate-900'
                   }`}
                 >
-                  <option value="Career Goal">🎯 Career Goal</option>
-                  <option value="Hackathon Target">🏆 Hackathon Target</option>
-                  <option value="Internship Aspiration">💼 Internship Aspiration</option>
-                  <option value="Skill Target">⚡ Skill Target</option>
+                  <option value="Career Goal">Career Goal</option>
+                  <option value="Hackathon Target">Hackathon Target</option>
+                  <option value="Internship Aspiration">Internship Aspiration</option>
+                  <option value="Skill Target">Skill Target</option>
                 </select>
                 <input
                   type="text"

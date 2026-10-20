@@ -21,6 +21,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [otp, setOtp] = useState('');
   const [demoOtp, setDemoOtp] = useState<string | null>(null);
   
@@ -43,6 +44,11 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    // Bot honeypot check
+    if (honeypot) {
+      return;
+    }
 
     if (!isValidEmail(email)) {
       setError('Please enter a valid email address (e.g. name@domain.com)');
@@ -122,7 +128,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
       {/* Header */}
       <div className="flex items-center gap-3.5 mb-6">
         <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
-          <img src="/logo.png" alt="CareerGrowth" className="w-full h-full object-contain" />
+          <img src="/logo.png" alt="Tatva CareerGrowth Logo" className="w-full h-full object-contain" />
         </div>
         <div>
           <h2 className="text-2xl font-bold font-outfit text-slate-900 dark:text-white">Create Account</h2>
@@ -143,6 +149,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
       {step === 'info' ? (
         <>
           <form onSubmit={handleSendOtp} className="space-y-4">
+            {/* Anti-spam honeypot (hidden from human users) */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={e => setHoneypot(e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+              style={{ display: 'none', position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+              aria-hidden="true"
+            />
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
                 Full Name
@@ -155,7 +172,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                   onChange={e => setName(e.target.value)}
                   required
                   placeholder="e.g. Shaurya Doshi"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
                 />
               </div>
             </div>
@@ -172,7 +189,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                   onChange={e => setEmail(e.target.value)}
                   required
                   placeholder="student@careergrowth.org"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
                 />
               </div>
             </div>
@@ -189,7 +206,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                   onChange={e => setPassword(e.target.value)}
                   required
                   placeholder="Min 8 characters"
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
                 />
               </div>
             </div>
@@ -197,7 +214,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2 transition"
+              className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition"
             >
               {loading ? 'Sending Verification Code...' : 'Verify Email with OTP'}
               <ArrowRight className="w-4 h-4" />
@@ -235,7 +252,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           <button
             type="button"
             onClick={() => setStep('info')}
-            className="flex items-center gap-1.5 text-xs text-purple-600 dark:text-purple-400 hover:underline mb-2"
+            className="flex items-center gap-1.5 text-xs text-indigo-600 dark:text-indigo-400 hover:underline mb-2"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             Change email address ({email})
@@ -244,7 +261,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           {/* Visible Demo Verification Notice */}
           <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-700 dark:text-amber-300 text-xs space-y-1">
             <div className="font-bold flex items-center gap-1.5">
-              <span>⚡ Demo Verification Notice</span>
+              <span>Demo Verification Notice</span>
             </div>
             <p className="text-[11px] leading-relaxed">
               In production, OTPs are dispatched via secure institutional SMTP. For hackathon evaluation, immediate preview is enabled below.
@@ -282,7 +299,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
                 required
                 autoFocus
                 placeholder="• • • • • •"
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-lg tracking-[0.5em] font-mono text-center focus:outline-none focus:ring-2 focus:ring-purple-500 text-slate-900 dark:text-white"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-lg tracking-[0.5em] font-mono text-center focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-white"
               />
             </div>
             <p className="text-[11px] text-slate-500 mt-1.5">
@@ -296,7 +313,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
               type="button"
               disabled={countdown > 0 || loading}
               onClick={handleResendOtp}
-              className="text-purple-600 dark:text-purple-400 font-semibold hover:underline disabled:opacity-50 flex items-center gap-1"
+              className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline disabled:opacity-50 flex items-center gap-1"
             >
               <RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
               {countdown > 0 ? `Resend in ${countdown}s` : 'Resend Code'}
@@ -306,7 +323,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           <button
             type="submit"
             disabled={loading || otp.length !== 6}
-            className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2 transition"
+            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 transition"
           >
             {loading ? 'Verifying...' : 'Verify & Complete Registration'}
             <CheckCircle className="w-4 h-4" />
@@ -321,7 +338,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onSwitchT
           <button
             type="button"
             onClick={onSwitchToLogin}
-            className="text-purple-600 dark:text-purple-400 font-semibold hover:underline"
+            className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
           >
             Sign in here
           </button>

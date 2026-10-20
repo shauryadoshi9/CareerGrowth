@@ -84,12 +84,12 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
             <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-semibold">
               Deterministic & Explainable Gap Model
             </span>
-            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-semibold">
               Multi-Factor Evidence Synthesizer
             </span>
             {isUsingSample && (
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
-                📊 Sample data
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                Sample data
               </span>
             )}
           </div>
@@ -291,7 +291,7 @@ export const SkillGapAnalyzer: React.FC<SkillGapAnalyzerProps> = ({ language, on
                     {/* Certifications badge */}
                     {skill.certifications && skill.certifications.length > 0 ? (
                       skill.certifications.map((c, i) => (
-                        <span key={i} className="px-2 py-0.5 rounded bg-purple-500/15 text-purple-600 border border-purple-500/30 flex items-center gap-1">
+                        <span key={i} className="px-2 py-0.5 rounded bg-indigo-500/15 text-indigo-400 border border-indigo-500/30 flex items-center gap-1">
                           <Award className="w-3 h-3" />
                           <span>{c}</span>
                         </span>

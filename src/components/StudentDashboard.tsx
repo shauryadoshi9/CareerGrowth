@@ -114,10 +114,10 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
     const res = await addSkillToServer(newSkill);
     if (res.success && res.skills) {
       setSkills(res.skills);
-      setStatusMsg(`✅ "${newSkillName}" added to your verified profile!`);
+      setStatusMsg(`"${newSkillName}" added to your verified profile!`);
     } else {
       setSkills(prev => [...prev, { ...newSkill, id: `skill-${Date.now()}` } as Skill]);
-      setStatusMsg(`✅ "${newSkillName}" added to your verified profile!`);
+      setStatusMsg(`"${newSkillName}" added to your verified profile!`);
     }
 
     setNewSkillName('');
@@ -183,16 +183,16 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
       <div className={`p-6 rounded-2xl border relative overflow-hidden transition-all ${
         isDark 
           ? 'bg-gradient-to-r from-slate-900 via-indigo-950/60 to-slate-900 border-indigo-500/30' 
-          : 'bg-gradient-to-r from-indigo-50 via-white to-purple-50 border-indigo-200 shadow-md'
+          : 'bg-gradient-to-r from-indigo-50 via-white to-slate-50 border-indigo-200 shadow-md'
       }`}>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
+              <span className="px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-500 border border-emerald-500/30 text-xs font-semibold">
                 ● {t('verified_profile', language)}
               </span>
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
-                📊 Sample data
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                Sample data
               </span>
               <span className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>{learnerProfile.institution}</span>
             </div>
@@ -204,7 +204,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
                   if (editingNameValue.trim()) {
                     updateUserName(editingNameValue.trim());
                     setIsEditingName(false);
-                    setStatusMsg('✅ Name updated successfully!');
+                    setStatusMsg('Name updated successfully!');
                     setTimeout(() => setStatusMsg(null), 3000);
                   }
                 }}
@@ -273,17 +273,17 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
                   isDark ? 'bg-slate-900 border-indigo-500/40 text-indigo-300 hover:border-indigo-400' : 'bg-white border-indigo-300 text-indigo-700 hover:border-indigo-500'
                 }`}
               >
-                <option value="" disabled>⚡ Jump to Module...</option>
-                <option value="skill-gap">📊 Skill Gap Analyzer</option>
-                <option value="career-navigator">🧭 Career Navigator</option>
-                <option value="learning">⚡ Adaptive Learning Engine</option>
-                <option value="study-buddy">🤖 AI Study Buddy</option>
-                <option value="revision-planner">📅 Daily Revision Planner</option>
-                <option value="mock-interview">🎙️ AI Mock Interview</option>
-                <option value="opportunities">💼 Live Opportunities & Schemes</option>
-                <option value="mentors">👥 1:1 Industry Mentors</option>
-                <option value="vocational">🛠️ Vocational Hub</option>
-                <option value="offline-packs">📶 Offline Low-Bandwidth Packs</option>
+                <option value="" disabled>Jump to Module...</option>
+                <option value="skill-gap">Skill Gap Analyzer</option>
+                <option value="career-navigator">Career Navigator</option>
+                <option value="learning">Adaptive Learning Engine</option>
+                <option value="study-buddy">AI Study Buddy</option>
+                <option value="revision-planner">Daily Revision Planner</option>
+                <option value="mock-interview">AI Mock Interview</option>
+                <option value="opportunities">Live Opportunities & Schemes</option>
+                <option value="mentors">1:1 Industry Mentors</option>
+                <option value="vocational">Vocational Hub</option>
+                <option value="offline-packs">Offline Low-Bandwidth Packs</option>
               </select>
             </div>
 
@@ -412,7 +412,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
         <div className={`p-4 rounded-xl border ${isDark ? 'bg-slate-900/60 border-slate-800' : 'bg-white border-slate-200 shadow-sm'}`}>
           <div className="flex items-center justify-between text-slate-400 mb-1">
             <span className="text-xs font-medium">Active Roadmap</span>
-            <BookOpen className="w-4 h-4 text-purple-500" />
+            <BookOpen className="w-4 h-4 text-indigo-500" />
           </div>
           <div className="flex items-baseline gap-2">
             <span className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Phase 1</span>
@@ -456,7 +456,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
             isDark 
               ? 'bg-gradient-to-br from-indigo-950/40 via-slate-900 to-slate-900 border-indigo-500/30 hover:border-indigo-400' 
-              : 'bg-gradient-to-br from-indigo-50/70 via-white to-purple-50/50 border-indigo-200 hover:border-indigo-400 shadow-sm'
+              : 'bg-gradient-to-br from-indigo-50/70 via-white to-slate-50/50 border-indigo-200 hover:border-indigo-400 shadow-sm'
           }`}
         >
           <div className="flex items-center justify-between mb-3">
@@ -600,15 +600,15 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           onClick={() => onNavigateTab('mentors')}
           className={`group cursor-pointer p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
             isDark 
-              ? 'bg-gradient-to-br from-purple-950/40 via-slate-900 to-slate-900 border-purple-500/30 hover:border-purple-400' 
-              : 'bg-gradient-to-br from-purple-50/70 via-white to-indigo-50/50 border-purple-200 hover:border-purple-400 shadow-sm'
+              ? 'bg-gradient-to-br from-teal-950/40 via-slate-900 to-slate-900 border-teal-500/30 hover:border-teal-400' 
+              : 'bg-gradient-to-br from-teal-50/70 via-white to-slate-50/50 border-teal-200 hover:border-teal-400 shadow-sm'
           }`}
         >
           <div className="flex items-center justify-between mb-3">
-            <div className="w-9 h-9 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center group-hover:scale-110 transition-transform">
               <Users className="w-4 h-4" />
             </div>
-            <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+            <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-teal-500/10 text-teal-400 border border-teal-500/20">
               Google & MS
             </span>
           </div>
@@ -618,7 +618,7 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({ onNavigateTa
           <p className={`text-[11px] line-clamp-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Book 1:1 sessions with engineers from Google, MS & Zerodha.
           </p>
-          <div className="mt-2.5 pt-2 border-t border-slate-700/30 flex items-center justify-between text-[11px] font-semibold text-purple-400">
+          <div className="mt-2.5 pt-2 border-t border-slate-700/30 flex items-center justify-between text-[11px] font-semibold text-teal-400">
             <span>Book 1:1</span>
             <ArrowUpRight className="w-3 h-3" />
           </div>

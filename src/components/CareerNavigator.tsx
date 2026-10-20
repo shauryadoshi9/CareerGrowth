@@ -40,12 +40,12 @@ export const CareerNavigator: React.FC<CareerNavigatorProps> = ({ language, onNa
       }`}>
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/30 text-xs font-semibold">
+            <span className="px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 border border-indigo-500/30 text-xs font-semibold">
               Structured Skill-to-Career Roadmap
             </span>
             {isUsingSample && (
-              <span className="px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
-                📊 Sample data
+              <span className="px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-semibold">
+                Sample data
               </span>
             )}
           </div>

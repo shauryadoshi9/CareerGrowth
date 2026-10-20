@@ -25,7 +25,7 @@ const DEFAULT_ACCOUNTS: GoogleAccount[] = [
     id: 'g-demo-2',
     name: 'Priya Sharma (Demo Student)',
     email: 'priya.google@careergrowth.org',
-    avatarColor: 'bg-purple-600',
+    avatarColor: 'bg-teal-600',
   }
 ];
 
@@ -91,7 +91,7 @@ export const GoogleAccountChooserModal: React.FC<GoogleAccountChooserModalProps>
         id: `g-${Date.now()}`,
         name: derivedName.charAt(0).toUpperCase() + derivedName.slice(1),
         email: emailTrimmed.toLowerCase(),
-        avatarColor: 'bg-purple-600',
+        avatarColor: 'bg-teal-600',
       };
 
       const updated = [newAcc, ...savedAccounts.filter(a => a.email !== newAcc.email)];

@@ -83,7 +83,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             <div className="h-10 w-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-1 flex items-center justify-center shadow-sm group-hover:scale-105 transition-transform overflow-hidden">
               <img 
                 src="/logo.png" 
-                alt="CareerGrowth" 
+                alt="Tatva CareerGrowth Logo" 
                 className="h-full w-full object-contain"
               />
             </div>
@@ -344,7 +344,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
             {currentRole === 'teacher' && (
               <>
-                <UserCheck className="w-3.5 h-3.5 text-purple-500" />
+                <UserCheck className="w-3.5 h-3.5 text-teal-500" />
                 <span>Faculty / Teacher</span>
               </>
             )}

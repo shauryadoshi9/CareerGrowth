@@ -17,6 +17,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
   const { login, googleLogin } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [honeypot, setHoneypot] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [isGoogleModalOpen, setIsGoogleModalOpen] = useState(false);
@@ -25,9 +26,20 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
     e.preventDefault();
     setError(null);
 
+    // Bot honeypot check
+    if (honeypot) {
+      // Silent bot trap
+      return;
+    }
+
     const emailTrimmed = email.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailTrimmed)) {
       setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!password) {
+      setError('Please enter your password');
       return;
     }
 
@@ -51,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
     <div className="max-w-md mx-auto my-8 p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl transition-all">
       <div className="flex items-center gap-3.5 mb-6">
         <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-1 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
-          <img src="/logo.png" alt="CareerGrowth" className="w-full h-full object-contain" />
+          <img src="/logo.png" alt="CareerGrowth Logo" className="w-full h-full object-contain" />
         </div>
         <div>
           <h2 className="text-2xl font-bold font-outfit text-slate-900 dark:text-white">Welcome Back</h2>
@@ -60,12 +72,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
       </div>
 
       {/* Hackathon Demo Accounts Selector */}
-      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 border border-indigo-500/20">
+      <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-teal-500/10 to-blue-500/10 border border-indigo-500/20">
         <div className="flex items-center justify-between mb-2">
           <span className="text-xs font-bold text-indigo-700 dark:text-indigo-300 uppercase tracking-wider flex items-center gap-1.5">
-            ⚡ Demo Accounts (Hackathon Evaluator)
+            Demo Accounts (Hackathon Evaluator)
           </span>
-          <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-semibold">1-Click</span>
+          <span className="text-[10px] px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 font-semibold">1-Click</span>
         </div>
         <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3">
           Select any seeded role to immediately test real role-based permissions:
@@ -88,9 +100,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
               setEmail('teacher.demo@careergrowth.org');
               setPassword('Demo@2026!');
             }}
-            className="p-2.5 rounded-xl border border-purple-500/30 bg-white dark:bg-slate-800 hover:border-purple-500 text-left transition group"
+            className="p-2.5 rounded-xl border border-teal-500/30 bg-white dark:bg-slate-800 hover:border-teal-500 text-left transition group"
           >
-            <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-purple-500">Teacher</div>
+            <div className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-teal-500">Teacher</div>
             <div className="text-[10px] text-slate-500 truncate">Dr. Sharma</div>
           </button>
           <button
@@ -115,6 +127,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToRegis
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        {/* Anti-spam honeypot (hidden from human users) */}
+        <input
+          type="text"
+          name="website"
+          value={honeypot}
+          onChange={e => setHoneypot(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          style={{ display: 'none', position: 'absolute', opacity: 0, pointerEvents: 'none' }}
+          aria-hidden="true"
+        />
         <div>
           <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
             Email Address

@@ -45,7 +45,7 @@ async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function waitForServer(baseUrl, maxAttempts = 30) {
+async function waitForServer(baseUrl, maxAttempts = 60) {
   for (let i = 0; i < maxAttempts; i++) {
     try {
       const res = await fetch(`${baseUrl}/api/health`);
@@ -53,7 +53,7 @@ async function waitForServer(baseUrl, maxAttempts = 30) {
     } catch {
       // Server not ready yet
     }
-    await sleep(200);
+    await sleep(250);
   }
   return false;
 }
@@ -84,6 +84,7 @@ async function runSecurityChecks() {
   console.log('============================================================');
   console.log(`Port: ${testPort} | DB: Isolated Temporary Seed Instance\n`);
 
+  let serverOutput = '';
   serverProcess = spawn(process.execPath, [path.join(ROOT_DIR, 'server', 'index.js')], {
     cwd: ROOT_DIR,
     env: {
@@ -98,9 +99,13 @@ async function runSecurityChecks() {
     stdio: ['ignore', 'pipe', 'pipe']
   });
 
+  serverProcess.stdout.on('data', data => {
+    serverOutput += data.toString();
+  });
+
   serverProcess.stderr.on('data', data => {
-    // Collect server stderr if error occurs
     const msg = data.toString();
+    serverOutput += msg;
     if (msg.includes('FATAL') || msg.includes('Error:')) {
       console.error(`[Server Error]: ${msg.trim()}`);
     }
@@ -110,6 +115,7 @@ async function runSecurityChecks() {
   const ready = await waitForServer(baseUrl);
   if (!ready) {
     console.error('❌ Server failed to start within timeout window.');
+    console.error(`Server output:\n${serverOutput}`);
     cleanup();
     process.exit(1);
   }

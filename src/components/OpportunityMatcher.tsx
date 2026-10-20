@@ -138,7 +138,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
           return [newOpp, ...filtered];
         });
         setRecentIncomingOpp(newOpp);
-        setStreamToast(`⚡ New listing streamed from ${newOpp.sourcePlatform}: ${newOpp.title}`);
+        setStreamToast(`New listing streamed from ${newOpp.sourcePlatform}: ${newOpp.title}`);
         setTimeout(() => {
           if (mounted) setStreamToast(null);
         }, 5000);
@@ -209,7 +209,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         if (res.freshIngested && res.freshIngested.length > 0) {
           setRecentIncomingOpp(res.freshIngested[0]);
         }
-        setStreamToast(`✅ Refreshed! Harvested ${res.freshCount || 3} new ongoing opportunities, hackathons & PM Internship schemes from external portals.`);
+        setStreamToast(`Refreshed: Harvested ${res.freshCount || 3} new ongoing opportunities, hackathons & PM Internship schemes from external portals.`);
         setTimeout(() => setStreamToast(null), 5000);
       }
     } catch (err) {
@@ -252,7 +252,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
       prizeOrStipend: newStipend || 'Competitive Prize',
       deadline: newDeadline || 'Rolling Admissions',
       registeredCount: 'Just Listed',
-      urgencyBadge: '⚡ New Opportunity',
+      urgencyBadge: 'New Opportunity',
       verifiedHost: true,
       minGpa: 6.0,
       requiredSkills: newSkills.split(',').map(s => ({ skillName: s.trim(), level: 70 })),
@@ -262,10 +262,10 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
     const res = await postCustomOpportunityApi(oppPayload);
     if (res.success && res.opportunity) {
       setOpportunities(prev => [res.opportunity!, ...prev]);
-      setPostStatusMsg(`✅ "${newTitle}" posted successfully and synced to server!`);
+      setPostStatusMsg(`"${newTitle}" posted successfully and synced to server!`);
     } else {
       setOpportunities(prev => [{ ...oppPayload, id: `opp-${Date.now()}` } as Opportunity, ...prev]);
-      setPostStatusMsg(`⚠️ Opportunity added locally.`);
+      setPostStatusMsg(`Opportunity added locally.`);
     }
 
     setNewTitle('');
@@ -294,7 +294,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
       case 'NSP & Govt Portal':
         return 'bg-orange-500/15 text-orange-400 border-orange-500/30';
       default:
-        return 'bg-purple-500/15 text-purple-400 border-purple-500/30';
+        return 'bg-sky-500/15 text-sky-400 border-sky-500/30';
     }
   };
 
@@ -317,7 +317,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
               Live Industry & Government Pipelines
             </span>
             <span className="px-2.5 py-1 rounded-md text-xs font-semibold bg-amber-500/10 text-amber-500 border border-amber-500/30 flex items-center gap-1.5">
-              📊 Demo Listings • Curated Sample Data
+              Demo Listings • Curated Sample Data
             </span>
           </div>
 
@@ -409,7 +409,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
           <div className="mt-3 pt-3 border-t border-slate-800/60 flex items-center justify-between gap-3 text-xs bg-indigo-500/5 px-3 py-2 rounded-xl border border-indigo-500/20">
             <div className="flex items-center gap-2 min-w-0">
               <span className="px-1.5 py-0.5 rounded bg-indigo-500 text-white text-[9px] font-black uppercase tracking-wider shrink-0">
-                ⚡ Just Streamed
+                Just Streamed
               </span>
               <span className={`font-bold truncate ${isDark ? 'text-white' : 'text-slate-900'}`}>
                 {recentIncomingOpp.title}
@@ -455,13 +455,13 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {[
             { id: 'all', label: 'All Opportunities', icon: Sparkles },
-            { id: 'live_stream', label: '🔴 Live Streamed Only', icon: Zap },
-            { id: 'hackathon', label: '⚡ Hackathons & Challenges', icon: Flame },
-            { id: 'internship', label: '💼 Internships (PM Scheme & Tech)', icon: Briefcase },
-            { id: 'quiz', label: '🏆 Quizzes & Contests', icon: Trophy },
-            { id: 'scholarship', label: '🎓 Scholarships & Grants', icon: GraduationCap },
-            { id: 'free_course', label: '📚 Free Courses (NPTEL/AICTE)', icon: BookOpen },
-            { id: 'job', label: '🚀 Entry-Level Jobs (TCS/Tech)', icon: Award }
+            { id: 'live_stream', label: 'Live Streamed Only', icon: Zap },
+            { id: 'hackathon', label: 'Hackathons & Challenges', icon: Flame },
+            { id: 'internship', label: 'Internships (PM Scheme & Tech)', icon: Briefcase },
+            { id: 'quiz', label: 'Quizzes & Contests', icon: Trophy },
+            { id: 'scholarship', label: 'Scholarships & Grants', icon: GraduationCap },
+            { id: 'free_course', label: 'Free Courses (NPTEL/AICTE)', icon: BookOpen },
+            { id: 'job', label: 'Entry-Level Jobs (TCS/Tech)', icon: Award }
           ].map(tab => {
             const Icon = tab.icon;
             const active = selectedCategory === tab.id;
@@ -554,7 +554,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
               }`}
             >
               {/* Card Header Top Gradient Accent */}
-              <div className={`h-2.5 w-full bg-gradient-to-r ${opp.bannerGradient || 'from-indigo-500 to-purple-600'}`} />
+              <div className={`h-2.5 w-full bg-gradient-to-r ${opp.bannerGradient || 'from-indigo-500 to-sky-600'}`} />
 
               <div className="p-6 space-y-4 flex-1">
                 {/* Platform Tag & Urgency / Deadline */}
@@ -664,7 +664,7 @@ export const OpportunityMatcher: React.FC<OpportunityMatcherProps> = ({
                   href={opp.sourceUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-2.5 px-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-md shadow-indigo-600/20 flex items-center justify-center gap-2 transition"
+                  className="w-full py-2.5 px-3 rounded-xl text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-500 shadow-md shadow-indigo-600/20 flex items-center justify-center gap-2 transition"
                 >
                   <span>Apply on Official {opp.sourcePlatform}</span>
                   <ExternalLink className="w-3.5 h-3.5 shrink-0" />

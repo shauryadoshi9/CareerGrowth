@@ -160,30 +160,6 @@ The compiled single-page application from `/dist` and all `/api` endpoints are s
 
 ---
 
-## 🚀 Free Deployment Guide (Render)
-
-Deploy CareerGrowth for free as a single unified Web Service:
-
-1. Push your repository to your GitHub account.
-2. Sign in to [Render Dashboard](https://dashboard.render.com/) and click **New + > Web Service**.
-3. Select and connect your repository: `CareerGrowth`.
-4. Fill in the build settings:
-   * **Name:** `careergrowth-demo`
-   * **Environment:** `Node`
-   * **Region:** Any (e.g., Singapore or Frankfurt)
-   * **Branch:** `main`
-   * **Build Command:** `npm install && npm run build`
-   * **Start Command:** `npm run start`
-   * **Instance Type:** `Free`
-5. Under **Environment Variables**, add:
-   * `JWT_SECRET` = `render_demo_jwt_secret_must_be_over_32_characters_long!`
-   * `DEMO_MODE` = `true`
-   * `ALLOWED_ORIGIN` = `https://careergrowth-demo.onrender.com` *(or `*`)*
-   * `TRUST_PROXY` = `true`
-   * `NODE_ENV` = `production`
-   * `GEMINI_API_KEY` = *(Optional: your Gemini API key)*
-6. Click **Deploy Web Service**.
-7. Once deployed, open `https://<your-render-service>.onrender.com/api/health` in your browser to verify server status.
 
 > ℹ️ **Hosting Note on Free Tiers:** Free hosting instances spin down after periods of inactivity. On restart, the local JSON data automatically re-seeds from `server/database.seed.json`, ensuring the demo evaluation accounts always remain in a clean, predictable state for hackathon judges.
 
